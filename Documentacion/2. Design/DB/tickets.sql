@@ -3,20 +3,20 @@ use ticketing;
 
 create table usuarios (
     id int auto_increment primary key,
-    nombre varchar(100) not null,
-    email_personal varchar(100) unique,
-    email_corporativo varchar(100) unique not null,
-    contrasena varchar(200) not null,
-    rol varchar(50) not null,
-    departamento varchar(50) not null,
+    nombre varchar(255) not null,
+    email_personal varchar(255) null,
+    email_corporativo varchar(255) unique not null,
+    contrasena varchar(255) not null,
+    rol varchar(255) not null,
+    departamento varchar(255) not null,
     
     constraint chk_rol CHECK (rol IN ('admin', 'agente', 'usuario'))
 );
 
 create table categorias (
     id int auto_increment primary key,
-    nombre varchar(100) not null,
-    descripcion varchar(600)
+    nombre varchar(255) not null,
+    descripcion varchar(255) null
 );
 
 
@@ -24,12 +24,12 @@ create table tickets (
     id int auto_increment primary key,
     usuario_id int not null,
     categoria_id int not null,
-    titulo varchar(200) not null,
-    descripcion varchar(600) not null,
-    prioridad varchar(30) not null,
-    estado varchar(60) not null,
-    fecha_creacion date not null,
-    fecha_cierre date,
+    titulo varchar(255) not null,
+    descripcion varchar(1000) not null,
+    prioridad varchar(255) not null,
+    estado varchar(255) not null,
+    fecha_creacion timestamp not null default current_timestamp,
+    fecha_cierre timestamp null,
 
     constraint fk_tickets_usuarios
 	foreign key (usuario_id) references usuarios(id),
@@ -42,7 +42,7 @@ create table asignaciones (
     id int auto_increment primary key,
     ticket_id int not null,
     agente_id int not null,
-    fecha_creacion date not null,
+    fecha_creacion timestamp not null default current_timestamp,
 
     constraint fk_asignaciones_tickets
 	foreign key (ticket_id) references tickets(id),
@@ -55,8 +55,8 @@ create table comentarios (
     id int auto_increment primary key,
     ticket_id int not null,
     usuario_id int not null,
-    comentario varchar(600) not null,
-    fecha_creacion date not null,
+    comentario varchar(1000) not null,
+    fecha_creacion timestamp not null default current_timestamp,
 
     constraint fk_comentarios_tickets
 	foreign key (ticket_id) references tickets(id),
@@ -65,13 +65,23 @@ create table comentarios (
 	foreign key (usuario_id) references usuarios(id)
 );
 
-create table historial_tickets (
+create table historiales_tickets (
     id int auto_increment primary key,
     ticket_id int not null,
-    estado_anterior varchar(50) not null,
-    estado_nuevo varchar(50) not null,
-    fecha_cambio date not null,
+    estado_anterior varchar(255) not null,
+    estado_nuevo varchar(255) not null,
+    fecha_creacion timestamp not null default current_timestamp,
 
-    constraint fk_historialtickets_tickets
+    constraint fk_historialestickets_tickets
 	foreign key (ticket_id) references tickets(id)
+);
+
+create table notificaciones (
+    id int auto_increment primary key,
+    usuario_id int not null,
+    mensaje varchar(255) not null,
+    fecha_creacion timestamp not null default current_timestamp,
+    
+    constraint fk_notificaciones_usuarios
+	foreign key (usuario_id) references usuarios(id)
 );
