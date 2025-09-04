@@ -4,7 +4,7 @@ use ticketing;
 create table usuarios (
     id int auto_increment primary key,
     nombre varchar(255) not null,
-    email_personal varchar(255) null,
+    email_personal varchar(255) unique null,
     email_corporativo varchar(255) unique not null,
     contrasena varchar(255) not null,
     rol varchar(255) not null,
@@ -65,14 +65,14 @@ create table comentarios (
 	foreign key (usuario_id) references usuarios(id)
 );
 
-create table historiales_tickets (
+create table historial_tickets (
     id int auto_increment primary key,
     ticket_id int not null,
     estado_anterior varchar(255) not null,
     estado_nuevo varchar(255) not null,
     fecha_creacion timestamp not null default current_timestamp,
 
-    constraint fk_historialestickets_tickets
+    constraint fk_historialtickets_tickets
 	foreign key (ticket_id) references tickets(id)
 );
 
