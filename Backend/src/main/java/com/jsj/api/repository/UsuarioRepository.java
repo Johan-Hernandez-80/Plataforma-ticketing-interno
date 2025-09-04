@@ -5,7 +5,6 @@
 package com.jsj.api.repository;
 
 import com.jsj.api.entity.Usuario;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
