@@ -2,79 +2,144 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+
 package com.jsj.api.util;
 
-import org.springframework.data.domain.*;
 import java.util.*;
 
+import org.springframework.data.domain.*;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.repository.query.FluentQuery;
 
 import java.util.function.Function;
 
 /**
- * Servicio que usa todos los métodos de JpaRepository
+ *
  * @author Juan José Molano Franco
  */
-public interface BaseService<T, ID> {
+@Transactional
+public abstract class BaseService<T, ID> {
+
+    protected final JpaRepository<T, ID> repo;
+
+    public BaseService(JpaRepository<T, ID> repo) {
+        this.repo = repo;
+    }
 
     // CRUD / list variants
-    <S extends T> S save(S entity);
-
-    <S extends T> List<S> saveAll(Iterable<S> entities);
-
-    Optional<T> findById(ID id);
-
-    boolean existsById(ID id);
-
-    long count();
-
-    List<T> findAll();
-
-    List<T> findAllById(Iterable<ID> ids);
-
-    void deleteById(ID id);
-
-    void delete(T entity);
-
-    void deleteAllById(Iterable<? extends ID> ids);
-
-    void deleteAll(Iterable<? extends T> entities);
-
-    void deleteAll();
+    public <S extends T> S save(S entity) {
+        return repo.save(entity);
+    }
+    
+    public <S extends T> List<S> saveAll(Iterable<S> entities) {
+        return repo.saveAll(entities);
+    }
+    
+    public Optional<T> findById(ID id) {
+        return repo.findById(id);
+    }
+    
+    public boolean existsById(ID id) {
+        return repo.existsById(id);
+    }
+    
+    public long count() {
+        return repo.count();
+    }
+    
+    public List<T> findAll() {
+        return repo.findAll();
+    }
+    
+    public List<T> findAllById(Iterable<ID> ids) {
+        return repo.findAllById(ids);
+    }
+    
+    public void deleteById(ID id) {
+        repo.deleteById(id);
+    }
+    
+    public void delete(T entity) {
+        repo.delete(entity);
+    }
+    
+    public void deleteAllById(Iterable<? extends ID> ids) {
+        repo.deleteAllById(ids);
+    }
+    
+    public void deleteAll(Iterable<? extends T> entities) {
+        repo.deleteAll(entities);
+    }
+    
+    public void deleteAll() {
+        repo.deleteAll();
+    }
 
     // Sorting / paging
-    List<T> findAll(Sort sort);
-
-    Page<T> findAll(Pageable pageable);
-
-    // JPA-specific
-    void flush();
-
-    <S extends T> S saveAndFlush(S entity);
-
-    <S extends T> List<S> saveAllAndFlush(Iterable<S> entities);
-
-    void deleteAllInBatch();
-
-    void deleteAllInBatch(Iterable<T> entities);
-
-    void deleteAllByIdInBatch(Iterable<ID> ids);
-
-    T getReferenceById(ID id);
-
-    // Query by Example
-    <S extends T> Optional<S> findOne(Example<S> example);
-
-    <S extends T> List<S> findAll(Example<S> example);
-
-    <S extends T> List<S> findAll(Example<S> example, Sort sort);
-
-    <S extends T> Page<S> findAll(Example<S> example, Pageable pageable);
-
-    <S extends T, R> R findBy(Example<S> example,
-            Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction);
+    public List<T> findAll(Sort sort) {
+        return repo.findAll(sort);
+    }
     
-    <S extends T> long count(Example<S> example);
+    public Page<T> findAll(Pageable pageable) {
+        return repo.findAll(pageable);
+    }
 
-    <S extends T> boolean exists(Example<S> example);
+    // JPA-specific    
+    public void flush() {
+        repo.flush();
+    }
+    
+    public <S extends T> S saveAndFlush(S entity) {
+        return repo.saveAndFlush(entity);
+    }
+    
+    public <S extends T> List<S> saveAllAndFlush(Iterable<S> entities) {
+        return repo.saveAllAndFlush(entities);
+    }
+    
+    public void deleteAllInBatch() {
+        repo.deleteAllInBatch();
+    }
+    
+    public void deleteAllInBatch(Iterable<T> entities) {
+        repo.deleteAllInBatch(entities);
+    }
+    
+    public void deleteAllByIdInBatch(Iterable<ID> ids) {
+        repo.deleteAllByIdInBatch(ids);
+    }
+    
+    public T getReferenceById(ID id) {
+        return repo.getReferenceById(id);
+    }
+
+    // Query by Example    
+    public <S extends T> Optional<S> findOne(Example<S> example) {
+        return repo.findOne(example);
+    }
+    
+    public <S extends T> List<S> findAll(Example<S> example) {
+        return repo.findAll(example);
+    }
+    
+    public <S extends T> List<S> findAll(Example<S> example, Sort sort) {
+        return repo.findAll(example, sort);
+    }
+    
+    public <S extends T> Page<S> findAll(Example<S> example, Pageable pageable) {
+        return repo.findAll(example, pageable);
+    }
+    
+    public <S extends T, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> qf) {
+        return repo.findBy(example, qf);
+    }
+    
+    public <S extends T> long count(Example<S> example) {
+        return repo.count(example);
+    }
+
+    public <S extends T> boolean exists(Example<S> example) {
+        return repo.exists(example);
+    }
 }
