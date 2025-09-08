@@ -14,6 +14,7 @@ create table permisos (
 create table permisos_roles (
 	rol_id int not null,
 	permiso_id int not null,
+	primary key (rol_id, permiso_id),
 	
 	constraint fk_permisosroles_roles
 	foreign key (rol_id) references roles(id),
