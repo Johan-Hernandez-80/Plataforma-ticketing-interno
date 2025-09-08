@@ -49,7 +49,6 @@ public class Ticket {
     @Column(name = "fecha_cierre")
     private LocalDateTime fechaCierre;
 
-    // Las entidadema que tienen al ticket
     @OneToMany(mappedBy = "ticket")
     private List<Comentario> comentarios;
 

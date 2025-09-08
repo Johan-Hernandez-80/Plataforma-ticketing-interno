@@ -42,7 +42,6 @@ public class Usuario {
     @Column(nullable = false, length = 225)
     private String departamento;
 
-    // Las entidadema que tienen al usuario
     @OneToMany(mappedBy = "usuario")
     private List<Ticket> tickets = new ArrayList<>();
 

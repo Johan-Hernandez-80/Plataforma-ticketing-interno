@@ -26,14 +26,14 @@ public class JwtUtils {
     private static final Key KEY = Keys.hmacShaKeyFor(SECRET.getBytes());
 
     public static String generateToken(Usuario user) {
-    return Jwts.builder()
-            .setSubject(user.getId().toString())
-            .claim("role", user.getRol().getNombre())
-            .setIssuedAt(new Date())
-            .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_MS))
-            .signWith(KEY, SignatureAlgorithm.HS256)
-            .compact();
-}
+        return Jwts.builder()
+                .setSubject(user.getId().toString())
+                .claim("role", user.getRol().getNombre())
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_MS))
+                .signWith(KEY, SignatureAlgorithm.HS256)
+                .compact();
+    }
 
     public static String extractUserId(String token) throws JwtException {
         return Jwts.parserBuilder()

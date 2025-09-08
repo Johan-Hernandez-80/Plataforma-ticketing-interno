@@ -32,42 +32,42 @@ public class AuthController {
     }
 
     @Operation(
-        summary = "Login user",
-        description = "Authenticates a user using email and password and returns a JWT token",
-        requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-            description = "Credentials for login",
-            required = true,
-            content = @Content(
-                schema = @Schema(implementation = LoginRequest.class)
-            )
-        ),
-        responses = {
-            @ApiResponse(
-                responseCode = "200",
-                description = "Authentication successful, token returned",
-                content = @Content(
-                    mediaType = "application/json",
-                    schema = @Schema(
-                        example = "{\"token\": \"<jwt-token>\"}"
+            summary = "Login user",
+            description = "Authenticates a user using email and password and returns a JWT token",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Credentials for login",
+                    required = true,
+                    content = @Content(
+                            schema = @Schema(implementation = LoginRequest.class)
                     )
+            ),
+            responses = {
+                @ApiResponse(
+                        responseCode = "200",
+                        description = "Authentication successful, token returned",
+                        content = @Content(
+                                mediaType = "application/json",
+                                schema = @Schema(
+                                        example = "{\"token\": \"<jwt-token>\"}"
+                                )
+                        )
+                ),
+                @ApiResponse(
+                        responseCode = "401",
+                        description = "Authentication failed, invalid credentials",
+                        content = @Content
+                ),
+                @ApiResponse(
+                        responseCode = "500",
+                        description = "Internal server error",
+                        content = @Content
                 )
-            ),
-            @ApiResponse(
-                responseCode = "401",
-                description = "Authentication failed, invalid credentials",
-                content = @Content
-            ),
-            @ApiResponse(
-                responseCode = "500",
-                description = "Internal server error",
-                content = @Content
-            )
-        }
+            }
     )
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(
-        @Parameter(description = "Login credentials including email and password", required = true)
-        @RequestBody LoginRequest request
+            @Parameter(description = "Login credentials including email and password", required = true)
+            @RequestBody LoginRequest request
     ) {
         Usuario user = usuarioService.validateCredentials(request.getEmail(), request.getPassword());
         if (user == null) {
