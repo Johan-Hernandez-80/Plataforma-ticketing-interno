@@ -33,6 +33,46 @@ public class HistorialTicket {
 
     @Column(nullable = false, updatable = false, insertable = false,
             columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private LocalDateTime fechaCambio;
+    private LocalDateTime fechaCreacion;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Ticket getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(Ticket ticket) {
+        this.ticket = ticket;
+    }
+
+    public String getEstadoAnterior() {
+        return estadoAnterior;
+    }
+
+    public void setEstadoAnterior(String estadoAnterior) {
+        this.estadoAnterior = estadoAnterior;
+    }
+
+    public String getEstadoNuevo() {
+        return estadoNuevo;
+    }
+
+    public void setEstadoNuevo(String estadoNuevo) {
+        this.estadoNuevo = estadoNuevo;
+    }
+
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
 
 }

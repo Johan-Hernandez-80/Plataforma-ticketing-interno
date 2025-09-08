@@ -6,6 +6,7 @@ package com.jsj.api.service;
 
 import com.jsj.api.util.BaseService;
 import com.jsj.api.entity.Asignacion;
+import com.jsj.api.entity.dao.AsignacionDAO;
 import com.jsj.api.repository.AsignacionRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +15,9 @@ import org.springframework.stereotype.Service;
  * @author Juan José Molano Franco
  */
 @Service
-public class AsignacionService extends BaseService<Asignacion, Long> {
+public class AsignacionService extends BaseService<Asignacion, Long, AsignacionDAO> {
 
-    public AsignacionService(AsignacionRepository repo) {
-        super(repo);
+    public AsignacionService(AsignacionRepository repo, AsignacionDAO dao) {
+        super(repo, Asignacion.class, dao);
     }
 }

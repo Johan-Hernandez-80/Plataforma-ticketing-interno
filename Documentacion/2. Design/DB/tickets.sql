@@ -1,16 +1,38 @@
 create database ticketing;
 use ticketing;
 
+create table roles (
+	id int auto_increment primary key,
+	nombre varchar(255) unique not null
+);
+
+create table permisos (
+	id int auto_increment primary key,
+	nombre varchar(255) unique not null
+);
+
+create table permisos_roles (
+	rol_id int not null,
+	permiso_id int not null,
+	
+	constraint fk_permisosroles_roles
+	foreign key (rol_id) references roles(id),
+	
+	constraint fk_permisosroles_permisos
+	foreign key (permiso_id) references permisos(id)
+);
+
 create table usuarios (
     id int auto_increment primary key,
+    rol_id int not null,
     nombre varchar(255) not null,
     email_personal varchar(255) unique null,
     email_corporativo varchar(255) unique not null,
     contrasena varchar(255) not null,
-    rol varchar(255) not null,
     departamento varchar(255) not null,
     
-    constraint chk_rol CHECK (rol IN ('admin', 'agente', 'usuario'))
+    constraint fk_usuarios_roles
+	foreign key (rol_id) references roles(id)
 );
 
 create table categorias (

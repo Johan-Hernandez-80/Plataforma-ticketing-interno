@@ -6,6 +6,7 @@ package com.jsj.api.service;
 
 import com.jsj.api.util.BaseService;
 import com.jsj.api.entity.Categoria;
+import com.jsj.api.entity.dao.CategoriaDAO;
 import com.jsj.api.repository.CategoriaRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +15,9 @@ import org.springframework.stereotype.Service;
  * @author Juan José Molano Franco
  */
 @Service
-public class CategoriaService extends BaseService<Categoria, Long> {
+public class CategoriaService extends BaseService<Categoria, Long, CategoriaDAO> {
 
-    public CategoriaService(CategoriaRepository repo) {
-        super(repo);
+    public CategoriaService(CategoriaRepository repo, CategoriaDAO dao) {
+        super(repo, Categoria.class, dao);
     }
 }

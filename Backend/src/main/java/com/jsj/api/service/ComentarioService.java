@@ -6,6 +6,7 @@ package com.jsj.api.service;
 
 import com.jsj.api.util.BaseService;
 import com.jsj.api.entity.Comentario;
+import com.jsj.api.entity.dao.ComentarioDAO;
 import com.jsj.api.repository.ComentarioRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +15,9 @@ import org.springframework.stereotype.Service;
  * @author Juan José Molano Franco
  */
 @Service
-public class ComentarioService extends BaseService<Comentario, Long> {
+public class ComentarioService extends BaseService<Comentario, Long, ComentarioDAO> {
 
-    public ComentarioService(ComentarioRepository repo) {
-        super(repo);
+    public ComentarioService(ComentarioRepository repo, ComentarioDAO dao) {
+        super(repo, Comentario.class, dao);
     }
 }

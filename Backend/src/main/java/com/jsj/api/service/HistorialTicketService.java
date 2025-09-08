@@ -6,6 +6,7 @@ package com.jsj.api.service;
 
 import com.jsj.api.util.BaseService;
 import com.jsj.api.entity.HistorialTicket;
+import com.jsj.api.entity.dao.HistorialTicketDAO;
 import com.jsj.api.repository.HistorialTicketRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +15,9 @@ import org.springframework.stereotype.Service;
  * @author Juan José Molano Franco
  */
 @Service
-public class HistorialTicketService extends BaseService<HistorialTicket, Long> {
+public class HistorialTicketService extends BaseService<HistorialTicket, Long, HistorialTicketDAO> {
 
-    public HistorialTicketService(HistorialTicketRepository repo) {
-        super(repo);
+    public HistorialTicketService(HistorialTicketRepository repo, HistorialTicketDAO dao) {
+        super(repo, HistorialTicket.class, dao);
     }
 }
