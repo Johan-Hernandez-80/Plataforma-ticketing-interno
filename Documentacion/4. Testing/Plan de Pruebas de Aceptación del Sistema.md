@@ -14,26 +14,15 @@ el cliente
 
 ## Criterios de Aceptación
 
-Los criterios de aceptación para cada historia de usuario están documentados en el archivo criterios_de_aceptacion.md dentro de la sección de requerimientos.
-
-```text
-Historia 1: Como usuario, quiero iniciar sesión para acceder al sistema.
-Criterios de aceptación:
-- Se requiere correo y contraseña válidos.
-- El botón "Iniciar sesión" debe estar deshabilitado hasta que se completen los campos.
-- Si las credenciales son válidas, se accede al panel del usuario.
-- Si no, se muestra un mensaje de error.
-```
+Los criterios de aceptación para cada historia de usuario están documentados en el
+archivo criterios_de_aceptación.md dentro de la sección de requerimientos.
+Con el fin de hacer que la documentación general sea mas organizada, digerible y
+evite repeticiones innecesarias haciendo mucho mas difícil realizar cambios durante
+todo el proceso.
 
 ---
 
 ## Casos de Prueba
 
-Una tabla estructurada por caso:
-
-| ID     | Historia relacionada     | Caso de Prueba                  | Precondición                 | Pasos a Seguir                                                           | Resultado Esperado          |
-| ------ | ------------------------ | ------------------------------- | ---------------------------- | ------------------------------------------------------------------------ | --------------------------- |
-| TC-001 | HU-01 (Inicio de sesión) | Ingreso válido                  | Usuario en pantalla de login | 1. Ingresar correo y contraseña válidos <br> 2. Clic en "Iniciar sesión" | Acceso al panel de usuario  |
-| TC-002 | HU-01 (Inicio de sesión) | Error por contraseña incorrecta | Usuario en pantalla de login | 1. Ingresar correo válido <br> 2. Contraseña incorrecta <br> 3. Clic     | Se muestra mensaje de error |
-
-> 🔹 Repite esto para las historias clave. Puedes agrupar por módulo o por rol (Empleado, Agente, Admin).
+No se realizaron debido a gran cantidad de dudas respecto a que se detalla aquí exactamente
+Se realizarán en un archivo externo si se considera necesario debido a su gran tamaño
