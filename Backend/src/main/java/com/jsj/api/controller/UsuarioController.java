@@ -4,11 +4,13 @@
  */
 package com.jsj.api.controller;
 
+import com.jsj.api.service.BaseService;
 import com.jsj.api.entity.*;
 import com.jsj.api.entity.dao.UsuarioDAO;
 import com.jsj.api.entity.dto.*;
-import com.jsj.api.util.mapper.UsuarioMapper;
-import com.jsj.api.util.*;
+import com.jsj.api.entity.mapper.UsuarioMapper;
+import com.jsj.api.security.CurrentUser;
+import com.jsj.api.entity.filter.UsuarioFilter;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.responses.*;
@@ -24,10 +26,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/usuarios")
 @Tag(name = "Usuarios", description = "Operations related to Usuario entities")
-public class UsuarioController extends BaseController<Usuario, Long, UsuarioDTO, UsuarioDAO, UsuarioMapper> {
+public class UsuarioController extends BaseController<Usuario, Long, UsuarioDTO, UsuarioDAO, UsuarioMapper, UsuarioFilter> {
 
-    public UsuarioController(BaseService<Usuario, Long, UsuarioDAO> service, UsuarioMapper mapper) {
-        super(service, mapper);
+    public UsuarioController(BaseService<Usuario, Long, UsuarioDAO> service, UsuarioMapper mapper, UsuarioFilter filter) {
+        super(service, mapper, filter);
     }
 
     @Operation(summary = "Create a new Usuario",
@@ -42,6 +44,9 @@ public class UsuarioController extends BaseController<Usuario, Long, UsuarioDTO,
     public ResponseEntity<UsuarioDTO> create(
             @Parameter(description = "DTO representing the Usuario to create", required = true)
             @RequestBody UsuarioDTO dto) {
+        if (!"admin".equalsIgnoreCase(CurrentUser.getRole())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         return super.create(dto);
     }
 
@@ -101,6 +106,9 @@ public class UsuarioController extends BaseController<Usuario, Long, UsuarioDTO,
     public ResponseEntity<Void> delete(
             @Parameter(description = "ID of the Usuario to delete", required = true)
             @PathVariable Long id) {
+        if (!"admin".equalsIgnoreCase(CurrentUser.getRole())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         return super.delete(id);
     }
 }

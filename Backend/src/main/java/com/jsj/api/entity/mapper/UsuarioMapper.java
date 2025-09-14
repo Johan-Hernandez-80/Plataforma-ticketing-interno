@@ -1,0 +1,31 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.jsj.api.entity.mapper;
+
+import com.jsj.api.entity.Usuario;
+import com.jsj.api.entity.dto.UsuarioDTO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.ReportingPolicy;
+
+/**
+ *
+ * @author Juan José Molano Franco
+ */
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+public interface UsuarioMapper extends BaseMapper<Usuario, UsuarioDTO> {
+
+    @Override
+    @Mapping(source = "rol.id", target = "rolId")
+    UsuarioDTO toDTO(Usuario entity);
+
+    @Override
+    Usuario toEntity(UsuarioDTO dto);
+
+    @Override
+    void updateEntityFromDTO(UsuarioDTO dto, @MappingTarget Usuario entity);
+    
+}

@@ -4,11 +4,13 @@
  */
 package com.jsj.api.controller;
 
+import com.jsj.api.service.BaseService;
 import com.jsj.api.entity.Categoria;
 import com.jsj.api.entity.dao.CategoriaDAO;
 import com.jsj.api.entity.dto.CategoriaDTO;
-import com.jsj.api.util.*;
-import com.jsj.api.util.mapper.CategoriaMapper;
+import com.jsj.api.entity.mapper.CategoriaMapper;
+import com.jsj.api.security.CurrentUser;
+import com.jsj.api.entity.filter.CategoriaFilter;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.responses.*;
@@ -24,10 +26,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/categorias")
 @Tag(name = "Categorias", description = "Operations related to Categoria entities")
-public class CategoriaController extends BaseController<Categoria, Long, CategoriaDTO, CategoriaDAO, CategoriaMapper> {
+public class CategoriaController extends BaseController<Categoria, Long, CategoriaDTO, CategoriaDAO, CategoriaMapper, CategoriaFilter> {
 
-    public CategoriaController(BaseService<Categoria, Long, CategoriaDAO> service, CategoriaMapper mapper) {
-        super(service, mapper);
+    public CategoriaController(BaseService<Categoria, Long, CategoriaDAO> service, CategoriaMapper mapper, CategoriaFilter filter) {
+        super(service, mapper, filter);
     }
 
     @Operation(summary = "Create a new Categoria",
@@ -60,6 +62,9 @@ public class CategoriaController extends BaseController<Categoria, Long, Categor
             @PathVariable Long id,
             @Parameter(description = "DTO containing updated Categoria information", required = true)
             @RequestBody CategoriaDTO dto) {
+        if (!"admin".equalsIgnoreCase(CurrentUser.getRole())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         return super.update(id, dto);
     }
 
@@ -101,6 +106,9 @@ public class CategoriaController extends BaseController<Categoria, Long, Categor
     public ResponseEntity<Void> delete(
             @Parameter(description = "ID of the Categoria to delete", required = true)
             @PathVariable Long id) {
+        if (!"admin".equalsIgnoreCase(CurrentUser.getRole())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         return super.delete(id);
     }
 }
