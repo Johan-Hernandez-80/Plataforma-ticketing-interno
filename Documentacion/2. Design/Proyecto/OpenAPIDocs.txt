@@ -1,0 +1,1739 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "OpenAPI definition",
+    "version": "v0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080/api",
+      "description": "Generated server url"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "Asignaciones",
+      "description": "Operations related to Asignacion entities"
+    },
+    {
+      "name": "Authentication",
+      "description": "Endpoints for user authentication and JWT token retrieval"
+    },
+    {
+      "name": "HistorialTickets",
+      "description": "Operations related to HistorialTicket entities"
+    },
+    {
+      "name": "Notificaciones",
+      "description": "Operations related to Notificacion entities"
+    },
+    {
+      "name": "Usuarios",
+      "description": "Operations related to Usuario entities"
+    },
+    {
+      "name": "Categorias",
+      "description": "Operations related to Categoria entities"
+    },
+    {
+      "name": "Comentarios",
+      "description": "Operations related to Comentario entities"
+    },
+    {
+      "name": "Tickets",
+      "description": "Operations related to Ticket entities"
+    }
+  ],
+  "paths": {
+    "/usuarios": {
+      "get": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Get all Usuarios",
+        "description": "Retrieves all Usuario entities.",
+        "operationId": "getAll",
+        "responses": {
+          "200": {
+            "description": "List of Usuarios",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioDTO"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Create a new Usuario",
+        "description": "Creates a new Usuario entity with the given DTO.",
+        "operationId": "create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Usuario created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      }
+    },
+    "/tickets": {
+      "get": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Get all Tickets",
+        "description": "Retrieves all Ticket entities.",
+        "operationId": "getAll_1",
+        "responses": {
+          "200": {
+            "description": "List of Tickets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TicketDTO"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Create a new Ticket",
+        "description": "Creates a new Ticket entity with the given DTO.",
+        "operationId": "create_1",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Ticket created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      }
+    },
+    "/notificaciones": {
+      "get": {
+        "tags": [
+          "Notificaciones"
+        ],
+        "summary": "Get all Notificaciones",
+        "description": "Retrieves all Notificacion entities.",
+        "operationId": "getAll_2",
+        "responses": {
+          "200": {
+            "description": "List of Notificaciones",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NotificacionDTO"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Notificaciones"
+        ],
+        "summary": "Create a new Notificacion",
+        "description": "Creates a new Notificacion entity with the given DTO.",
+        "operationId": "create_2",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificacionDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Notificacion created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificacionDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      }
+    },
+    "/historialtickets": {
+      "get": {
+        "tags": [
+          "HistorialTickets"
+        ],
+        "summary": "Get all HistorialTickets",
+        "description": "Retrieves all HistorialTicket entities.",
+        "operationId": "getAll_3",
+        "responses": {
+          "200": {
+            "description": "List of HistorialTickets",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/HistorialTicketDTO"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "HistorialTickets"
+        ],
+        "summary": "Create a new HistorialTicket",
+        "description": "Creates a new HistorialTicket entity with the given DTO.",
+        "operationId": "create_3",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HistorialTicketDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "HistorialTicket created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistorialTicketDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      }
+    },
+    "/comentarios": {
+      "get": {
+        "tags": [
+          "Comentarios"
+        ],
+        "summary": "Get all Comentarios",
+        "description": "Retrieves all Comentario entities.",
+        "operationId": "getAll_4",
+        "responses": {
+          "200": {
+            "description": "List of Comentarios",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ComentarioDTO"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Comentarios"
+        ],
+        "summary": "Create a new Comentario",
+        "description": "Creates a new Comentario entity with the given DTO.",
+        "operationId": "create_4",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComentarioDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Comentario created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComentarioDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      }
+    },
+    "/categorias": {
+      "get": {
+        "tags": [
+          "Categorias"
+        ],
+        "summary": "Get all Categorias",
+        "description": "Retrieves all Categoria entities.",
+        "operationId": "getAll_5",
+        "responses": {
+          "200": {
+            "description": "List of Categorias",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CategoriaDTO"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Categorias"
+        ],
+        "summary": "Create a new Categoria",
+        "description": "Creates a new Categoria entity with the given DTO.",
+        "operationId": "create_5",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategoriaDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Categoria created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoriaDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Register new user",
+        "description": "Creates a new user account with encrypted password and assigned role",
+        "operationId": "register",
+        "requestBody": {
+          "description": "User data for registration",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "User registered successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Validation errors"
+          },
+          "409": {
+            "description": "Database constraint violation or duplicate key"
+          },
+          "500": {
+            "description": "Internal server error"
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Login user",
+        "description": "Authenticates a user using email and password and returns a JWT token",
+        "operationId": "login",
+        "requestBody": {
+          "description": "Credentials for login",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Authentication successful, token returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "token": "\u003Cjwt-token\u003E"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Authentication failed, invalid credentials"
+          },
+          "500": {
+            "description": "Internal server error"
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      }
+    },
+    "/asignaciones": {
+      "get": {
+        "tags": [
+          "Asignaciones"
+        ],
+        "summary": "Get all Asignaciones",
+        "description": "Retrieves all Asignacion entities.",
+        "operationId": "getAll_6",
+        "responses": {
+          "200": {
+            "description": "List of Asignaciones",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AsignacionDTO"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Asignaciones"
+        ],
+        "summary": "Create a new Asignacion",
+        "description": "Creates a new Asignacion entity with the given DTO.",
+        "operationId": "create_6",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AsignacionDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Asignacion created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AsignacionDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      }
+    },
+    "/usuarios/{id}": {
+      "get": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Get a Usuario by ID",
+        "description": "Retrieves the Usuario identified by the given ID.",
+        "operationId": "getById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Usuario to retrieve",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuario retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuario not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Delete a Usuario",
+        "description": "Deletes the Usuario identified by the given ID.",
+        "operationId": "delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Usuario to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Usuario deleted successfully"
+          },
+          "404": {
+            "description": "Usuario not found"
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Update an existing Usuario",
+        "description": "Updates the Usuario identified by the given ID with the data from the DTO.",
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Usuario to update",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UsuarioDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Usuario updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuario not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/UsuarioDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      }
+    },
+    "/tickets/{id}": {
+      "get": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Get a Ticket by ID",
+        "description": "Retrieves the Ticket identified by the given ID.",
+        "operationId": "getById_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Ticket to retrieve",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ticket retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ticket not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Delete a Ticket",
+        "description": "Deletes the Ticket identified by the given ID.",
+        "operationId": "delete_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Ticket to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Ticket deleted successfully"
+          },
+          "404": {
+            "description": "Ticket not found"
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Update an existing Ticket",
+        "description": "Updates the Ticket identified by the given ID with the data from the DTO.",
+        "operationId": "update_1",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Ticket to update",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Ticket updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ticket not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      }
+    },
+    "/notificaciones/{id}": {
+      "get": {
+        "tags": [
+          "Notificaciones"
+        ],
+        "summary": "Get a Notificacion by ID",
+        "description": "Retrieves the Notificacion identified by the given ID.",
+        "operationId": "getById_2",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Notificacion to retrieve",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Notificacion retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificacionDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Notificacion not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificacionDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Notificaciones"
+        ],
+        "summary": "Delete a Notificacion",
+        "description": "Deletes the Notificacion identified by the given ID.",
+        "operationId": "delete_2",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Notificacion to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Notificacion deleted successfully"
+          },
+          "404": {
+            "description": "Notificacion not found"
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Notificaciones"
+        ],
+        "summary": "Update an existing Notificacion",
+        "description": "Updates the Notificacion identified by the given ID with the data from the DTO.",
+        "operationId": "update_2",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Notificacion to update",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificacionDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Notificacion updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificacionDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Notificacion not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificacionDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      }
+    },
+    "/historialtickets/{id}": {
+      "get": {
+        "tags": [
+          "HistorialTickets"
+        ],
+        "summary": "Get a HistorialTicket by ID",
+        "description": "Retrieves the HistorialTicket identified by the given ID.",
+        "operationId": "getById_3",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the HistorialTicket to retrieve",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "HistorialTicket retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistorialTicketDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "HistorialTicket not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistorialTicketDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "HistorialTickets"
+        ],
+        "summary": "Delete a HistorialTicket",
+        "description": "Deletes the HistorialTicket identified by the given ID.",
+        "operationId": "delete_3",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the HistorialTicket to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "HistorialTicket deleted successfully"
+          },
+          "404": {
+            "description": "HistorialTicket not found"
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "HistorialTickets"
+        ],
+        "summary": "Update an existing HistorialTicket",
+        "description": "Updates the HistorialTicket identified by the given ID with the data from the DTO.",
+        "operationId": "update_3",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the HistorialTicket to update",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/HistorialTicketDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "HistorialTicket updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistorialTicketDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "HistorialTicket not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/HistorialTicketDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      }
+    },
+    "/comentarios/{id}": {
+      "get": {
+        "tags": [
+          "Comentarios"
+        ],
+        "summary": "Get a Comentario by ID",
+        "description": "Retrieves the Comentario identified by the given ID.",
+        "operationId": "getById_4",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Comentario to retrieve",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Comentario retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComentarioDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Comentario not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComentarioDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Comentarios"
+        ],
+        "summary": "Delete a Comentario",
+        "description": "Deletes the Comentario identified by the given ID.",
+        "operationId": "delete_4",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Comentario to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Comentario deleted successfully"
+          },
+          "404": {
+            "description": "Comentario not found"
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Comentarios"
+        ],
+        "summary": "Update an existing Comentario",
+        "description": "Updates the Comentario identified by the given ID with the data from the DTO.",
+        "operationId": "update_4",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Comentario to update",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComentarioDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Comentario updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComentarioDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Comentario not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComentarioDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      }
+    },
+    "/categorias/{id}": {
+      "get": {
+        "tags": [
+          "Categorias"
+        ],
+        "summary": "Get a Categoria by ID",
+        "description": "Retrieves the Categoria identified by the given ID.",
+        "operationId": "getById_5",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Categoria to retrieve",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Categoria retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoriaDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Categoria not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoriaDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Categorias"
+        ],
+        "summary": "Delete a Categoria",
+        "description": "Deletes the Categoria identified by the given ID.",
+        "operationId": "delete_5",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Categoria to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Categoria deleted successfully"
+          },
+          "404": {
+            "description": "Categoria not found"
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Categorias"
+        ],
+        "summary": "Update an existing Categoria",
+        "description": "Updates the Categoria identified by the given ID with the data from the DTO.",
+        "operationId": "update_5",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Categoria to update",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategoriaDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Categoria updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoriaDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Categoria not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoriaDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      }
+    },
+    "/asignaciones/{id}": {
+      "get": {
+        "tags": [
+          "Asignaciones"
+        ],
+        "summary": "Get an Asignacion by ID",
+        "description": "Retrieves the Asignacion identified by the given ID.",
+        "operationId": "getById_6",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Asignacion to retrieve",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Asignacion retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AsignacionDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Asignacion not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AsignacionDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Asignaciones"
+        ],
+        "summary": "Delete an Asignacion",
+        "description": "Deletes the Asignacion identified by the given ID.",
+        "operationId": "delete_6",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Asignacion to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Asignacion deleted successfully"
+          },
+          "404": {
+            "description": "Asignacion not found"
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Asignaciones"
+        ],
+        "summary": "Update an existing Asignacion",
+        "description": "Updates the Asignacion identified by the given ID with the data from the DTO.",
+        "operationId": "update_6",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the Asignacion to update",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AsignacionDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Asignacion updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AsignacionDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Asignacion not found",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/AsignacionDTO"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden – insufficient permissions"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UsuarioDTO": {
+        "type": "object",
+        "description": "DTO for Usuario. Only includes attributes the current user has permission to view. Field visibility depends on the user's roles and permissions.",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unique identifier of the usuario."
+          },
+          "rolId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Identifier of the role related to the usuario."
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Name of the usuario."
+          },
+          "emailPersonal": {
+            "type": "string",
+            "description": "Attribute emailPersonal of the usuario."
+          },
+          "emailCorporativo": {
+            "type": "string",
+            "description": "Attribute emailCorporativo of the usuario."
+          },
+          "contrasena": {
+            "type": "string",
+            "description": "Password of the usuario."
+          },
+          "departamento": {
+            "type": "string",
+            "description": "Department of the usuario."
+          }
+        }
+      },
+      "TicketDTO": {
+        "type": "object",
+        "description": "DTO for Ticket. Only includes attributes the current user has permission to view. Field visibility depends on the user's roles and permissions.",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unique identifier of the ticket."
+          },
+          "usuarioId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Identifier of the user related to the ticket."
+          },
+          "categoriaId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Identifier of the category related to the ticket."
+          },
+          "titulo": {
+            "type": "string",
+            "description": "Title of the ticket."
+          },
+          "descripcion": {
+            "type": "string",
+            "description": "Detailed description of the ticket."
+          },
+          "prioridad": {
+            "type": "string",
+            "description": "Priority of the ticket (ABIERTO, EN PROGRESO, RESUELTO, CERRADO)."
+          },
+          "estado": {
+            "type": "string",
+            "description": "Current status of the ticket."
+          },
+          "fechaCreacion": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp of the ticket."
+          },
+          "fechaCierre": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Closing timestamp of the ticket."
+          }
+        }
+      },
+      "NotificacionDTO": {
+        "type": "object",
+        "description": "DTO for Notificacion. Only includes attributes the current user has permission to view. Field visibility depends on the user's roles and permissions.",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unique identifier of the notificacion."
+          },
+          "usuarioId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Identifier of the user related to the notificacion."
+          },
+          "mensaje": {
+            "type": "string",
+            "description": "Notification message."
+          },
+          "fechaCreacion": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp of the notificacion."
+          }
+        }
+      },
+      "HistorialTicketDTO": {
+        "type": "object",
+        "description": "DTO for HistorialTicket. Only includes attributes the current user has permission to view. Field visibility depends on the user's roles and permissions.",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unique identifier of the historialticket."
+          },
+          "ticketId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Attribute ticketId of the historialticket."
+          },
+          "estadoAnterior": {
+            "type": "string",
+            "description": "Previous status of the ticket."
+          },
+          "estadoNuevo": {
+            "type": "string",
+            "description": "New status of the ticket."
+          },
+          "fechaCreacion": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp of the historialticket."
+          }
+        }
+      },
+      "ComentarioDTO": {
+        "type": "object",
+        "description": "DTO for Comentario. Only includes attributes the current user has permission to view. Field visibility depends on the user's roles and permissions.",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unique identifier of the comentario."
+          },
+          "ticketId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Attribute ticketId of the comentario."
+          },
+          "usuarioId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Identifier of the user related to the comentario."
+          },
+          "comentario": {
+            "type": "string",
+            "description": "Comment content."
+          },
+          "fechaCreacion": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp of the comentario."
+          }
+        }
+      },
+      "CategoriaDTO": {
+        "type": "object",
+        "description": "DTO for Categoria. Only includes attributes the current user has permission to view. Field visibility depends on the user's roles and permissions.",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unique identifier of the categoria."
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Name of the categoria."
+          },
+          "descripcion": {
+            "type": "string",
+            "description": "Detailed description of the categoria."
+          }
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "description": "Login credentials including email and password",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Email address of the usuario."
+          },
+          "password": {
+            "type": "string",
+            "description": "Password of the usuario."
+          }
+        }
+      },
+      "AsignacionDTO": {
+        "type": "object",
+        "description": "DTO for Asignacion. Only includes attributes the current user has permission to view. Field visibility depends on the user's roles and permissions.",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unique identifier of the asignacion."
+          },
+          "ticketId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Attribute ticketId of the asignacion."
+          },
+          "agenteId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Identifier of the agent related to the asignacion."
+          },
+          "fechaCreacion": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp of the asignacion."
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
