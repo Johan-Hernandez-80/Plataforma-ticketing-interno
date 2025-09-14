@@ -7,13 +7,13 @@ package com.jsj.api.controller;
 import com.jsj.api.entity.Asignacion;
 import com.jsj.api.entity.dao.AsignacionDAO;
 import com.jsj.api.entity.dto.AsignacionDTO;
-import com.jsj.api.util.BaseController;
-import com.jsj.api.util.BaseMapper;
-import com.jsj.api.util.BaseService;
-import com.jsj.api.util.mapper.AsignacionMapper;
+import com.jsj.api.entity.mapper.AsignacionMapper;
+import com.jsj.api.security.CurrentUser;
+import com.jsj.api.entity.mapper.BaseMapper;
+import com.jsj.api.service.BaseService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.jsj.api.util.*;
+import com.jsj.api.entity.filter.AsignacionFilter;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.responses.*;
@@ -29,10 +29,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/asignaciones")
 @Tag(name = "Asignaciones", description = "Operations related to Asignacion entities")
-public class AsignacionController extends BaseController<Asignacion, Long, AsignacionDTO, AsignacionDAO, AsignacionMapper> {
+public class AsignacionController extends BaseController<Asignacion, Long, AsignacionDTO, AsignacionDAO, AsignacionMapper, AsignacionFilter> {
 
-    public AsignacionController(BaseService<Asignacion, Long, AsignacionDAO> service, AsignacionMapper mapper) {
-        super(service, mapper);
+    public AsignacionController(BaseService<Asignacion, Long, AsignacionDAO> service, AsignacionMapper mapper, AsignacionFilter filter) {
+        super(service, mapper, filter);
     }
 
     @Operation(summary = "Create a new Asignacion",
@@ -47,6 +47,9 @@ public class AsignacionController extends BaseController<Asignacion, Long, Asign
     public ResponseEntity<AsignacionDTO> create(
             @Parameter(description = "DTO representing the Asignacion to create", required = true)
             @RequestBody AsignacionDTO dto) {
+        if (!"admin".equalsIgnoreCase(CurrentUser.getRole()) || !"agente".equalsIgnoreCase(CurrentUser.getRole())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         return super.create(dto);
     }
 
@@ -65,6 +68,9 @@ public class AsignacionController extends BaseController<Asignacion, Long, Asign
             @PathVariable Long id,
             @Parameter(description = "DTO containing updated Asignacion information", required = true)
             @RequestBody AsignacionDTO dto) {
+        if (!"admin".equalsIgnoreCase(CurrentUser.getRole())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         return super.update(id, dto);
     }
 
@@ -106,6 +112,9 @@ public class AsignacionController extends BaseController<Asignacion, Long, Asign
     public ResponseEntity<Void> delete(
             @Parameter(description = "ID of the Asignacion to delete", required = true)
             @PathVariable Long id) {
+        if (!"admin".equalsIgnoreCase(CurrentUser.getRole())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         return super.delete(id);
     }
 }

@@ -7,12 +7,12 @@ package com.jsj.api.controller;
 import com.jsj.api.entity.Ticket;
 import com.jsj.api.entity.dao.TicketDAO;
 import com.jsj.api.entity.dto.TicketDTO;
-import com.jsj.api.util.BaseController;
-import com.jsj.api.util.BaseService;
-import com.jsj.api.util.mapper.TicketMapper;
+import com.jsj.api.entity.mapper.TicketMapper;
+import com.jsj.api.security.CurrentUser;
+import com.jsj.api.service.BaseService;
+import com.jsj.api.entity.filter.TicketFilter;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.jsj.api.util.*;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.responses.*;
@@ -28,10 +28,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/tickets")
 @Tag(name = "Tickets", description = "Operations related to Ticket entities")
-public class TicketController extends BaseController<Ticket, Long, TicketDTO, TicketDAO, TicketMapper> {
+public class TicketController extends BaseController<Ticket, Long, TicketDTO, TicketDAO, TicketMapper, TicketFilter> {
 
-    public TicketController(BaseService<Ticket, Long, TicketDAO> service, TicketMapper mapper) {
-        super(service, mapper);
+    public TicketController(BaseService<Ticket, Long, TicketDAO> service, TicketMapper mapper, TicketFilter filter) {
+        super(service, mapper, filter);
     }
 
     @Operation(summary = "Create a new Ticket",
@@ -64,6 +64,9 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO, Ti
             @PathVariable Long id,
             @Parameter(description = "DTO containing updated Ticket information", required = true)
             @RequestBody TicketDTO dto) {
+        if (!"admin".equalsIgnoreCase(CurrentUser.getRole())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         return super.update(id, dto);
     }
 
@@ -105,6 +108,9 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO, Ti
     public ResponseEntity<Void> delete(
             @Parameter(description = "ID of the Ticket to delete", required = true)
             @PathVariable Long id) {
+        if (!"admin".equalsIgnoreCase(CurrentUser.getRole())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         return super.delete(id);
     }
 }

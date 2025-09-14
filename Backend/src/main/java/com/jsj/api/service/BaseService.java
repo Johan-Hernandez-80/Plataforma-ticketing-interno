@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.jsj.api.util;
+package com.jsj.api.service;
 
 import java.util.*;
 
@@ -35,7 +35,7 @@ public abstract class BaseService<T, ID, DAO> {
     }
 
     // CRUD / list variants
-    public <S extends T> S save(S entity) {
+     public <S extends T> S save(S entity) {
         return repo.save(entity);
     }
 

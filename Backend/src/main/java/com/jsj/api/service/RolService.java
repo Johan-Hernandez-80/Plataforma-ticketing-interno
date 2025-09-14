@@ -7,7 +7,6 @@ package com.jsj.api.service;
 import com.jsj.api.entity.Rol;
 import com.jsj.api.entity.dao.RolDAO;
 import com.jsj.api.repository.RolRepository;
-import com.jsj.api.util.BaseService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -19,6 +18,18 @@ public class RolService extends BaseService<Rol, Long, RolDAO> {
 
     public RolService(RolRepository repo, RolDAO dao) {
         super(repo, Rol.class, dao);
+    }
+
+    public Rol getRolUsuario() {
+        return dao.getRolUsuario();
+    }
+
+    public Rol getRolAgente() {
+        return dao.getRolAgente();
+    }
+
+    public boolean isIdRolAnAgente(Long rolId) {
+        return ((RolRepository) repo).existsByIdAndNombre(rolId, "agente");
     }
 
 }

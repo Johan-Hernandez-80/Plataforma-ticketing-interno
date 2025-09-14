@@ -4,7 +4,6 @@
  */
 package com.jsj.api.service;
 
-import com.jsj.api.util.BaseService;
 import com.jsj.api.entity.Categoria;
 import com.jsj.api.entity.dao.CategoriaDAO;
 import com.jsj.api.repository.CategoriaRepository;

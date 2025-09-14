@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.jsj'
-version = '1.0.0'
+version = '1.0.1'
 description = 'Backend del proyecto de ticketing'
 
 java {
@@ -33,6 +33,7 @@ dependencies {
         implementation 'org.mapstruct:mapstruct:1.5.5.Final'
         implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
         implementation 'org.mariadb.jdbc:mariadb-java-client:3.5.5'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
 
         annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 

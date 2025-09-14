@@ -4,7 +4,6 @@
  */
 package com.jsj.api.service;
 
-import com.jsj.api.util.BaseService;
 import com.jsj.api.entity.HistorialTicket;
 import com.jsj.api.entity.dao.HistorialTicketDAO;
 import com.jsj.api.repository.HistorialTicketRepository;

@@ -1,0 +1,23 @@
+# Link
+
+https://drive.google.com/file/d/1EFeB7LwK6R9ZBSLm9tn4Q8hDVIN-NBjW/view?usp=drive_link
+
+# Justificación
+
+Cliente-Controller
+	SecurityConfig: Configura cuales HTTP requests necesitan auth. Inicializa otras beans de config.
+	JwtAuthFilter: Por cada request verifica la autenticación JWT y la guarda en el SecurityContext.
+	OpenApiConfig: Añade esquema bearer de autenticación a OpenAPI y respuesta 403. Añade documentación de los DTO schemes.
+	GlobalExceptionHandler: Atrapa a todas las excepciones y las formatea de forma legible e informativa para la respuesta.
+Controller
+	PasswordEncoderConfig: Crea la bean para encriptar contraseñas.
+	JwtUtils: Gestiona los JWT.
+	CurrentUser: Accede información de la sesión del SecurityContext.
+Controller-Service
+	Mapper: Mapea DTO <-> Entity. Los DTOs son de la parte del cliente, las entities del service para abajo.
+	Filter: Nullea los campos que el usuario no puede ver o suministrar basado en sus permisos.
+Service-DB
+	Repository: Tiene las funcionalidades de JPARepository implementadas
+	DAO: Tiene funcionalidades extra.
+
+Esta arquitectura permite escalabilidad, seguridad y automatización. Maneja de forma segura las requests, devolviendo las no autorizadas, y obtiene o guarda información de la DB después de filtrarla para enforzar los roles de usuario.
