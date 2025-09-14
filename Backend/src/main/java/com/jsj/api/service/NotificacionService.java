@@ -4,7 +4,6 @@
  */
 package com.jsj.api.service;
 
-import com.jsj.api.util.BaseService;
 import com.jsj.api.entity.Notificacion;
 import com.jsj.api.entity.dao.NotificacionDAO;
 import com.jsj.api.repository.NotificacionRepository;

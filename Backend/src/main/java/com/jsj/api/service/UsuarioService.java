@@ -4,12 +4,13 @@
  */
 package com.jsj.api.service;
 
-import com.jsj.api.util.BaseService;
 import com.jsj.api.entity.Usuario;
 import com.jsj.api.entity.dao.UsuarioDAO;
+import com.jsj.api.entity.dto.UsuarioDTO;
 import com.jsj.api.repository.UsuarioRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import java.util.Set;
+import jdk.jshell.spi.ExecutionControl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -40,5 +41,5 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioDAO> {
         }
         return null;
     }
-
+    
 }

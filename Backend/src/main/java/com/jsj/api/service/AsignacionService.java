@@ -4,7 +4,6 @@
  */
 package com.jsj.api.service;
 
-import com.jsj.api.util.BaseService;
 import com.jsj.api.entity.Asignacion;
 import com.jsj.api.entity.dao.AsignacionDAO;
 import com.jsj.api.repository.AsignacionRepository;

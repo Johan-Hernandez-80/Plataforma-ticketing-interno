@@ -4,6 +4,7 @@
  */
 package com.jsj.api.security;
 
+import com.jsj.api.service.UsuarioService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,9 +23,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final PermissionService permissionService;
+    private final UsuarioService usuarioService;
 
-    public SecurityConfig(PermissionService permissionService) {
+    public SecurityConfig(PermissionService permissionService, UsuarioService usuarioService) {
         this.permissionService = permissionService;
+        this.usuarioService = usuarioService;
     }
 
     @Bean
@@ -35,7 +38,7 @@ public class SecurityConfig {
                 .requestMatchers(
                     "/swagger-ui/**",
                     "/v3/api-docs/**",
-                    "/auth/login"   // <-- adjust to your login/register endpoints
+                    "/auth/**"
                 ).permitAll()
                 .anyRequest().authenticated()
             )
@@ -46,7 +49,7 @@ public class SecurityConfig {
 
     @Bean
     public JwtAuthFilter jwtAuthFilter() {
-        return new JwtAuthFilter(permissionService);
+        return new JwtAuthFilter(permissionService, usuarioService);
     }
 
     @Bean

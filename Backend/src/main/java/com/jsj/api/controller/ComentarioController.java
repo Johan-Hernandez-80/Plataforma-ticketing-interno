@@ -7,12 +7,12 @@ package com.jsj.api.controller;
 import com.jsj.api.entity.Comentario;
 import com.jsj.api.entity.dao.ComentarioDAO;
 import com.jsj.api.entity.dto.ComentarioDTO;
-import com.jsj.api.util.BaseController;
-import com.jsj.api.util.BaseService;
-import com.jsj.api.util.mapper.ComentarioMapper;
+import com.jsj.api.entity.mapper.ComentarioMapper;
+import com.jsj.api.security.CurrentUser;
+import com.jsj.api.service.BaseService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.jsj.api.util.*;
+import com.jsj.api.entity.filter.ComentarioFilter;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.responses.*;
@@ -28,10 +28,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/comentarios")
 @Tag(name = "Comentarios", description = "Operations related to Comentario entities")
-public class ComentarioController extends BaseController<Comentario, Long, ComentarioDTO, ComentarioDAO, ComentarioMapper> {
+public class ComentarioController extends BaseController<Comentario, Long, ComentarioDTO, ComentarioDAO, ComentarioMapper, ComentarioFilter> {
 
-    public ComentarioController(BaseService<Comentario, Long, ComentarioDAO> service, ComentarioMapper mapper) {
-        super(service, mapper);
+    public ComentarioController(BaseService<Comentario, Long, ComentarioDAO> service, ComentarioMapper mapper, ComentarioFilter filter) {
+        super(service, mapper, filter);
     }
 
     @Operation(summary = "Create a new Comentario",
@@ -64,6 +64,9 @@ public class ComentarioController extends BaseController<Comentario, Long, Comen
             @PathVariable Long id,
             @Parameter(description = "DTO containing updated Comentario information", required = true)
             @RequestBody ComentarioDTO dto) {
+        if (!"admin".equalsIgnoreCase(CurrentUser.getRole())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         return super.update(id, dto);
     }
 
@@ -105,6 +108,9 @@ public class ComentarioController extends BaseController<Comentario, Long, Comen
     public ResponseEntity<Void> delete(
             @Parameter(description = "ID of the Comentario to delete", required = true)
             @PathVariable Long id) {
+        if (!"admin".equalsIgnoreCase(CurrentUser.getRole())) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
         return super.delete(id);
     }
 }

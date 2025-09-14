@@ -7,7 +7,6 @@ package com.jsj.api.service;
 import com.jsj.api.entity.Permiso;
 import com.jsj.api.entity.dao.PermisoDAO;
 import com.jsj.api.repository.PermisoRepository;
-import com.jsj.api.util.BaseService;
 import org.springframework.stereotype.Service;
 
 /**

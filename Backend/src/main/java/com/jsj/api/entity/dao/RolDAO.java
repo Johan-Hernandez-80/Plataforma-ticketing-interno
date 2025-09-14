@@ -6,6 +6,7 @@ package com.jsj.api.entity.dao;
 
 import com.jsj.api.entity.Rol;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -14,5 +15,11 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface RolDAO extends JpaRepository<Rol, Long> {
+
+    @Query("SELECT r FROM Rol r WHERE r.nombre = 'usuario'")
+    Rol getRolUsuario();
+    
+    @Query("SELECT r FROM Rol r WHERE r.nombre = 'agente'")
+    Rol getRolAgente();
 
 }

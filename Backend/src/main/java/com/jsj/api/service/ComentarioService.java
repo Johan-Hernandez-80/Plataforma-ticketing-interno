@@ -4,7 +4,6 @@
  */
 package com.jsj.api.service;
 
-import com.jsj.api.util.BaseService;
 import com.jsj.api.entity.Comentario;
 import com.jsj.api.entity.dao.ComentarioDAO;
 import com.jsj.api.repository.ComentarioRepository;
