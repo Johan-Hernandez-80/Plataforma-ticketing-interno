@@ -20,7 +20,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 /**
  *
@@ -48,11 +51,35 @@ public class GlobalExceptionHandler {
     // -------- Validation errors --------
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Object> handleValidation(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        for (FieldError error : ex.getBindingResult().getFieldErrors()) {
-            errors.put(error.getField(), error.getDefaultMessage());
-        }
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        List<String> detalles = ex.getBindingResult()
+                .getFieldErrors()
+                .stream()
+                .map(FieldError::getDefaultMessage)
+                .toList();
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("error", "Datos inválidos.");
+        body.put("detalles", detalles);
+
+        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<Map<String, String>> handleTypeMismatch(MethodArgumentTypeMismatchException ex) {
+        Map<String, String> body = Map.of(
+                "error", "Solicitud inválida.",
+                "detalles", "Los parámetros enviados son incorrectos."
+        );
+        return ResponseEntity.badRequest().body(body);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<Map<String, String>> handleMalformedBody(HttpMessageNotReadableException ex) {
+        Map<String, String> body = Map.of(
+                "error", "Solicitud inválida.",
+                "detalles", "El cuerpo de la petición está mal formado."
+        );
+        return ResponseEntity.badRequest().body(body);
     }
 
     // -------- Auth / Security errors --------
@@ -85,7 +112,7 @@ public class GlobalExceptionHandler {
     // -------- Fallback --------
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleGeneral(Exception ex) {
-        return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error: " + ex.getMessage());
+        return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Error interno del servidor. Intente nuevamente más tarde.");
     }
 
     // -------- Helper --------

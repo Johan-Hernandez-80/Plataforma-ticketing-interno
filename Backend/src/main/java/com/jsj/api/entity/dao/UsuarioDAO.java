@@ -4,12 +4,18 @@
  */
 package com.jsj.api.entity.dao;
 
+import com.jsj.api.entity.Rol;
 import com.jsj.api.entity.Usuario;
+import com.jsj.api.entity.dto.UsuarioDTO;
+import com.jsj.api.entity.filter.BaseFilter;
+import com.jsj.api.entity.filter.UsuarioFilter;
+import com.jsj.api.entity.mapper.BaseMapper;
+import com.jsj.api.entity.mapper.UsuarioMapper;
+import com.jsj.api.repository.UsuarioRepository;
+import com.jsj.api.security.CurrentUser;
+import java.util.Optional;
 import java.util.Set;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.NativeQuery;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -17,18 +23,53 @@ import org.springframework.stereotype.Repository;
  * @author Juan José Molano Franco
  */
 @Repository
-public interface UsuarioDAO extends JpaRepository<Usuario, Long> {
+public class UsuarioDAO extends BaseDAO<Usuario, Long, UsuarioDTO, UsuarioMapper, UsuarioFilter, UsuarioRepository> {
 
-    @Query("SELECT p.nombre FROM Usuario u "
-            + "JOIN u.rol r "
-            + "JOIN r.permisos p "
-            + "WHERE u.id = :userId")
-    Set<String> getPermissionsById(@Param("userId") Long userId);
+    public UsuarioDAO(UsuarioMapper mapper, UsuarioFilter filter, UsuarioRepository repo) {
+        super(mapper, filter, repo);
+    }
 
-    @Query("SELECT u FROM Usuario u WHERE u.emailPersonal = :emailPersonal")
-    Usuario findByEmailPersonal(@Param("emailPersonal") String emailPersonal);
+    public Set<String> getPermissionsById(Long userId) {
+        return repo.getPermissionsById(userId);
+    }
 
-    @Query("SELECT u FROM Usuario u WHERE u.emailCorporativo = :emailCorporativo")
-    Usuario findByEmailCorporativo(@Param("emailCorporativo") String emailCorporativo);
+    public Usuario findByEmailPersonal(String email) {
+        return repo.findByEmailPersonal(email);
+    }
+
+    public Usuario findByEmailCorporativo(String email) {
+        return repo.findByEmailCorporativo(email);
+    }
+
+    public boolean existsById(Long idUsuario) {
+        return repo.existsById(idUsuario);
+    }
+
+    public UsuarioDTO updateUsuario(Long idUsuario, UsuarioDTO dto) {
+        Set<String> perms = CurrentUser.getPermissions();
+        
+        Optional<Usuario> opt = repo.findById(idUsuario);
+        if (opt.isEmpty()) {
+            return null;
+        }
+        Usuario entity = opt.get();
+        
+        mapper.updateEntityFromDTO(dto, entity);
+        
+        filter.filterEntity(entity, perms);
+        
+        return filter.filterDTO(mapper.toDTO(repo.save(entity)), perms);
+    }
+    
+    public UsuarioDTO save(UsuarioDTO dto, Rol rol) {
+        Set<String> perms = CurrentUser.getPermissions();
+        
+        Usuario entity = mapper.toEntity(dto);
+        entity.setRol(rol);
+        
+        filter.filterEntity(entity, perms);
+        
+        return filter.filterDTO(mapper.toDTO(repo.save(entity)), perms);
+    }
 
 }

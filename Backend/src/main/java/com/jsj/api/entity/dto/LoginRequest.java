@@ -13,7 +13,7 @@ import lombok.Data;
  */
 @Data
 @Schema(
-    description = "Request payload for authentication. Contains the user's email (personal or corporate) and password. Both fields are required for login."
+    description = "Payload para autenticación. Contiene el email del usuario (personal o corporativo) y su contraseña. Ambos campos se requieren para loguear."
 )
 public class LoginRequest {
 

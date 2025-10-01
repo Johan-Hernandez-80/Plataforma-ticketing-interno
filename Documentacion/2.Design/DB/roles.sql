@@ -1,114 +1,314 @@
 use ticketing;
 
--- Admin: all permissions
-insert into roles (nombre) values ('admin');
+-- =========================================
+-- ROLES
+-- =========================================
+insert into roles (nombre) values 
+('admin'),
+('agente'),
+('usuario');
 
-insert into permisos (nombre)
-select concat(op, '_', table_name_singular, '_', column_name)
-from (select 'view' as op union all select 'update') ops
-join (
-    select table_name,
-           case table_name
-               when 'roles' then 'rol'
-               when 'permisos' then 'permiso'
-               when 'permisos_roles' then 'permiso_rol'
-               when 'usuarios' then 'usuario'
-               when 'categorias' then 'categoria'
-               when 'tickets' then 'ticket'
-               when 'asignaciones' then 'asignacion'
-               when 'comentarios' then 'comentario'
-               when 'historial_tickets' then 'historial_ticket'
-               when 'notificaciones' then 'notificacion'
-           end as table_name_singular,
-           column_name
-    from information_schema.columns
-    where table_schema = 'ticketing'
-) cols;
+-- =========================================
+-- PERMISOS
+-- =========================================
 
+-- ROL
+insert into permisos (nombre) values
+('view_rol_id'), ('update_rol_id'),
+('view_rol_nombre'), ('update_rol_nombre');
+
+-- PERMISO
+insert into permisos (nombre) values
+('view_permiso_id'), ('update_permiso_id'),
+('view_permiso_nombre'), ('update_permiso_nombre');
+
+-- PERMISO_ROL
+insert into permisos (nombre) values
+('view_permiso_rol_rol_id'), ('update_permiso_rol_rol_id'),
+('view_permiso_rol_permiso_id'), ('update_permiso_rol_permiso_id');
+
+-- USUARIO
+insert into permisos (nombre) values
+('view_usuario_id'), ('update_usuario_id'),
+('view_usuario_rol_id'), ('update_usuario_rol_id'),
+('view_usuario_nombre'), ('update_usuario_nombre'),
+('view_usuario_email_personal'), ('update_usuario_email_personal'),
+('view_usuario_email_corporativo'), ('update_usuario_email_corporativo'),
+('view_usuario_contrasena'), ('update_usuario_contrasena'),
+('view_usuario_departamento'), ('update_usuario_departamento');
+
+-- CATEGORIA
+insert into permisos (nombre) values
+('view_categoria_id'), ('update_categoria_id'),
+('view_categoria_nombre'), ('update_categoria_nombre'),
+('view_categoria_descripcion'), ('update_categoria_descripcion');
+
+-- TICKET
+insert into permisos (nombre) values
+('view_ticket_id'), ('update_ticket_id'),
+('view_ticket_usuario_id'), ('update_ticket_usuario_id'),
+('view_ticket_categoria_id'), ('update_ticket_categoria_id'),
+('view_ticket_titulo'), ('update_ticket_titulo'),
+('view_ticket_descripcion'), ('update_ticket_descripcion'),
+('view_ticket_prioridad'), ('update_ticket_prioridad'),
+('view_ticket_estado'), ('update_ticket_estado'),
+('view_ticket_fecha_creacion'), ('update_ticket_fecha_creacion'),
+('view_ticket_fecha_cierre'), ('update_ticket_fecha_cierre');
+
+-- ASIGNACION
+insert into permisos (nombre) values
+('view_asignacion_id'), ('update_asignacion_id'),
+('view_asignacion_ticket_id'), ('update_asignacion_ticket_id'),
+('view_asignacion_agente_id'), ('update_asignacion_agente_id'),
+('view_asignacion_fecha_creacion'), ('update_asignacion_fecha_creacion');
+
+-- COMENTARIO
+insert into permisos (nombre) values
+('view_comentario_id'), ('update_comentario_id'),
+('view_comentario_ticket_id'), ('update_comentario_ticket_id'),
+('view_comentario_usuario_id'), ('update_comentario_usuario_id'),
+('view_comentario_texto'), ('update_comentario_texto'),
+('view_comentario_fecha_creacion'), ('update_comentario_fecha_creacion');
+
+-- HISTORIAL_TICKET
+insert into permisos (nombre) values
+('view_historial_ticket_id'), ('update_historial_ticket_id'),
+('view_historial_ticket_ticket_id'), ('update_historial_ticket_ticket_id'),
+('view_historial_ticket_estado_anterior'), ('update_historial_ticket_estado_anterior'),
+('view_historial_ticket_estado_nuevo'), ('update_historial_ticket_estado_nuevo'),
+('view_historial_ticket_fecha_creacion'), ('update_historial_ticket_fecha_creacion');
+
+-- NOTIFICACION
+insert into permisos (nombre) values
+('view_notificacion_id'), ('update_notificacion_id'),
+('view_notificacion_usuario_id'), ('update_notificacion_usuario_id'),
+('view_notificacion_mensaje'), ('update_notificacion_mensaje'),
+('view_notificacion_fecha_creacion'), ('update_notificacion_fecha_creacion');
+
+-- =========================================
+-- PERMISOS_ROLES
+-- =========================================
+
+-- ADMIN: all permissions
 insert into permisos_roles (rol_id, permiso_id)
 select 1, id from permisos;
 
-
--- Agente: filtered permissions
-insert into roles (nombre) values ('agente');
-
+-- AGENTE (view first, then update, one per line)
 insert into permisos_roles (rol_id, permiso_id)
-select 2, p.id
-from permisos p
-join (
-    select concat('view_usuario_', col) as permiso
-    from (select 'rol_id' union all select 'nombre' union all
-          select 'email_personal' union all select 'email_corporativo'
-          union all select 'departamento') ucols(col)
+select 2, id from permisos where nombre in (
+  -- ===== ROL =====
+--  'view_rol_id',
+--  'view_rol_nombre',
+--  'update_rol_id',
+--  'update_rol_nombre',
 
-    union all
-    select 'update_usuario_email_personal'
+  -- ===== PERMISO =====
+--  'view_permiso_id',
+--  'view_permiso_nombre',
+--  'update_permiso_id',
+--  'update_permiso_nombre',
 
-    union all
-    -- categorias: view all
-    select concat('view_categoria_', col)
-    from (select 'id' union all select 'nombre' union all select 'descripcion') ccols(col)
+  -- ===== PERMISO_ROL =====
+--  'view_permiso_rol_rol_id',
+--  'view_permiso_rol_permiso_id',
+--  'update_permiso_rol_rol_id',
+--  'update_permiso_rol_permiso_id',
 
-    union all
-    -- tickets: view all, update except id, fecha_creacion
-    select concat('view_ticket_', col)
-    from (select 'id' union all select 'usuario_id' union all select 'categoria_id'
-          union all select 'titulo' union all select 'descripcion'
-          union all select 'prioridad' union all select 'estado'
-          union all select 'fecha_creacion' union all select 'fecha_cierre') tcols(col)
+  -- ===== USUARIO =====
+  'view_usuario_id',
+--  'view_usuario_rol_id',
+  'view_usuario_nombre',
+  'view_usuario_email_personal',
+  'view_usuario_email_corporativo',
+--  'view_usuario_contrasena',
+  'view_usuario_departamento',
+--  'update_usuario_id',
+--  'update_usuario_rol_id',
+  'update_usuario_nombre',
+  'update_usuario_email_personal',
+  'update_usuario_email_corporativo',
+  'update_usuario_contrasena',
+--  'update_usuario_departamento',
 
-    union all
-    select concat('update_ticket_', col)
-    from (select 'usuario_id' union all select 'categoria_id'
-          union all select 'titulo' union all select 'descripcion'
-          union all select 'prioridad' union all select 'estado'
-          union all select 'fecha_cierre') tcols2(col)
+  -- ===== CATEGORIA =====
+  'view_categoria_id',
+  'view_categoria_nombre',
+  'view_categoria_descripcion',
+--  'update_categoria_id',
+--  'update_categoria_nombre',
+--  'update_categoria_descripcion',
 
-    union all
-    -- asignaciones: view all, update except id, fecha_creacion
-    select concat('view_asignacion_', col)
-    from (select 'id' union all select 'ticket_id' union all select 'agente_id'
-          union all select 'fecha_creacion') acols(col)
+  -- ===== TICKET =====
+  'view_ticket_id',
+  'view_ticket_usuario_id',
+  'view_ticket_categoria_id',
+  'view_ticket_titulo',
+  'view_ticket_descripcion',
+  'view_ticket_prioridad',
+  'view_ticket_estado',
+  'view_ticket_fecha_creacion',
+  'view_ticket_fecha_cierre',
+  'update_ticket_id',
+  'update_ticket_usuario_id',
+  'update_ticket_categoria_id',
+  'update_ticket_titulo',
+  'update_ticket_descripcion',
+  'update_ticket_prioridad',
+  'update_ticket_estado',
+  'update_ticket_fecha_creacion',
+  'update_ticket_fecha_cierre',
 
-    union all
-    select concat('update_asignacion_', col)
-    from (select 'ticket_id' union all select 'agente_id') acols2(col)
+  -- ===== ASIGNACION =====
+  'view_asignacion_id',
+  'view_asignacion_ticket_id',
+  'view_asignacion_agente_id',
+  'view_asignacion_fecha_creacion',
+  'update_asignacion_id',
+  'update_asignacion_ticket_id',
+  'update_asignacion_agente_id',
+  'update_asignacion_fecha_creacion',
 
-    union all
-    -- comentarios: view all, update except id, fecha_creacion
-    select concat('view_comentario_', col)
-    from (select 'id' union all select 'ticket_id' union all select 'usuario_id'
-          union all select 'comentario' union all select 'fecha_creacion') ccols2(col)
+  -- ===== COMENTARIO =====
+  'view_comentario_id',
+  'view_comentario_ticket_id',
+  'view_comentario_usuario_id',
+  'view_comentario_texto',
+  'view_comentario_fecha_creacion',
+  'update_comentario_id',
+  'update_comentario_ticket_id',
+  'update_comentario_usuario_id',
+  'update_comentario_texto',
+  'update_comentario_fecha_creacion',
 
-    union all
-    select concat('update_comentario_', col)
-    from (select 'ticket_id' union all select 'usuario_id' union all select 'comentario') ccols3(col)
+  -- ===== HISTORIAL_TICKET =====
+  'view_historial_ticket_id',
+  'view_historial_ticket_ticket_id',
+  'view_historial_ticket_estado_anterior',
+  'view_historial_ticket_estado_nuevo',
+  'view_historial_ticket_fecha_creacion',
+  'update_historial_ticket_id',
+  'update_historial_ticket_ticket_id',
+  'update_historial_ticket_estado_anterior',
+  'update_historial_ticket_estado_nuevo',
+  'update_historial_ticket_fecha_creacion',
 
-    union all
-    -- historial_ticket: view all, update except id, fecha_creacion
-    select concat('view_historial_ticket_', col)
-    from (select 'id' union all select 'ticket_id' union all select 'estado_anterior'
-          union all select 'estado_nuevo' union all select 'fecha_creacion') hcols(col)
+  -- ===== NOTIFICACION =====
+  'view_notificacion_id',
+  'view_notificacion_usuario_id',
+  'view_notificacion_mensaje',
+  'view_notificacion_fecha_creacion',
+  'update_notificacion_id',
+  'update_notificacion_usuario_id',
+  'update_notificacion_mensaje',
+  'update_notificacion_fecha_creacion'
+);
 
-    union all
-    select concat('update_historial_ticket_', col)
-    from (select 'ticket_id' union all select 'estado_anterior' union all select 'estado_nuevo') hcols2(col)
-
-    union all
-    -- notificaciones: view all, update except id, fecha_creacion
-    select concat('view_notificacion_', col)
-    from (select 'id' union all select 'usuario_id' union all select 'mensaje'
-          union all select 'fecha_creacion') ncols(col)
-
-    union all
-    select concat('update_notificacion_', col)
-    from (select 'usuario_id' union all select 'mensaje') ncols2(col)
-) allowed
-on p.nombre = allowed.permiso;
-
-
--- Usuario: same as agente
-insert into roles (nombre) values ('usuario');
-
+-- USUARIO (view first, then update, one per line)
 insert into permisos_roles (rol_id, permiso_id)
-select 3, permiso_id from permisos_roles where rol_id = 2;
+select 3, id from permisos where nombre in (
+  -- ===== ROL =====
+--  'view_rol_id',
+--  'view_rol_nombre',
+--  'update_rol_id',
+--  'update_rol_nombre',
+
+  -- ===== PERMISO =====
+--  'view_permiso_id',
+--  'view_permiso_nombre',
+--  'update_permiso_id',
+--  'update_permiso_nombre',
+
+  -- ===== PERMISO_ROL =====
+--  'view_permiso_rol_rol_id',
+--  'view_permiso_rol_permiso_id',
+--  'update_permiso_rol_rol_id',
+--  'update_permiso_rol_permiso_id',
+
+  -- ===== USUARIO =====
+  'view_usuario_id',
+--  'view_usuario_rol_id',
+  'view_usuario_nombre',
+  'view_usuario_email_personal',
+  'view_usuario_email_corporativo',
+--  'view_usuario_contrasena',
+  'view_usuario_departamento',
+--  'update_usuario_id',
+--  'update_usuario_rol_id',
+  'update_usuario_nombre',
+  'update_usuario_email_personal',
+  'update_usuario_email_corporativo',
+  'update_usuario_contrasena',
+--  'update_usuario_departamento',
+
+  -- ===== CATEGORIA =====
+  'view_categoria_id',
+  'view_categoria_nombre',
+  'view_categoria_descripcion',
+  'update_categoria_id',
+  'update_categoria_nombre',
+  'update_categoria_descripcion',
+
+  -- ===== TICKET =====
+  'view_ticket_id',
+  'view_ticket_usuario_id',
+  'view_ticket_categoria_id',
+  'view_ticket_titulo',
+  'view_ticket_descripcion',
+  'view_ticket_prioridad',
+  'view_ticket_estado',
+  'view_ticket_fecha_creacion',
+  'view_ticket_fecha_cierre',
+  'update_ticket_id',
+  'update_ticket_usuario_id',
+  'update_ticket_categoria_id',
+  'update_ticket_titulo',
+  'update_ticket_descripcion',
+  'update_ticket_prioridad',
+  'update_ticket_estado',
+  'update_ticket_fecha_creacion',
+  'update_ticket_fecha_cierre',
+
+  -- ===== ASIGNACION =====
+  'view_asignacion_id',
+  'view_asignacion_ticket_id',
+  'view_asignacion_agente_id',
+  'view_asignacion_fecha_creacion',
+  'update_asignacion_id',
+  'update_asignacion_ticket_id',
+  'update_asignacion_agente_id',
+  'update_asignacion_fecha_creacion',
+
+  -- ===== COMENTARIO =====
+  'view_comentario_id',
+  'view_comentario_ticket_id',
+  'view_comentario_usuario_id',
+  'view_comentario_texto',
+  'view_comentario_fecha_creacion',
+  'update_comentario_id',
+  'update_comentario_ticket_id',
+  'update_comentario_usuario_id',
+  'update_comentario_texto',
+  'update_comentario_fecha_creacion',
+
+  -- ===== HISTORIAL_TICKET =====
+  'view_historial_ticket_id',
+  'view_historial_ticket_ticket_id',
+  'view_historial_ticket_estado_anterior',
+  'view_historial_ticket_estado_nuevo',
+  'view_historial_ticket_fecha_creacion',
+  'update_historial_ticket_id',
+  'update_historial_ticket_ticket_id',
+  'update_historial_ticket_estado_anterior',
+  'update_historial_ticket_estado_nuevo',
+  'update_historial_ticket_fecha_creacion',
+
+  -- ===== NOTIFICACION =====
+  'view_notificacion_id',
+  'view_notificacion_usuario_id',
+  'view_notificacion_mensaje',
+  'view_notificacion_fecha_creacion',
+  'update_notificacion_id',
+  'update_notificacion_usuario_id',
+  'update_notificacion_mensaje',
+  'update_notificacion_fecha_creacion'
+);
