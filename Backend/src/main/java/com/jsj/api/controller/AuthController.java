@@ -47,10 +47,10 @@ public class AuthController {
     }
 
     @Operation(
-            summary = "Login user",
-            description = "Authenticates a user using email and password and returns a JWT token",
+            summary = "Login del usuario",
+            description = "Autentica un usuario usando email y contraseña y retorna un token valido",
             requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    description = "Credentials for login",
+                    description = "Credenciales para login",
                     required = true,
                     content = @Content(
                             schema = @Schema(implementation = LoginRequest.class)
@@ -59,7 +59,7 @@ public class AuthController {
             responses = {
                 @ApiResponse(
                         responseCode = "200",
-                        description = "Authentication successful, token returned",
+                        description = "Autenticación exitosa, token retornado",
                         content = @Content(
                                 mediaType = "application/json",
                                 schema = @Schema(
@@ -69,86 +69,29 @@ public class AuthController {
                 ),
                 @ApiResponse(
                         responseCode = "401",
-                        description = "Authentication failed, invalid credentials",
+                        description = "Autenticación fallida, credenciales inválidas",
                         content = @Content
                 ),
                 @ApiResponse(
                         responseCode = "500",
-                        description = "Internal server error",
+                        description = "Error interno del servidor",
                         content = @Content
                 )
             }
     )
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(
-            @Parameter(description = "Login credentials including email and password", required = true)
+            @Parameter(description = "Credenciales se login, email y contraseña", required = true)
             @RequestBody LoginRequest request
     ) {
         Usuario user = usuarioService.validateCredentials(request.getEmail(), request.getPassword());
         if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Credenciales inválidas. Verifique su email y contraseña."));
         }
 
         String token = JwtUtils.generateToken(user);
         Map<String, String> body = Map.of("token", token);
         return ResponseEntity.ok(body);
-    }
-
-    @Operation(
-            summary = "Register new user",
-            description = "Creates a new user account with encrypted password and assigned role",
-            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    description = "User data for registration",
-                    required = true,
-                    content = @Content(
-                            schema = @Schema(implementation = UsuarioDTO.class)
-                    )
-            ),
-            responses = {
-                @ApiResponse(
-                        responseCode = "200",
-                        description = "User registered successfully",
-                        content = @Content(
-                                mediaType = "application/json",
-                                schema = @Schema(implementation = UsuarioDTO.class)
-                        )
-                ),
-                @ApiResponse(
-                        responseCode = "400",
-                        description = "Validation errors",
-                        content = @Content
-                ),
-                @ApiResponse(
-                        responseCode = "409",
-                        description = "Database constraint violation or duplicate key",
-                        content = @Content
-                ),
-                @ApiResponse(
-                        responseCode = "500",
-                        description = "Internal server error",
-                        content = @Content
-                )
-            }
-    )
-    @PostMapping("/register")
-    public ResponseEntity<UsuarioDTO> register(
-            @Parameter(description = "User registration data", required = true)
-            @RequestBody UsuarioDTO dto
-    ) {
-        Set<String> perms = CurrentUser.getPermissions();
-
-        Usuario usuario = mapper.toEntity(dto);
-
-        usuario.setContrasena(passwordEncoder.encode(dto.getContrasena()));
-
-        if (rolService.isIdRolAnAgente(dto.getRolId())) {
-            usuario.setRol(rolService.getRolAgente());
-        } else {
-            usuario.setRol(rolService.getRolUsuario());
-        }
-        filter.filterEntity(usuario, perms);
-        Usuario saved = usuarioService.save(usuario);
-        return ResponseEntity.ok(filter.filterDTO(mapper.toDTO(saved), perms));
     }
 
 }

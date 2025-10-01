@@ -5,7 +5,10 @@
 package com.jsj.api.entity.dao;
 
 import com.jsj.api.entity.Comentario;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.jsj.api.entity.dto.ComentarioDTO;
+import com.jsj.api.entity.filter.ComentarioFilter;
+import com.jsj.api.entity.mapper.ComentarioMapper;
+import com.jsj.api.repository.ComentarioRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -13,6 +16,10 @@ import org.springframework.stereotype.Repository;
  * @author Juan José Molano Franco
  */
 @Repository
-public interface ComentarioDAO extends JpaRepository<Comentario, Long> {
+public class ComentarioDAO extends BaseDAO<Comentario, Long, ComentarioDTO, ComentarioMapper, ComentarioFilter, ComentarioRepository> {
+
+    public ComentarioDAO(ComentarioMapper mapper, ComentarioFilter filter, ComentarioRepository repo) {
+        super(mapper, filter, repo);
+    }
 
 }

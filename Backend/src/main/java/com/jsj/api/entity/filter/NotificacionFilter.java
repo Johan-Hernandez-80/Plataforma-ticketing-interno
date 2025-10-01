@@ -7,8 +7,6 @@ package com.jsj.api.entity.filter;
 
 import com.jsj.api.entity.*;
 import com.jsj.api.entity.dto.*;
-import com.jsj.api.service.UsuarioService;
-import com.jsj.api.entity.mapper.BaseMapper;
 import java.util.Set;
 import org.springframework.stereotype.Component;
 
@@ -18,12 +16,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class NotificacionFilter implements BaseFilter<Notificacion, NotificacionDTO> {
-
-    private final UsuarioService usuarioService;
-
-    public NotificacionFilter(UsuarioService usuarioService) {
-        this.usuarioService = usuarioService;
-    }
 
     @Override
     public NotificacionDTO filterDTO(NotificacionDTO dto, Set<String> permissions) {

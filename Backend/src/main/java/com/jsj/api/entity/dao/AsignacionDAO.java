@@ -5,7 +5,10 @@
 package com.jsj.api.entity.dao;
 
 import com.jsj.api.entity.Asignacion;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.jsj.api.entity.dto.AsignacionDTO;
+import com.jsj.api.entity.filter.AsignacionFilter;
+import com.jsj.api.entity.mapper.AsignacionMapper;
+import com.jsj.api.repository.AsignacionRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -13,6 +16,10 @@ import org.springframework.stereotype.Repository;
  * @author Juan José Molano Franco
  */
 @Repository
-public interface AsignacionDAO extends JpaRepository<Asignacion, Long> {
+public class AsignacionDAO extends BaseDAO<Asignacion, Long, AsignacionDTO, AsignacionMapper, AsignacionFilter, AsignacionRepository> {
+
+    public AsignacionDAO(AsignacionMapper mapper, AsignacionFilter filter, AsignacionRepository repo) {
+        super(mapper, filter, repo);
+    }
 
 }

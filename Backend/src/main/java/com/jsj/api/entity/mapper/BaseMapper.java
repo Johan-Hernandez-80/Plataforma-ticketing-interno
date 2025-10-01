@@ -12,17 +12,18 @@ import org.mapstruct.MappingTarget;
  * @author Juan José Molano Franco
  */
 public interface BaseMapper<
-        E, // Entity
-        DTO // For handling info without recursion
+        E, // Entidad
+        DTO // Para manejar información sin recursión
         > {
 
-    // To recieve data
+    // Para recibir data
     DTO toDTO(E entity);
 
-    // To send back data
+    // Para retornar data
     E toEntity(DTO dto);
 
-    // Also to send back data
+    // También para retornar data
+    // Si se crea con maptstruct hará una alteración automática a los campos no nulos
     void updateEntityFromDTO(DTO dto, E entity);
 
 }

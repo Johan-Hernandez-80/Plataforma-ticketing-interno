@@ -11,6 +11,7 @@ import com.jsj.api.entity.dto.CategoriaDTO;
 import com.jsj.api.entity.mapper.CategoriaMapper;
 import com.jsj.api.security.CurrentUser;
 import com.jsj.api.entity.filter.CategoriaFilter;
+import com.jsj.api.service.CategoriaService;
 import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.responses.*;
@@ -26,89 +27,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/categorias")
 @Tag(name = "Categorias", description = "Operations related to Categoria entities")
-public class CategoriaController extends BaseController<Categoria, Long, CategoriaDTO, CategoriaDAO, CategoriaMapper, CategoriaFilter> {
+public class CategoriaController extends BaseController<Categoria, Long, CategoriaDTO> {
 
-    public CategoriaController(BaseService<Categoria, Long, CategoriaDAO> service, CategoriaMapper mapper, CategoriaFilter filter) {
-        super(service, mapper, filter);
+    public CategoriaController(CategoriaService service) {
+        super(service);
     }
 
-    @Operation(summary = "Create a new Categoria",
-            description = "Creates a new Categoria entity with the given DTO.",
-            responses = {
-                @ApiResponse(responseCode = "200", description = "Categoria created successfully",
-                        content = @Content(mediaType = "application/json",
-                                schema = @Schema(implementation = CategoriaDTO.class))),
-                @ApiResponse(responseCode = "403", description = "Forbidden")
-            })
-    @PostMapping
-    public ResponseEntity<CategoriaDTO> create(
-            @Parameter(description = "DTO representing the Categoria to create", required = true)
-            @RequestBody CategoriaDTO dto) {
-        return super.create(dto);
-    }
-
-    @Operation(summary = "Update an existing Categoria",
-            description = "Updates the Categoria identified by the given ID with the data from the DTO.",
-            responses = {
-                @ApiResponse(responseCode = "200", description = "Categoria updated successfully",
-                        content = @Content(mediaType = "application/json",
-                                schema = @Schema(implementation = CategoriaDTO.class))),
-                @ApiResponse(responseCode = "404", description = "Categoria not found"),
-                @ApiResponse(responseCode = "403", description = "Forbidden")
-            })
-    @PatchMapping("/{id}")
-    public ResponseEntity<CategoriaDTO> update(
-            @Parameter(description = "ID of the Categoria to update", required = true)
-            @PathVariable Long id,
-            @Parameter(description = "DTO containing updated Categoria information", required = true)
-            @RequestBody CategoriaDTO dto) {
-        if (!"admin".equalsIgnoreCase(CurrentUser.getRole())) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-        return super.update(id, dto);
-    }
-
-    @Operation(summary = "Get a Categoria by ID",
-            description = "Retrieves the Categoria identified by the given ID.",
-            responses = {
-                @ApiResponse(responseCode = "200", description = "Categoria retrieved successfully",
-                        content = @Content(mediaType = "application/json",
-                                schema = @Schema(implementation = CategoriaDTO.class))),
-                @ApiResponse(responseCode = "404", description = "Categoria not found")
-            })
-    @GetMapping("/{id}")
-    public ResponseEntity<CategoriaDTO> getById(
-            @Parameter(description = "ID of the Categoria to retrieve", required = true)
-            @PathVariable Long id) {
-        return super.getById(id);
-    }
-
-    @Operation(summary = "Get all Categorias",
-            description = "Retrieves all Categoria entities.",
-            responses = {
-                @ApiResponse(responseCode = "200", description = "List of Categorias",
-                        content = @Content(mediaType = "application/json",
-                                array = @ArraySchema(schema = @Schema(implementation = CategoriaDTO.class))))
-            })
-    @GetMapping
-    public List<CategoriaDTO> getAll() {
-        return super.getAll();
-    }
-
-    @Operation(summary = "Delete a Categoria",
-            description = "Deletes the Categoria identified by the given ID.",
-            responses = {
-                @ApiResponse(responseCode = "204", description = "Categoria deleted successfully"),
-                @ApiResponse(responseCode = "404", description = "Categoria not found"),
-                @ApiResponse(responseCode = "403", description = "Forbidden")
-            })
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(
-            @Parameter(description = "ID of the Categoria to delete", required = true)
-            @PathVariable Long id) {
-        if (!"admin".equalsIgnoreCase(CurrentUser.getRole())) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-        return super.delete(id);
-    }
 }

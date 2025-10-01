@@ -4,8 +4,8 @@
  */
 package com.jsj.api.entity.dto;
 
-import com.jsj.api.entity.Rol;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 
 /**
@@ -14,15 +14,24 @@ import lombok.Data;
  */
 @Data
 @Schema(
-    description = "DTO for Usuario. Only includes attributes the current user has permission to view. Field visibility depends on the user's roles and permissions."
+        description = "DTO para usuario. Solo incluye los atributos que el usuario autenticado tiene permiso para usar. La visibilidad de los campos depende del rol y permisos del usuario."
 )
 public class UsuarioDTO {
 
     private Long id;
     private Long rolId;
     private String nombre;
+    @NotBlank(message = "El correo personal es obligatorio")
+    @Email(message = "El correo personal no es válido")
+    @Pattern(regexp = "\\S+", message = "El correo personal no debe contener espacios en blanco")
     private String emailPersonal;
+    @NotBlank(message = "El correo corporativo es obligatorio")
+    @Email(message = "El correo corporativo no es válido")
+    @Pattern(regexp = "\\S+", message = "El correo corporativo no debe contener espacios en blanco")
     private String emailCorporativo;
+    @NotBlank(message = "La contraseña es obligatoria")
+    @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
+    @Pattern(regexp = "\\S+", message = "La contraseña no debe contener espacios en blanco")
     private String contrasena;
     private String departamento;
 

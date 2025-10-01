@@ -40,7 +40,7 @@ public class OpenApiConfig implements WebMvcConfigurer {
         return openApi -> openApi.getPaths().values().forEach(pathItem
                 -> pathItem.readOperations().forEach(op -> {
                     op.getResponses().addApiResponse("403",
-                            new ApiResponse().description("Forbidden – insufficient permissions"));
+                            new ApiResponse().description("Acceso denegado. Token inválido o expirado."));
                 })
         );
     }

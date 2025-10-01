@@ -14,10 +14,12 @@ import org.springframework.stereotype.Service;
  * @author Juan José Molano Franco
  */
 @Service
-public class RolService extends BaseService<Rol, Long, RolDAO> {
+public class RolService {
 
-    public RolService(RolRepository repo, RolDAO dao) {
-        super(repo, Rol.class, dao);
+    private final RolDAO dao;
+    
+    public RolService(RolDAO dao) {
+        this.dao = dao;
     }
 
     public Rol getRolUsuario() {
@@ -26,10 +28,6 @@ public class RolService extends BaseService<Rol, Long, RolDAO> {
 
     public Rol getRolAgente() {
         return dao.getRolAgente();
-    }
-
-    public boolean isIdRolAnAgente(Long rolId) {
-        return ((RolRepository) repo).existsByIdAndNombre(rolId, "agente");
     }
 
 }

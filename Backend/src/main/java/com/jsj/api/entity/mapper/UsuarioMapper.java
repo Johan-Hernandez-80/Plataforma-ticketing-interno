@@ -9,13 +9,14 @@ import com.jsj.api.entity.dto.UsuarioDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.mapstruct.ReportingPolicy;
 
 /**
  *
  * @author Juan José Molano Franco
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(config = BaseMapperConfig.class)
 public interface UsuarioMapper extends BaseMapper<Usuario, UsuarioDTO> {
 
     @Override
