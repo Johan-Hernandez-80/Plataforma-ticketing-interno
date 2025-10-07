@@ -4,8 +4,12 @@
  */
 package com.jsj.api.repository;
 
+import com.jsj.api.entity.Comentario;
 import com.jsj.api.entity.Ticket;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 /**
  *
@@ -13,4 +17,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
+    @Query("""
+       SELECT t FROM Ticket t
+       WHERE (:estado IS NULL OR t.estado = :estado)
+         AND (:prioridad IS NULL OR t.prioridad = :prioridad)
+         AND (:usuarioId IS NULL OR t.usuario.id = :usuarioId)
+       """)
+    List<Ticket> findTickets(
+            @Param("estado") String estado,
+            @Param("prioridad") String prioridad,
+            @Param("usuarioId") Long usuarioId);
+    
 }

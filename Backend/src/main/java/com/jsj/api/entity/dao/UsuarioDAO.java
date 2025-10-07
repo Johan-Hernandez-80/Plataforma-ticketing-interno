@@ -72,4 +72,20 @@ public class UsuarioDAO extends BaseDAO<Usuario, Long, UsuarioDTO, UsuarioMapper
         return filter.filterDTO(mapper.toDTO(repo.save(entity)), perms);
     }
 
+    public boolean isAdmin(Long currentUserId) {
+        return repo.isAdmin(currentUserId);
+    }
+
+    public boolean isAgente(Long id) {
+        return repo.isAgente(id);
+    }
+
+    public boolean isAgenteAssignedToTicket(Long idUsuario, Long idTicket) {
+        return repo.isAgenteAssignedToTicket(idUsuario, idTicket);
+    }
+
+    public boolean isTicketBelongsToUsuario(Long idUsuario, Long idTicket) {
+        return repo.isTicketBelongsToUsuario(idUsuario, idTicket);
+    }
+
 }
