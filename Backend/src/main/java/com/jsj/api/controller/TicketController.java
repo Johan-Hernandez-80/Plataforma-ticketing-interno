@@ -11,6 +11,7 @@ import com.jsj.api.entity.mapper.TicketMapper;
 import com.jsj.api.security.CurrentUser;
 import com.jsj.api.service.BaseService;
 import com.jsj.api.entity.filter.TicketFilter;
+import com.jsj.api.service.TicketService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.*;
@@ -28,89 +29,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/tickets")
 @Tag(name = "Tickets", description = "Operations related to Ticket entities")
-public class TicketController extends BaseController<Ticket, Long, TicketDTO, TicketDAO, TicketMapper, TicketFilter> {
+public class TicketController extends BaseController<Ticket, Long, TicketDTO>{
 
-    public TicketController(BaseService<Ticket, Long, TicketDAO> service, TicketMapper mapper, TicketFilter filter) {
-        super(service, mapper, filter);
-    }
-
-    @Operation(summary = "Create a new Ticket",
-            description = "Creates a new Ticket entity with the given DTO.",
-            responses = {
-                @ApiResponse(responseCode = "200", description = "Ticket created successfully",
-                        content = @Content(mediaType = "application/json",
-                                schema = @Schema(implementation = TicketDTO.class))),
-                @ApiResponse(responseCode = "403", description = "Forbidden")
-            })
-    @PostMapping
-    public ResponseEntity<TicketDTO> create(
-            @Parameter(description = "DTO representing the Ticket to create", required = true)
-            @RequestBody TicketDTO dto) {
-        return super.create(dto);
-    }
-
-    @Operation(summary = "Update an existing Ticket",
-            description = "Updates the Ticket identified by the given ID with the data from the DTO.",
-            responses = {
-                @ApiResponse(responseCode = "200", description = "Ticket updated successfully",
-                        content = @Content(mediaType = "application/json",
-                                schema = @Schema(implementation = TicketDTO.class))),
-                @ApiResponse(responseCode = "404", description = "Ticket not found"),
-                @ApiResponse(responseCode = "403", description = "Forbidden")
-            })
-    @PatchMapping("/{id}")
-    public ResponseEntity<TicketDTO> update(
-            @Parameter(description = "ID of the Ticket to update", required = true)
-            @PathVariable Long id,
-            @Parameter(description = "DTO containing updated Ticket information", required = true)
-            @RequestBody TicketDTO dto) {
-        if (!"admin".equalsIgnoreCase(CurrentUser.getRole())) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-        return super.update(id, dto);
-    }
-
-    @Operation(summary = "Get a Ticket by ID",
-            description = "Retrieves the Ticket identified by the given ID.",
-            responses = {
-                @ApiResponse(responseCode = "200", description = "Ticket retrieved successfully",
-                        content = @Content(mediaType = "application/json",
-                                schema = @Schema(implementation = TicketDTO.class))),
-                @ApiResponse(responseCode = "404", description = "Ticket not found")
-            })
-    @GetMapping("/{id}")
-    public ResponseEntity<TicketDTO> getById(
-            @Parameter(description = "ID of the Ticket to retrieve", required = true)
-            @PathVariable Long id) {
-        return super.getById(id);
-    }
-
-    @Operation(summary = "Get all Tickets",
-            description = "Retrieves all Ticket entities.",
-            responses = {
-                @ApiResponse(responseCode = "200", description = "List of Tickets",
-                        content = @Content(mediaType = "application/json",
-                                array = @ArraySchema(schema = @Schema(implementation = TicketDTO.class))))
-            })
-    @GetMapping
-    public List<TicketDTO> getAll() {
-        return super.getAll();
-    }
-
-    @Operation(summary = "Delete a Ticket",
-            description = "Deletes the Ticket identified by the given ID.",
-            responses = {
-                @ApiResponse(responseCode = "204", description = "Ticket deleted successfully"),
-                @ApiResponse(responseCode = "404", description = "Ticket not found"),
-                @ApiResponse(responseCode = "403", description = "Forbidden")
-            })
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(
-            @Parameter(description = "ID of the Ticket to delete", required = true)
-            @PathVariable Long id) {
-        if (!"admin".equalsIgnoreCase(CurrentUser.getRole())) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-        return super.delete(id);
+    public TicketController(TicketService service) {
+        super(service);
     }
 }

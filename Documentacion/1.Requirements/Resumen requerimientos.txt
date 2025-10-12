@@ -1,0 +1,53 @@
+# Requerimientos
+
+## Usuario
+
+Crear tiquetes.
+Ver sus tiquetes.
+Ver historial de tiquetes.
+Interactuar con sus tiquetes.
+Adjuntar imágenes o documentos.
+Ver sus notificaciones.
+Cambiar su correo personal y contraseña.
+
+## Agente
+
+Ver sus tiquetes asignados.
+?Atender tiquetes (puede seleccionar uno no asignado) y actualizarlos (estado de urgencia, comentarios, cerrarlos (¿los tiquetes (o todo) deberían de tener un atributo de activo?)).
+Ve tiques según urgencia y fecha.
+Cambiar la prioridad de los tiquetes.
+
+## Admin
+
+¿Qué tipo de notificaciones debería de recibir?
+
+Crea categorías de tiquetes. (Solo el admin puede, no las puede borrar).
+Asigna (y reasigna) tiquetes.
+Gestiona usuarios (les crea cuentas, nada más).
+Puede atender tiquetes.
+Puede ver toda la información de los tiquetes.
+Escribir comentarios.
+Ver métricas: tiquetes por categoría, tiempo promedio de resolución, carga de trabajo por agente.
+Reporte de métricas exportable en PDF/CSV.
+Registrar usuarios nuevos.
+Cambiar la prioridad de los tiquetes.
+Cerrar tiquetes.
+
+# Reglas de negocio
+
+Todos pueden hacer login con correo (cualquiera de los dos) y contraseña.
+Prioridad de tiquetes: Urgente, Importante, Programado.
+Asignación automática de tiquete al ser creado por cagegoría y urgencia.
+Enviar notificaciones al usuario cuando sucede algo con su tiquete.
+Enviar notificaciones al agente cuando se le asigna un tiquete.
+Solo el admin puede registrar usuarios.
+La cuenta de admin es por defecto pero mutable como los demás.
+MAX 50mb por archivo..
+Los errores deben ser descriptivos y granulares.
+Estados tiquetes: En progreso, Programado, Cerrado.
+Solo el usuario puede crear tiquetes.
+
+
+
+
+

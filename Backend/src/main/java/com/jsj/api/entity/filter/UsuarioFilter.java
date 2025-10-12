@@ -13,6 +13,7 @@ import com.jsj.api.entity.mapper.BaseMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  *
@@ -22,9 +23,11 @@ import java.util.Set;
 public class UsuarioFilter implements BaseFilter<Usuario, UsuarioDTO> {
 
     private final RolService rolService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UsuarioFilter(RolService rolService) {
+    public UsuarioFilter(RolService rolService, PasswordEncoder passwordEncoder) {
         this.rolService = rolService;
+        this.passwordEncoder = passwordEncoder;
     }
     
     @Override
@@ -50,7 +53,7 @@ public class UsuarioFilter implements BaseFilter<Usuario, UsuarioDTO> {
         if (!permissions.contains("update_usuario_nombre")) {entity.setNombre(null);}
         if (!permissions.contains("update_usuario_email_personal")) {entity.setEmailPersonal(null);}
         if (!permissions.contains("update_usuario_email_corporativo")) {entity.setEmailCorporativo(null);}
-        if (!permissions.contains("update_usuario_contrasena")) {entity.setContrasena(null);}
+        if (!permissions.contains("update_usuario_contrasena")) {entity.setContrasena(null);} else if (entity.getContrasena() != null) {entity.setContrasena(passwordEncoder.encode(entity.getContrasena()));}
         if (!permissions.contains("update_usuario_departamento")) {entity.setDepartamento(null);}
  
         return entity;

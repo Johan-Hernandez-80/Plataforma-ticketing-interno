@@ -5,7 +5,10 @@
 package com.jsj.api.entity.dao;
 
 import com.jsj.api.entity.Ticket;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.jsj.api.entity.dto.TicketDTO;
+import com.jsj.api.entity.filter.TicketFilter;
+import com.jsj.api.entity.mapper.TicketMapper;
+import com.jsj.api.repository.TicketRepository;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -13,6 +16,10 @@ import org.springframework.stereotype.Repository;
  * @author Juan José Molano Franco
  */
 @Repository
-public interface TicketDAO extends JpaRepository<Ticket, Long> {
+public class TicketDAO extends BaseDAO<Ticket, Long, TicketDTO, TicketMapper, TicketFilter, TicketRepository> {
+
+    public TicketDAO(TicketMapper mapper, TicketFilter filter, TicketRepository repo) {
+        super(mapper, filter, repo);
+    }
 
 }

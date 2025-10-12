@@ -6,7 +6,8 @@ package com.jsj.api.service;
 
 import com.jsj.api.entity.Notificacion;
 import com.jsj.api.entity.dao.NotificacionDAO;
-import com.jsj.api.repository.NotificacionRepository;
+import com.jsj.api.entity.dto.NotificacionDTO;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,9 +15,10 @@ import org.springframework.stereotype.Service;
  * @author Juan José Molano Franco
  */
 @Service
-public class NotificacionService extends BaseService<Notificacion, Long, NotificacionDAO> {
+public class NotificacionService extends BaseService<Notificacion, Long, NotificacionDTO, NotificacionDAO> {
 
-    public NotificacionService(NotificacionRepository repo, NotificacionDAO dao) {
-        super(repo, Notificacion.class, dao);
+    public NotificacionService(NotificacionDAO dao) {
+        super(dao);
     }
+
 }

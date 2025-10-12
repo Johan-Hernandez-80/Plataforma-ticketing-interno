@@ -15,7 +15,7 @@ import org.mapstruct.ReportingPolicy;
  *
  * @author Juan José Molano Franco
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(config = BaseMapperConfig.class)
 public interface ComentarioMapper extends BaseMapper<Comentario, ComentarioDTO> {
 
     @Override
