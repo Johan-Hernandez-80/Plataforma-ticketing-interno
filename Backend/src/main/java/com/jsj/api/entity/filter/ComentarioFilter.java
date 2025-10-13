@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
  * @author Juan José Molano Franco
  */
 @Component
-public class ComentarioFilter implements BaseFilter<Comentario, ComentarioDTO> {
+public class ComentarioFilter extends BaseFilter<Comentario, ComentarioDTO> {
     
     private final TicketService ticketService;
     private final UsuarioService usuarioService;
@@ -29,7 +29,7 @@ public class ComentarioFilter implements BaseFilter<Comentario, ComentarioDTO> {
     }
 
     @Override
-    public ComentarioDTO filterDTO(ComentarioDTO dto, Set<String> permissions) {
+    public ComentarioDTO filterDTO(ComentarioDTO dto) {
         
         if (!permissions.contains("view_comentario_id")) { dto.setId(null); }
         if (!permissions.contains("view_comentario_ticket_id")) { dto.setTicketId(null); }
@@ -41,7 +41,7 @@ public class ComentarioFilter implements BaseFilter<Comentario, ComentarioDTO> {
     }
 
     @Override
-    public Comentario filterEntity(Comentario entity, Set<String> permissions) {
+    public Comentario filterEntity(Comentario entity) {
         
         if (!permissions.contains("update_comentario_id")) { entity.setId(null); }
         if (!permissions.contains("update_comentario_ticket_id")) { entity.setTicket(null); }

@@ -30,12 +30,11 @@ public class NotificacionDAO extends BaseDAO<Notificacion, Long, NotificacionDTO
     }
 
     public List<NotificacionDTO> getNotificacionesByIdUsuario(Long idUsuario) {
-        Set<String> perms = CurrentUser.getPermissions();
         List<Notificacion> notificaciones = repo.findByUsuarioId(idUsuario);
         List<NotificacionDTO> notificacionesDTOs = new ArrayList<>();
 
         for (Notificacion n : notificaciones) {
-            filter.filterEntity(n, perms);
+            filter.filterEntity(n);
             notificacionesDTOs.add(mapper.toDTO(n));
         }
         return notificacionesDTOs;

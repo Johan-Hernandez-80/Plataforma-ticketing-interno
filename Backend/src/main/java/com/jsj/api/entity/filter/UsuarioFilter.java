@@ -20,7 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  * @author Juan José Molano Franco
  */
 @Component
-public class UsuarioFilter implements BaseFilter<Usuario, UsuarioDTO> {
+public class UsuarioFilter extends BaseFilter<Usuario, UsuarioDTO> {
 
     private final RolService rolService;
     private final PasswordEncoder passwordEncoder;
@@ -31,7 +31,7 @@ public class UsuarioFilter implements BaseFilter<Usuario, UsuarioDTO> {
     }
     
     @Override
-    public UsuarioDTO filterDTO(UsuarioDTO dto, Set<String> permissions) {
+    public UsuarioDTO filterDTO(UsuarioDTO dto) {
         
         if (!permissions.contains("view_usuario_id")) {dto.setId(null);}
         if (!permissions.contains("view_usuario_rol_id")) {dto.setRolId(null);}
@@ -46,7 +46,7 @@ public class UsuarioFilter implements BaseFilter<Usuario, UsuarioDTO> {
     }
 
     @Override
-    public Usuario filterEntity(Usuario entity, Set<String> permissions) {
+    public Usuario filterEntity(Usuario entity) {
         
         if (!permissions.contains("update_usuario_id")) {entity.setId(null);}
         if (!permissions.contains("update_usuario_rol_id")) {entity.setRol(null);}

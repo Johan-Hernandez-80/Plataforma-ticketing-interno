@@ -26,21 +26,17 @@ public class ComentarioDAO extends BaseDAO<Comentario, Long, ComentarioDTO, Come
     }
 
     public List<ComentarioDTO> findComentariosByTicketId(Long idTicket) {
-        Set<String> perms = CurrentUser.getPermissions();
-
         return repo.findByTicketIdOrderByFechaCreacionAsc(idTicket)
                 .stream()
                 .map(mapper::toDTO)
-                .map(dto -> filter.filterDTO(dto, perms))
+                .map(dto -> filter.filterDTO(dto))
                 .toList();
     }
 
     public ComentarioDTO save(ComentarioDTO comentarioDTO) {
-        Set<String> perms = CurrentUser.getPermissions();
+        Comentario entity = repo.save(filter.filterEntity(mapper.toEntity(comentarioDTO)));
 
-        Comentario entity = repo.save(filter.filterEntity(mapper.toEntity(comentarioDTO), perms));
-
-        return filter.filterDTO(mapper.toDTO(entity), perms);
+        return filter.filterDTO(mapper.toDTO(entity));
     }
 
 }

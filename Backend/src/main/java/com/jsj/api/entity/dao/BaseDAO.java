@@ -7,6 +7,7 @@ package com.jsj.api.entity.dao;
 import com.jsj.api.entity.Usuario;
 import com.jsj.api.entity.filter.BaseFilter;
 import com.jsj.api.entity.mapper.BaseMapper;
+import com.jsj.api.security.CurrentUser;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -38,7 +39,7 @@ public class BaseDAO<
         this.filter = filter;
         this.repo = repo;
     }
-
+    
     // CRUD / list variants
     public <S extends E> S save(S entity) {
         return repo.save(entity);

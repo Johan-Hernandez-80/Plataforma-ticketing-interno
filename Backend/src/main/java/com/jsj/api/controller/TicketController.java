@@ -4,6 +4,7 @@
  */
 package com.jsj.api.controller;
 
+import com.jsj.api.exception.TicketInexistenteException;
 import com.jsj.api.entity.Ticket;
 import com.jsj.api.entity.dao.TicketDAO;
 import com.jsj.api.entity.dto.ComentarioDTO;
@@ -12,6 +13,7 @@ import com.jsj.api.entity.mapper.TicketMapper;
 import com.jsj.api.security.CurrentUser;
 import com.jsj.api.service.BaseService;
 import com.jsj.api.entity.filter.TicketFilter;
+import com.jsj.api.exception.AgenteInexistenteException;
 import com.jsj.api.exception.CategoriaInexistenteException;
 import com.jsj.api.exception.EstadoInvalidoException;
 import com.jsj.api.exception.NotAuthorizedException;
@@ -24,7 +26,9 @@ import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.responses.*;
 import io.swagger.v3.oas.annotations.tags.*;
+import java.time.LocalDate;
 import java.util.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -83,6 +87,14 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO> {
                             "error", "Recurso no encontrado.",
                             "detalle", "El usuario " + ticketDTO.getUsuarioId() + " no existe en la base de datos."
                     ));
+        } catch (PrioridadInvalidaException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("error", "Prioridad invalida",
+                            "detalle", String.format("La prioridad %s es inválida", ticketDTO.getPrioridad())));
+        } catch (EstadoInvalidoException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("error", "Estado inválido",
+                            "detalle", String.format("La prioridad %s es inválida", ticketDTO.getPrioridad())));
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
@@ -203,9 +215,10 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO> {
             @Parameter(description = "ID del ticket a consultar", required = true)
             @PathVariable Long idTicket
     ) {
-        List<ComentarioDTO> comentarios = service.findComentariosByTicketId(idTicket);
-
-        if (comentarios == null) {
+        List<ComentarioDTO> comentarios;
+        try {
+            comentarios = service.findComentariosByTicketId(idTicket);
+        } catch (TicketInexistenteException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(Map.of("error", "No se encontro un ticket con este id"));
         }
@@ -240,14 +253,16 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO> {
             )
             @RequestBody ComentarioDTO comentarioDTO
     ) {
-        ComentarioDTO created = service.addComentario(ticketId, comentarioDTO);
-        if (created == null) {
+        ComentarioDTO created;
+        try {
+            created = service.addComentario(ticketId, comentarioDTO);
+        } catch (TicketInexistenteException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(Map.of("error", "El ticket no existe o no fue encontrado"));
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
-/*
+
     @Operation(
             summary = "Actualizar prioridad de un ticket",
             description = "Permite actualizar la prioridad de un ticket existente, "
@@ -266,11 +281,11 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO> {
     @PatchMapping("/{idTicket}/prioridad")
     public ResponseEntity<?> updatePrioridad(
             @PathVariable Long idTicket,
-            @RequestBody PrioridadDTO prioridadDTO
+            @RequestBody String prioridad
     ) {
         try {
-            String nuevaPrioridad = service.updatePrioridad(idTicket, prioridadDTO.getPrioridad());
-            return ResponseEntity.ok(Map.of("prioridad", nuevaPrioridad));
+            TicketDTO ticket = service.updatePrioridad(idTicket, prioridad);
+            return ResponseEntity.ok(ticket);
         } catch (TicketInexistenteException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(Map.of("error", "El ticket no existe"));
@@ -279,5 +294,105 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO> {
                     .body(Map.of("error", "El valor de la prioridad no es válido"));
         }
     }
-*/
+
+    @Operation(
+            summary = "Cerrar un ticket",
+            description = "Permite cerrar un ticket existente cambiando su estado a 'cerrado'."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Ticket cerrado correctamente",
+                content = @Content(schema = @Schema(implementation = TicketDTO.class))),
+        @ApiResponse(responseCode = "400", description = "Solicitud inválida",
+                content = @Content(schema = @Schema(example = "{ \"error\": \"Solicitud inválida para cerrar el ticket\" }"))),
+        @ApiResponse(responseCode = "404", description = "Ticket no encontrado",
+                content = @Content(schema = @Schema(example = "{ \"error\": \"El ticket no fue encontrado\" }"))),
+        @ApiResponse(responseCode = "500", description = "Error interno del servidor",
+                content = @Content(schema = @Schema(example = "{ \"error\": \"Error interno del servidor. Intente nuevamente más tarde.\" }")))
+    })
+    @PatchMapping("/{idTicket}/cerrar")
+    public ResponseEntity<?> cerrarTicket(
+            @Parameter(description = "ID del ticket a cerrar", required = true)
+            @PathVariable Long idTicket
+    ) {
+        try {
+            TicketDTO cerrado = service.cerrarTicket(idTicket);
+            return ResponseEntity.ok(cerrado);
+        } catch (TicketInexistenteException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("error", "El ticket no fue encontrado"));
+        }
+    }
+
+    @Operation(
+            summary = "Reasignar un ticket a un agente",
+            description = "Permite al administrador reasignar un ticket existente a un agente disponible."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Ticket reasignado correctamente",
+                content = @Content(schema = @Schema(implementation = TicketDTO.class))),
+        @ApiResponse(responseCode = "400", description = "Datos inválidos",
+                content = @Content(schema = @Schema(example = "{ \"error\": \"Los datos enviados son inválidos\" }"))),
+        @ApiResponse(responseCode = "401", description = "No autorizado",
+                content = @Content(schema = @Schema(example = "{ \"error\": \"No tiene permiso para usar este endpoint\" }"))),
+        @ApiResponse(responseCode = "404", description = "Ticket o agente no encontrado",
+                content = @Content(schema = @Schema(example = "{ \"error\": \"No se encontró el ticket o el agente solicitado\" }"))),
+        @ApiResponse(responseCode = "500", description = "Error interno del servidor",
+                content = @Content(schema = @Schema(example = "{ \"error\": \"Error interno del servidor. Intente nuevamente más tarde.\" }")))
+    })
+    @PostMapping("/{idTicket}")
+    public ResponseEntity<?> reasignarTicket(
+            @Parameter(description = "ID del ticket a reasignar", required = true)
+            @PathVariable Long idTicket,
+            @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Datos con el ID del nuevo agente",
+                    required = true,
+                    content = @Content(schema = @Schema(example = "{ \"agenteId\": 123 }"))
+            )
+            @RequestBody Map<String, Long> body
+    ) {
+        if (!"admin".equalsIgnoreCase(CurrentUser.getRole())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        Long agenteId = body.get("agenteId");
+        try {
+            TicketDTO reasignado = service.reasignarTicket(idTicket, agenteId);
+            return ResponseEntity.status(HttpStatus.CREATED).body(reasignado);
+        } catch (TicketInexistenteException | AgenteInexistenteException ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Map.of("error", "No se encontró el ticket o el agente solicitado"));
+        }
+    }
+
+    @Operation(
+            summary = "Consultar tickets filtrados",
+            description = "Permite obtener todos los tickets aplicando filtros por estado, prioridad, agente o fecha."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Tickets obtenidos correctamente",
+                content = @Content(array = @ArraySchema(schema = @Schema(implementation = TicketDTO.class)))),
+        @ApiResponse(responseCode = "400", description = "Filtros inválidos o valores no reconocidos",
+                content = @Content(schema = @Schema(example = "{ \"error\": \"Filtros inválidos o valores no reconocidos\" }"))),
+        @ApiResponse(responseCode = "500", description = "Error interno del servidor",
+                content = @Content(schema = @Schema(example = "{ \"error\": \"Error interno del servidor. Intente nuevamente más tarde.\" }")))
+    })
+    @GetMapping()
+    public ResponseEntity<?> getTicketsFiltrados(
+            @Parameter(description = "Estado del ticket (ej: pendiente, cerrado, en progreso)")
+            @RequestParam(required = false) String estado,
+            @Parameter(description = "Prioridad del ticket (ej: urgente, importante, programado)")
+            @RequestParam(required = false) String prioridad,
+            @Parameter(description = "ID del agente asignado al ticket")
+            @RequestParam(required = false) Long agenteId,
+            @Parameter(description = "Fecha de creación del ticket (formato: yyyy-MM-dd)")
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha
+    ) {
+        try {
+            List<TicketDTO> tickets = service.findTicketsFiltrados(estado, prioridad, agenteId, fecha);
+            return ResponseEntity.ok(tickets);
+        } catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("error", "Filtros inválidos o valores no reconocidos"));
+        }
+    }
+
 }

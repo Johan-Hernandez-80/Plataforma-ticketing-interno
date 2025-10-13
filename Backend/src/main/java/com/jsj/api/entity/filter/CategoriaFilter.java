@@ -18,10 +18,10 @@ import org.springframework.stereotype.Component;
  * @author Juan José Molano Franco
  */
 @Component
-public class CategoriaFilter implements BaseFilter<Categoria, CategoriaDTO> {
+public class CategoriaFilter extends BaseFilter<Categoria, CategoriaDTO> {
 
     @Override
-    public CategoriaDTO filterDTO(CategoriaDTO dto, Set<String> permissions) {
+    public CategoriaDTO filterDTO(CategoriaDTO dto) {
         
         if (!permissions.contains("view_categoria_id")) { dto.setId(null); }
         if (!permissions.contains("view_categoria_nombre")) { dto.setNombre(null); }
@@ -31,7 +31,7 @@ public class CategoriaFilter implements BaseFilter<Categoria, CategoriaDTO> {
     }
 
     @Override
-    public Categoria filterEntity(Categoria entity, Set<String> permissions) {
+    public Categoria filterEntity(Categoria entity) {
         
         if (!permissions.contains("update_categoria_id")) { entity.setId(null); }
         if (!permissions.contains("update_categoria_nombre")) { entity.setNombre(null); }

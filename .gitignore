@@ -39,3 +39,5 @@ out/
 ### Others ###
 .env
 /evil/nbproject/private/
+/JavaApplication20/nbproject/private/
+/JavaApplication21/nbproject/private/

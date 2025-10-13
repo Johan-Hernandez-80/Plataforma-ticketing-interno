@@ -54,6 +54,12 @@ create table tickets (
     fecha_creacion timestamp not null default current_timestamp,
     fecha_cierre timestamp null,
 
+    constraint chk_tickets_estado
+        check (estado in ('En progreso','Pendiente','Cerrado')),
+
+    constraint chk_tickets_prioridad
+        check (prioridad in ('Urgente','Importante','Programado')),
+
     constraint fk_tickets_usuarios
 	foreign key (usuario_id) references usuarios(id),
 
@@ -94,6 +100,12 @@ create table historial_tickets (
     estado_anterior varchar(255) not null,
     estado_nuevo varchar(255) not null,
     fecha_creacion timestamp not null default current_timestamp,
+
+    constraint chk_historialtickets_estados
+        check (
+            estado_anterior in ('En progreso','Pendiente','Cerrado')
+            and estado_nuevo in ('En progreso','Pendiente','Cerrado')
+        ),
 
     constraint fk_historialtickets_tickets
 	foreign key (ticket_id) references tickets(id)

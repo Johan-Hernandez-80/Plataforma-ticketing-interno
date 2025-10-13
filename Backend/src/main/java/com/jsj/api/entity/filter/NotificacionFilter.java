@@ -15,10 +15,10 @@ import org.springframework.stereotype.Component;
  * @author Juan José Molano Franco
  */
 @Component
-public class NotificacionFilter implements BaseFilter<Notificacion, NotificacionDTO> {
+public class NotificacionFilter extends BaseFilter<Notificacion, NotificacionDTO> {
 
     @Override
-    public NotificacionDTO filterDTO(NotificacionDTO dto, Set<String> permissions) {
+    public NotificacionDTO filterDTO(NotificacionDTO dto) {
 
         if (!permissions.contains("view_notificacion_id")) { dto.setId(null); }
         if (!permissions.contains("view_notificacion_usuario_id")) { dto.setUsuarioId(null); }
@@ -29,7 +29,7 @@ public class NotificacionFilter implements BaseFilter<Notificacion, Notificacion
     }
 
     @Override
-    public Notificacion filterEntity(Notificacion entity, Set<String> permissions) {
+    public Notificacion filterEntity(Notificacion entity) {
 
         if (!permissions.contains("update_notificacion_id")) { entity.setId(null); }
         if (!permissions.contains("update_notificacion_usuario_id")) { entity.setUsuario(null); }
