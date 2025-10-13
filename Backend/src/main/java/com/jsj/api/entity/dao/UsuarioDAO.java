@@ -46,8 +46,6 @@ public class UsuarioDAO extends BaseDAO<Usuario, Long, UsuarioDTO, UsuarioMapper
     }
 
     public UsuarioDTO updateUsuario(Long idUsuario, UsuarioDTO dto) {
-        Set<String> perms = CurrentUser.getPermissions();
-        
         Optional<Usuario> opt = repo.findById(idUsuario);
         if (opt.isEmpty()) {
             return null;
@@ -56,20 +54,34 @@ public class UsuarioDAO extends BaseDAO<Usuario, Long, UsuarioDTO, UsuarioMapper
         
         mapper.updateEntityFromDTO(dto, entity);
         
-        filter.filterEntity(entity, perms);
+        filter.filterEntity(entity);
         
-        return filter.filterDTO(mapper.toDTO(repo.save(entity)), perms);
+        return filter.filterDTO(mapper.toDTO(repo.save(entity)));
     }
     
     public UsuarioDTO save(UsuarioDTO dto, Rol rol) {
-        Set<String> perms = CurrentUser.getPermissions();
-        
         Usuario entity = mapper.toEntity(dto);
         entity.setRol(rol);
         
-        filter.filterEntity(entity, perms);
+        filter.filterEntity(entity);
         
-        return filter.filterDTO(mapper.toDTO(repo.save(entity)), perms);
+        return filter.filterDTO(mapper.toDTO(repo.save(entity)));
+    }
+
+    public boolean isAdmin(Long currentUserId) {
+        return repo.isAdmin(currentUserId);
+    }
+
+    public boolean isAgente(Long id) {
+        return repo.isAgente(id);
+    }
+
+    public boolean isAgenteAssignedToTicket(Long idUsuario, Long idTicket) {
+        return repo.isAgenteAssignedToTicket(idUsuario, idTicket);
+    }
+
+    public boolean isTicketBelongsToUsuario(Long idUsuario, Long idTicket) {
+        return repo.isTicketBelongsToUsuario(idUsuario, idTicket);
     }
 
 }

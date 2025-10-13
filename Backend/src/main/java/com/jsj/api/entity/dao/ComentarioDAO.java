@@ -9,6 +9,9 @@ import com.jsj.api.entity.dto.ComentarioDTO;
 import com.jsj.api.entity.filter.ComentarioFilter;
 import com.jsj.api.entity.mapper.ComentarioMapper;
 import com.jsj.api.repository.ComentarioRepository;
+import com.jsj.api.security.CurrentUser;
+import java.util.List;
+import java.util.Set;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -20,6 +23,20 @@ public class ComentarioDAO extends BaseDAO<Comentario, Long, ComentarioDTO, Come
 
     public ComentarioDAO(ComentarioMapper mapper, ComentarioFilter filter, ComentarioRepository repo) {
         super(mapper, filter, repo);
+    }
+
+    public List<ComentarioDTO> findComentariosByTicketId(Long idTicket) {
+        return repo.findByTicketIdOrderByFechaCreacionAsc(idTicket)
+                .stream()
+                .map(mapper::toDTO)
+                .map(dto -> filter.filterDTO(dto))
+                .toList();
+    }
+
+    public ComentarioDTO save(ComentarioDTO comentarioDTO) {
+        Comentario entity = repo.save(filter.filterEntity(mapper.toEntity(comentarioDTO)));
+
+        return filter.filterDTO(mapper.toDTO(entity));
     }
 
 }

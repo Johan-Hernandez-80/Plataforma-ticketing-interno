@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/usuarios")
-@Tag(name = "Usuarios", description = "Operations related to Usuario entities")
+@Tag(name = "Usuarios", description = "Operaciones relacionadas con los usuarios")
 public class UsuarioController extends BaseController<Usuario, Long, UsuarioDTO> {
 
     private UsuarioService service;

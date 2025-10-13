@@ -28,4 +28,28 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query("SELECT u FROM Usuario u WHERE u.emailCorporativo = :emailCorporativo")
     Usuario findByEmailCorporativo(@Param("emailCorporativo") String emailCorporativo);
 
+    @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END "
+            + "FROM Usuario u "
+            + "JOIN u.rol r "
+            + "WHERE u.id = :usuarioId AND r.nombre = 'admin'")
+    boolean isAdmin(@Param("usuarioId") Long usuarioId);
+
+    @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END "
+            + "FROM Usuario u "
+            + "JOIN u.rol r "
+            + "WHERE u.id = :usuarioId AND r.nombre = 'agente'")
+    boolean isAgente(@Param("usuarioId") Long usuarioId);
+
+    @Query("SELECT CASE WHEN COUNT(a) > 0 THEN true ELSE false END "
+            + "FROM Asignacion a "
+            + "WHERE a.agente.id = :agenteId AND a.ticket.id = :ticketId")
+    boolean isAgenteAssignedToTicket(@Param("agenteId") Long agenteId,
+            @Param("ticketId") Long ticketId);
+
+    @Query("SELECT CASE WHEN COUNT(t) > 0 THEN true ELSE false END "
+            + "FROM Ticket t "
+            + "WHERE t.usuario.id = :usuarioId AND t.id = :ticketId")
+    boolean isTicketBelongsToUsuario(@Param("usuarioId") Long usuarioId,
+            @Param("ticketId") Long ticketId);
+
 }

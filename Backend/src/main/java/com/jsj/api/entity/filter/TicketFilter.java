@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
  * @author Juan José Molano Franco
  */
 @Component
-public class TicketFilter implements BaseFilter<Ticket, TicketDTO> {
+public class TicketFilter extends BaseFilter<Ticket, TicketDTO> {
     
     private final UsuarioService usuarioService;
     private final CategoriaService categoriaService;
@@ -29,7 +29,7 @@ public class TicketFilter implements BaseFilter<Ticket, TicketDTO> {
     }
     
     @Override
-    public TicketDTO filterDTO(TicketDTO dto, Set<String> permissions) {
+    public TicketDTO filterDTO(TicketDTO dto) {
         
         if (!permissions.contains("view_ticket_id")) {dto.setId(null);}
         if (!permissions.contains("view_ticket_usuario_id")) {dto.setUsuarioId(null);}
@@ -46,7 +46,7 @@ public class TicketFilter implements BaseFilter<Ticket, TicketDTO> {
     }
 
     @Override
-    public Ticket filterEntity(Ticket entity, Set<String> permissions) {
+    public Ticket filterEntity(Ticket entity) {
         
         if (!permissions.contains("update_ticket_id")) {entity.setId(null);}
         if (!permissions.contains("update_ticket_usuario_id")) {entity.setUsuario(null);}

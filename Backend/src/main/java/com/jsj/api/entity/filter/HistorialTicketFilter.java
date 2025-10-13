@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
  * @author Juan José Molano Franco
  */
 @Component
-public class HistorialTicketFilter implements BaseFilter<HistorialTicket, HistorialTicketDTO> {
+public class HistorialTicketFilter extends BaseFilter<HistorialTicket, HistorialTicketDTO> {
     
     private final TicketService ticketService;
 
@@ -26,7 +26,7 @@ public class HistorialTicketFilter implements BaseFilter<HistorialTicket, Histor
     }
 
     @Override
-    public HistorialTicketDTO filterDTO(HistorialTicketDTO dto, Set<String> permissions) {
+    public HistorialTicketDTO filterDTO(HistorialTicketDTO dto) {
         
         if (!permissions.contains("view_historial_ticket_id")) { dto.setId(null); }
         if (!permissions.contains("view_historial_ticket_ticket_id")) { dto.setTicketId(null); }
@@ -38,7 +38,7 @@ public class HistorialTicketFilter implements BaseFilter<HistorialTicket, Histor
     }
 
     @Override
-    public HistorialTicket filterEntity(HistorialTicket entity, Set<String> permissions) {
+    public HistorialTicket filterEntity(HistorialTicket entity) {
         
         if (!permissions.contains("update_historial_ticket_id")) { entity.setId(null); }
         if (!permissions.contains("update_historial_ticket_ticket_id")) { entity.setTicket(null); }

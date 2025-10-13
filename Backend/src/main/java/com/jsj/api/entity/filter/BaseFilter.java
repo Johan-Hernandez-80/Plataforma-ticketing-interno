@@ -5,23 +5,26 @@
 
 package com.jsj.api.entity.filter;
 
+import com.jsj.api.security.CurrentUser;
 import java.util.Set;
 
 /**
  *
  * @author Juan José Molano Franco
  */
-public interface BaseFilter <
-        E, // Entity
-        DTO // For handling info without recursion
+public abstract class BaseFilter <
+        E, // Entidad
+        DTO // Para la mostrar información sin recursión (listas de objetos que tienen a la entidad)
         > {
-    
-    // Filter entity data
-    // This entity is used to ALTER DATA in the DB, implement appropiate ROLE PERMISSIONS
-    E filterEntity(E entity, Set<String> permissions);
 
-    // Filter DTO data
-    // This DTO is used to EXPOSE DATA in the API, implement appropiate ROLE PERMISSIONS
-    DTO filterDTO(DTO dto, Set<String> permissions);
+    protected final Set<String> permissions = CurrentUser.getPermissions();
+    
+    // Filtra data de la entidad
+    // Esta entidad se usa para ALTERAR DATA en la DB, implemente los permisos de rol apropiados
+    abstract E filterEntity(E entity);
+
+    // Filtra data del DTO
+    // Este DTO se usa para EXPONER DATA en la API, implemente los permisos de rol apropiados
+    abstract DTO filterDTO(DTO dto);
     
 }

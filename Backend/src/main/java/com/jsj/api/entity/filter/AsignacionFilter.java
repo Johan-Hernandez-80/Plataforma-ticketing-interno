@@ -16,10 +16,10 @@ import org.springframework.stereotype.Component;
  * @author Juan José Molano Franco
  */
 @Component
-public class AsignacionFilter implements BaseFilter<Asignacion, AsignacionDTO> {
+public class AsignacionFilter extends BaseFilter<Asignacion, AsignacionDTO> {
 
     @Override
-    public AsignacionDTO filterDTO(AsignacionDTO dto, Set<String> permissions) {
+    public AsignacionDTO filterDTO(AsignacionDTO dto) {
 
         if (!permissions.contains("view_asignacion_id")) { dto.setId(null); }
         if (!permissions.contains("view_asignacion_ticket_id")) { dto.setTicketId(null); }
@@ -30,7 +30,7 @@ public class AsignacionFilter implements BaseFilter<Asignacion, AsignacionDTO> {
     }
 
     @Override
-    public Asignacion filterEntity(Asignacion entity, Set<String> permissions) {
+    public Asignacion filterEntity(Asignacion entity) {
 
         if (!permissions.contains("update_asignacion_id")) { entity.setId(null); }
         if (!permissions.contains("update_asignacion_ticket_id")) { entity.setTicket(null); }
