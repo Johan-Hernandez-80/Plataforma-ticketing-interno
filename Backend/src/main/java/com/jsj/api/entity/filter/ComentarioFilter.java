@@ -20,12 +20,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ComentarioFilter extends BaseFilter<Comentario, ComentarioDTO> {
     
-    private final TicketService ticketService;
-    private final UsuarioService usuarioService;
-
-    public ComentarioFilter(TicketService ticketService, UsuarioService usuarioService) {
-        this.ticketService = ticketService;
-        this.usuarioService = usuarioService;
+    public ComentarioFilter() {
     }
 
     @Override

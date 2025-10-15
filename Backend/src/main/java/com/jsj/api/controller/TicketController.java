@@ -375,7 +375,7 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO> {
         @ApiResponse(responseCode = "500", description = "Error interno del servidor",
                 content = @Content(schema = @Schema(example = "{ \"error\": \"Error interno del servidor. Intente nuevamente más tarde.\" }")))
     })
-    @GetMapping()
+    @GetMapping("/filtered")
     public ResponseEntity<?> getTicketsFiltrados(
             @Parameter(description = "Estado del ticket (ej: pendiente, cerrado, en progreso)")
             @RequestParam(required = false) String estado,
