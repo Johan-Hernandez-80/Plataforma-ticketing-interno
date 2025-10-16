@@ -5,6 +5,7 @@
 
 package com.jsj.api.entity.filter;
 
+import com.jsj.api.exception.ImmutableFieldException;
 import com.jsj.api.exception.InsufficientSavingPermissionsException;
 import com.jsj.api.security.CurrentUser;
 import java.util.Set;
@@ -20,11 +21,11 @@ public abstract class BaseFilter <
 
     // Filtra data de la entidad nueva a guardar
     // Esta entidad se usa para ALTERAR DATA en la DB, implemente los permisos de rol apropiados, nulificación de datos autogenerados y encriptación de contrasenas
-    abstract E filterEntityToSave(E entity) throws InsufficientSavingPermissionsException;
+    abstract E filterEntityToSave(E entity) throws InsufficientSavingPermissionsException, ImmutableFieldException;
     
     // Filtra data de la entidad nueva a guardar
     // Esta entidad se usa para ALTERAR DATA en la DB, implemente los permisos de rol apropiados, skip de datos nulos (sin cambios) y encriptación de contrasenas
-    abstract E filterEntityToUpdate(E entity, DTO dto) throws InsufficientSavingPermissionsException;
+    abstract E filterEntityToUpdate(E entity, DTO dto) throws InsufficientSavingPermissionsException, ImmutableFieldException;
 
     // Filtra data del DTO
     // Este DTO se usa para EXPONER DATA en la API, implemente los permisos de rol apropiados

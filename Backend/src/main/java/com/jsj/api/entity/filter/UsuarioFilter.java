@@ -6,6 +6,7 @@ package com.jsj.api.entity.filter;
 
 import com.jsj.api.entity.Usuario;
 import com.jsj.api.entity.dto.UsuarioDTO;
+import com.jsj.api.exception.ImmutableFieldException;
 import com.jsj.api.service.RolService;
 import com.jsj.api.exception.InsufficientSavingPermissionsException;
 import com.jsj.api.security.CurrentUser;
@@ -86,17 +87,19 @@ public class UsuarioFilter extends BaseFilter<Usuario, UsuarioDTO> {
     }
 
     @Override
-    public Usuario filterEntityToUpdate(Usuario entity, UsuarioDTO dto) throws InsufficientSavingPermissionsException {
+    public Usuario filterEntityToUpdate(Usuario entity, UsuarioDTO dto) throws InsufficientSavingPermissionsException, ImmutableFieldException {
 
         Set<String> permissions = CurrentUser.getPermissions();
 
-        log.info(permissions.toString());
+        if (dto.getId() != null) {
+            throw new ImmutableFieldException("No se puede cambiar la id");
+        }
 
         if (dto.getRolId() != null) {
             if (permissions.contains("update_usuario_rol_id")) {
                 entity.setRolId(dto.getRolId());
             } else {
-                throw new InsufficientSavingPermissionsException("No tiene permisos para actualizar el rol del usuario");
+                throw new InsufficientSavingPermissionsException("No tiene permisos para actualizar el id del rol del usuario");
             }
         }
 
@@ -126,7 +129,7 @@ public class UsuarioFilter extends BaseFilter<Usuario, UsuarioDTO> {
 
         if (dto.getContrasena() != null) {
             if (permissions.contains("update_usuario_contrasena")) {
-                entity.setContrasena(passwordEncoder.encode(dto.getContrasena()));
+                dto.setContrasena(passwordEncoder.encode(dto.getContrasena()));
             } else {
                 throw new InsufficientSavingPermissionsException("No tiene permisos para actualizar la contraseña del usuario");
             }

@@ -50,14 +50,16 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     boolean isAgenteAssignedToTicket(@Param("agenteId") Long agenteId,
             @Param("ticketId") Long ticketId);
 
-    @Query("SELECT CASE WHEN COUNT(t) > 0 THEN true ELSE false END "
-            + "FROM Ticket t "
-            + "WHERE t.usuario.id = :usuarioId AND t.id = :ticketId")
+    @Query("""
+        SELECT CASE WHEN COUNT(t) > 0 THEN true ELSE false END
+        FROM Ticket t
+        WHERE t.usuarioId = :usuarioId AND t.id = :ticketId
+    """)
     boolean isTicketBelongsToUsuario(@Param("usuarioId") Long usuarioId,
             @Param("ticketId") Long ticketId);
-    
+
     boolean existsByEmailPersonal(String emailPersonal);
-    
+
     boolean existsByEmailCorporativo(String emailCorporativo);
 
 }

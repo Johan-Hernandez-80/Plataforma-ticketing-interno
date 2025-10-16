@@ -4,6 +4,7 @@
  */
 package com.jsj.api.config;
 
+import com.jsj.api.entity.filter.UsuarioFilter;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.SecurityException;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
@@ -31,6 +34,8 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(UsuarioFilter.class);
 
     // -------- DB errors --------
     @ExceptionHandler(DataIntegrityViolationException.class)
@@ -75,6 +80,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<Map<String, String>> handleMalformedBody(HttpMessageNotReadableException ex) {
+        log.info("Error malformed body: ", ex);
         Map<String, String> body = Map.of(
                 "error", "Solicitud inválida.",
                 "detalles", "El cuerpo de la petición está mal formado."
@@ -112,6 +118,7 @@ public class GlobalExceptionHandler {
     // -------- Fallback --------
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object> handleGeneral(Exception ex) {
+        log.info("Error 500", ex);
         return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Error interno del servidor. Intente nuevamente más tarde.");
     }
 

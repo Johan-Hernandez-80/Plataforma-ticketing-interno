@@ -11,6 +11,7 @@ import com.jsj.api.entity.filter.BaseFilter;
 import com.jsj.api.entity.filter.UsuarioFilter;
 import com.jsj.api.entity.mapper.BaseMapper;
 import com.jsj.api.entity.mapper.UsuarioMapper;
+import com.jsj.api.exception.ImmutableFieldException;
 import com.jsj.api.exception.InsufficientSavingPermissionsException;
 import com.jsj.api.exception.UsuarioInexistenteException;
 import com.jsj.api.repository.UsuarioRepository;
@@ -47,7 +48,7 @@ public class UsuarioDAO extends BaseDAO<Usuario, Long, UsuarioDTO, UsuarioMapper
         return repo.existsById(idUsuario);
     }
 
-    public UsuarioDTO updateUsuario(Long idUsuario, UsuarioDTO dto) throws UsuarioInexistenteException, InsufficientSavingPermissionsException {
+    public UsuarioDTO updateUsuario(Long idUsuario, UsuarioDTO dto) throws UsuarioInexistenteException, InsufficientSavingPermissionsException, ImmutableFieldException {
         Optional<Usuario> opt = repo.findById(idUsuario);
         if (opt.isEmpty()) {
             throw new UsuarioInexistenteException("El usuario no existe");

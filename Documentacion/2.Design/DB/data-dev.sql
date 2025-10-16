@@ -1,7 +1,6 @@
--- Make sure we are using the right DB
 use ticketing;
 
--- Insert admin user
+-- Insertar admin
 insert into usuarios (rol_id, nombre, email_personal, email_corporativo, contrasena, departamento)
 values (
     (select id from roles where nombre = 'admin'),
@@ -12,7 +11,7 @@ values (
     'Administración'
 );
 
--- Insert agente user
+-- Insertar agente
 insert into usuarios (rol_id, nombre, email_personal, email_corporativo, contrasena, departamento)
 values (
     (select id from roles where nombre = 'agente'),
@@ -23,7 +22,7 @@ values (
     'Soporte'
 );
 
--- Insert usuario user
+-- Insertar usuario
 insert into usuarios (rol_id, nombre, email_personal, email_corporativo, contrasena, departamento)
 values (
     (select id from roles where nombre = 'usuario'),
@@ -32,4 +31,15 @@ values (
     'usuario@empresa.com',
     '$2a$10$mcFrZ.SKqpDX78UxCnfqQufiwPujp28e67TZ59TwyEgdJ73RBG4he',
     'General'
+);
+
+-- Insertar categoría
+insert into categorias (nombre, descripcion)
+values ('Soporte Técnico', 'Tickets relacionados con problemas técnicos');
+
+-- Insertar notificación
+insert into notificaciones (usuario_id, mensaje)
+values (
+    (select id from usuarios where email_corporativo = 'usuario@empresa.com'),
+    'Su ticket ha sido creado exitosamente.'
 );

@@ -24,7 +24,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
         SELECT t FROM Ticket t
         WHERE (:estado IS NULL OR t.estado = :estado)
         AND (:prioridad IS NULL OR t.prioridad = :prioridad)
-        AND (:usuarioId IS NULL OR t.usuario.id = :usuarioId)
+        AND (:usuarioId IS NULL OR t.usuarioId = :usuarioId)
     """)
     List<Ticket> findTickets(
             @Param("estado") String estado,
@@ -35,7 +35,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
         SELECT t FROM Ticket t
         WHERE (:estado IS NULL OR t.estado = :estado)
         AND (:prioridad IS NULL OR t.prioridad = :prioridad)
-        AND (:usuarioId IS NULL OR t.usuario.id = :usuarioId)
+        AND (:usuarioId IS NULL OR t.usuarioId = :usuarioId)
         AND (:fechaCreacion IS NULL OR DATE(t.fechaCreacion) = :fechaCreacion)
     """)
     List<Ticket> findTickets(
