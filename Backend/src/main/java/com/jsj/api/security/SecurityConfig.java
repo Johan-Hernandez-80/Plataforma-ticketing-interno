@@ -4,6 +4,7 @@
  */
 package com.jsj.api.security;
 
+import com.jsj.api.service.RolService;
 import com.jsj.api.service.UsuarioService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,10 +25,14 @@ public class SecurityConfig {
 
     private final PermissionService permissionService;
     private final UsuarioService usuarioService;
+    private final RolService rolService;
+    private final JwtUtils jwtUtils;
 
-    public SecurityConfig(PermissionService permissionService, UsuarioService usuarioService) {
+    public SecurityConfig(PermissionService permissionService, UsuarioService usuarioService, RolService rolService, JwtUtils jwtUtils) {
         this.permissionService = permissionService;
         this.usuarioService = usuarioService;
+        this.rolService = rolService;
+        this.jwtUtils = jwtUtils;
     }
 
     @Bean
@@ -49,7 +54,7 @@ public class SecurityConfig {
 
     @Bean
     public JwtAuthFilter jwtAuthFilter() {
-        return new JwtAuthFilter(permissionService, usuarioService);
+        return new JwtAuthFilter(permissionService, usuarioService, rolService, jwtUtils);
     }
 
     @Bean

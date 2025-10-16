@@ -34,7 +34,7 @@ public class TicketDAO extends BaseDAO<Ticket, Long, TicketDTO, TicketMapper, Ti
     public TicketDTO save(TicketDTO dto) {
         Ticket entity = mapper.toEntity(dto);
 
-        filter.filterEntity(entity);
+        filter.filterEntityToSave(entity);
 
         return filter.filterDTO(mapper.toDTO(repo.save(entity)));
     }

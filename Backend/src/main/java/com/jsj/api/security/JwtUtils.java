@@ -5,6 +5,7 @@
 package com.jsj.api.security;
 
 import com.jsj.api.entity.Usuario;
+import com.jsj.api.service.RolService;
 import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -24,18 +25,23 @@ public class JwtUtils {
     private static final String SECRET = dotenv.get("JWT_SECRET");
     private static final long EXPIRATION_MS = 3600000; // 1 hour
     private static final Key KEY = Keys.hmacShaKeyFor(SECRET.getBytes());
+    private final RolService rolService;
 
-    public static String generateToken(Usuario user) {
+    public JwtUtils(RolService rolService) {
+        this.rolService = rolService;
+    }
+    
+    public String generateToken(Usuario user) {
         return Jwts.builder()
                 .setSubject(user.getId().toString())
-                .claim("role", user.getRol().getNombre())
+                .claim("role", rolService.findRolNombreById(user.getRolId()).get())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_MS))
                 .signWith(KEY, SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public static String extractUserId(String token) throws JwtException {
+    public String extractUserId(String token) throws JwtException {
         return Jwts.parserBuilder()
                 .setSigningKey(KEY)
                 .build()

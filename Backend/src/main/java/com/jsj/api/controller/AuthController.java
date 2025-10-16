@@ -37,13 +37,15 @@ public class AuthController {
     private final UsuarioFilter filter;
     private final RolService rolService;
     private final PasswordEncoder passwordEncoder;
+    private final JwtUtils jwtUtils;
 
-    public AuthController(UsuarioService usuarioService, UsuarioMapper mapper, UsuarioFilter filter, RolService rolService, PasswordEncoder passwordEncoder) {
+    public AuthController(UsuarioService usuarioService, UsuarioMapper mapper, UsuarioFilter filter, RolService rolService, PasswordEncoder passwordEncoder, JwtUtils jwtUtils) {
         this.usuarioService = usuarioService;
         this.mapper = mapper;
         this.filter = filter;
         this.rolService = rolService;
         this.passwordEncoder = passwordEncoder;
+        this.jwtUtils = jwtUtils;
     }
 
     @Operation(
@@ -89,7 +91,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Credenciales inválidas. Verifique su email y contraseña."));
         }
 
-        String token = JwtUtils.generateToken(user);
+        String token = jwtUtils.generateToken(user);
         Map<String, String> body = Map.of("token", token);
         return ResponseEntity.ok(body);
     }

@@ -10,6 +10,8 @@ import com.jsj.api.entity.dto.*;
 import com.jsj.api.service.CategoriaService;
 import com.jsj.api.service.UsuarioService;
 import com.jsj.api.entity.mapper.BaseMapper;
+import com.jsj.api.exception.InsufficientSavingPermissionsException;
+import com.jsj.api.security.CurrentUser;
 import java.util.Set;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +33,8 @@ public class TicketFilter extends BaseFilter<Ticket, TicketDTO> {
     @Override
     public TicketDTO filterDTO(TicketDTO dto) {
         
+        Set<String> permissions = CurrentUser.getPermissions();
+        
         if (!permissions.contains("view_ticket_id")) {dto.setId(null);}
         if (!permissions.contains("view_ticket_usuario_id")) {dto.setUsuarioId(null);}
         if (!permissions.contains("view_ticket_categoria_id")) {dto.setCategoriaId(null);}
@@ -46,7 +50,9 @@ public class TicketFilter extends BaseFilter<Ticket, TicketDTO> {
     }
 
     @Override
-    public Ticket filterEntity(Ticket entity) {
+    public Ticket filterEntityToSave(Ticket entity) {
+        
+        Set<String> permissions = CurrentUser.getPermissions();
         
         if (!permissions.contains("update_ticket_id")) {entity.setId(null);}
         if (!permissions.contains("update_ticket_usuario_id")) {entity.setUsuario(null);}
@@ -60,6 +66,14 @@ public class TicketFilter extends BaseFilter<Ticket, TicketDTO> {
         
         return entity;
         
+    }
+
+    @Override
+    Ticket filterEntityToUpdate(Ticket entity, TicketDTO dto) throws InsufficientSavingPermissionsException {
+        
+        Set<String> permissions = CurrentUser.getPermissions();
+        
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

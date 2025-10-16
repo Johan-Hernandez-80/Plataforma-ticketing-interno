@@ -23,9 +23,8 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "rol_id", nullable = false)
-    private Rol rol;
+    @Column(name = "rol_id", nullable = false)
+    private Long rolId;
 
     @Column(nullable = false, length = 225)
     private String nombre;
@@ -42,18 +41,6 @@ public class Usuario {
     @Column(nullable = false, length = 225)
     private String departamento;
 
-    @OneToMany(mappedBy = "usuario")
-    private List<Ticket> tickets = new ArrayList<>();
-
-    @OneToMany(mappedBy = "agente")
-    private List<Asignacion> asignaciones = new ArrayList<>();
-
-    @OneToMany(mappedBy = "usuario")
-    private List<Comentario> comentarios = new ArrayList<>();
-
-    @OneToMany(mappedBy = "usuario")
-    private List<Notificacion> notificaciones = new ArrayList<>();
-
     public Long getId() {
         return id;
     }
@@ -62,12 +49,12 @@ public class Usuario {
         this.id = id;
     }
 
-    public Rol getRol() {
-        return rol;
+    public Long getRolId() {
+        return rolId;
     }
 
-    public void setRol(Rol rol) {
-        this.rol = rol;
+    public void setRolId(Long rolId) {
+        this.rolId = rolId;
     }
 
     public String getNombre() {
@@ -108,38 +95,6 @@ public class Usuario {
 
     public void setDepartamento(String departamento) {
         this.departamento = departamento;
-    }
-
-    public List<Ticket> getTickets() {
-        return tickets;
-    }
-
-    public void setTickets(List<Ticket> tickets) {
-        this.tickets = tickets;
-    }
-
-    public List<Asignacion> getAsignaciones() {
-        return asignaciones;
-    }
-
-    public void setAsignaciones(List<Asignacion> asignaciones) {
-        this.asignaciones = asignaciones;
-    }
-
-    public List<Comentario> getComentarios() {
-        return comentarios;
-    }
-
-    public void setComentarios(List<Comentario> comentarios) {
-        this.comentarios = comentarios;
-    }
-
-    public List<Notificacion> getNotificaciones() {
-        return notificaciones;
-    }
-
-    public void setNotificaciones(List<Notificacion> notificaciones) {
-        this.notificaciones = notificaciones;
     }
 
 }

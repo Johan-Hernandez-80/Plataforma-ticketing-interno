@@ -8,6 +8,8 @@ package com.jsj.api.entity.filter;
 import com.jsj.api.entity.*;
 import com.jsj.api.entity.dto.*;
 import com.jsj.api.entity.mapper.BaseMapper;
+import com.jsj.api.exception.InsufficientSavingPermissionsException;
+import com.jsj.api.security.CurrentUser;
 import java.util.Set;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +23,8 @@ public class AsignacionFilter extends BaseFilter<Asignacion, AsignacionDTO> {
     @Override
     public AsignacionDTO filterDTO(AsignacionDTO dto) {
 
+        Set<String> permissions = CurrentUser.getPermissions();
+        
         if (!permissions.contains("view_asignacion_id")) { dto.setId(null); }
         if (!permissions.contains("view_asignacion_ticket_id")) { dto.setTicketId(null); }
         if (!permissions.contains("view_asignacion_agente_id")) { dto.setAgenteId(null); }
@@ -30,13 +34,23 @@ public class AsignacionFilter extends BaseFilter<Asignacion, AsignacionDTO> {
     }
 
     @Override
-    public Asignacion filterEntity(Asignacion entity) {
+    public Asignacion filterEntityToSave(Asignacion entity) {
 
+        Set<String> permissions = CurrentUser.getPermissions();
+        
         if (!permissions.contains("update_asignacion_id")) { entity.setId(null); }
         if (!permissions.contains("update_asignacion_ticket_id")) { entity.setTicket(null); }
         if (!permissions.contains("update_asignacion_agente_id")) { entity.setAgente(null); }
         if (!permissions.contains("update_asignacion_fecha_creacion")) { entity.setFechaCreacion(null); }
 
         return entity;
+    }
+
+    @Override
+    Asignacion filterEntityToUpdate(Asignacion entity, AsignacionDTO dto) throws InsufficientSavingPermissionsException {
+        
+        Set<String> permissions = CurrentUser.getPermissions();
+        
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

@@ -19,20 +19,33 @@ import lombok.Data;
 public class UsuarioDTO {
 
     private Long id;
+
+    @NotNull(message = "La id del rol es obligatoria")
     private Long rolId;
+
+    @NotBlank(message = "El nombre es obligatorio")
+    @Size(max = 255, message = "El nombre no puede superar 255 caracteres")
     private String nombre;
-    @NotBlank(message = "El correo personal es obligatorio")
+
     @Email(message = "El correo personal no es válido")
     @Pattern(regexp = "\\S+", message = "El correo personal no debe contener espacios en blanco")
+    @Size(max = 255, message = "El correo personal no puede superar 255 caracteres")
     private String emailPersonal;
+
     @NotBlank(message = "El correo corporativo es obligatorio")
     @Email(message = "El correo corporativo no es válido")
     @Pattern(regexp = "\\S+", message = "El correo corporativo no debe contener espacios en blanco")
+    @Size(max = 255, message = "El correo corporativo no puede superar 255 caracteres")
     private String emailCorporativo;
+
     @NotBlank(message = "La contraseña es obligatoria")
     @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
     @Pattern(regexp = "\\S+", message = "La contraseña no debe contener espacios en blanco")
+    @Size(max = 255, message = "La contraseña no puede superar 255 caracteres")
     private String contrasena;
+
+    @NotBlank(message = "El departamento es obligatorio")
+    @Size(max = 255, message = "El departamento no puede superar 255 caracteres")
     private String departamento;
 
     public Long getId() {

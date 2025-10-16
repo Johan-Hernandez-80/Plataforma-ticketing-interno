@@ -10,6 +10,8 @@ import com.jsj.api.entity.dto.*;
 import com.jsj.api.service.TicketService;
 import com.jsj.api.service.UsuarioService;
 import com.jsj.api.entity.mapper.BaseMapper;
+import com.jsj.api.exception.InsufficientSavingPermissionsException;
+import com.jsj.api.security.CurrentUser;
 import java.util.Set;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +28,8 @@ public class ComentarioFilter extends BaseFilter<Comentario, ComentarioDTO> {
     @Override
     public ComentarioDTO filterDTO(ComentarioDTO dto) {
         
+        Set<String> permissions = CurrentUser.getPermissions();
+        
         if (!permissions.contains("view_comentario_id")) { dto.setId(null); }
         if (!permissions.contains("view_comentario_ticket_id")) { dto.setTicketId(null); }
         if (!permissions.contains("view_comentario_usuario_id")) { dto.setUsuarioId(null); }
@@ -36,7 +40,9 @@ public class ComentarioFilter extends BaseFilter<Comentario, ComentarioDTO> {
     }
 
     @Override
-    public Comentario filterEntity(Comentario entity) {
+    public Comentario filterEntityToSave(Comentario entity) {
+        
+        Set<String> permissions = CurrentUser.getPermissions();
         
         if (!permissions.contains("update_comentario_id")) { entity.setId(null); }
         if (!permissions.contains("update_comentario_ticket_id")) { entity.setTicket(null); }
@@ -45,5 +51,13 @@ public class ComentarioFilter extends BaseFilter<Comentario, ComentarioDTO> {
         if (!permissions.contains("update_comentario_fecha_creacion")) { entity.setFechaCreacion(null); }
         
         return entity;
+    }
+
+    @Override
+    Comentario filterEntityToUpdate(Comentario entity, ComentarioDTO dto) throws InsufficientSavingPermissionsException {
+        
+        Set<String> permissions = CurrentUser.getPermissions();
+        
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

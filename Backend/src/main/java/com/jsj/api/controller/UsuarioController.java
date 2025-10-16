@@ -8,6 +8,12 @@ import com.jsj.api.service.BaseService;
 import com.jsj.api.entity.*;
 import com.jsj.api.entity.dao.UsuarioDAO;
 import com.jsj.api.entity.dto.*;
+import com.jsj.api.exception.ContrasenaInvalidaException;
+import com.jsj.api.exception.EmailInvalidoException;
+import com.jsj.api.exception.IdInvalidaException;
+import com.jsj.api.exception.InsufficientSavingPermissionsException;
+import com.jsj.api.exception.RolInexistenteException;
+import com.jsj.api.exception.UsuarioInexistenteException;
 import com.jsj.api.security.CurrentUser;
 import com.jsj.api.service.UsuarioService;
 import io.swagger.v3.oas.annotations.*;
@@ -71,6 +77,8 @@ public class UsuarioController extends BaseController<Usuario, Long, UsuarioDTO>
                 content = @Content(schema = @Schema(implementation = UsuarioDTO.class))),
         @ApiResponse(responseCode = "400", description = "Datos inválidos",
                 content = @Content(schema = @Schema(example = "{ \"error\": \"Datos inválidos.\", \"detalles\": [\"El correo electrónico no es válido\", \"La contraseña debe tener mínimo 8 caracteres\"] }"))),
+        @ApiResponse(responseCode = "401", description = "No autorizado",
+                content = @Content(schema = @Schema(example = "{ \"error\": \"Datos inválidos.\", \"detalles\": [\"No tiene permisos para actualizar el rol del usuario\"] }"))),
         @ApiResponse(responseCode = "404", description = "Usuario no encontrado",
                 content = @Content(schema = @Schema(example = "{ \"mensaje\": \"Usuario no encontrado.\" }"))),
         @ApiResponse(responseCode = "500", description = "Error interno del servidor",
@@ -87,13 +95,20 @@ public class UsuarioController extends BaseController<Usuario, Long, UsuarioDTO>
             )
             @RequestBody UsuarioDTO usuarioDTO) {
 
-        UsuarioDTO updated = service.updateUsuario(idUsuario, usuarioDTO);
-
-        if (updated == null) {
+        UsuarioDTO updated;
+        try {
+            updated = service.updateUsuario(idUsuario, usuarioDTO);
+        } catch (UsuarioInexistenteException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(Map.of("mensaje", "Usuario no encontrado."));
+                    .body(Map.of("detalles", "Usuario no encontrado."));
+        } catch (InsufficientSavingPermissionsException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("detalles", ex.getMessage()));
+        } catch (EmailInvalidoException | IdInvalidaException | RolInexistenteException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("error: ", "Datos inválidos.",
+                            "detalles: ", ex.getMessage()));
         }
-
         return ResponseEntity.ok(updated);
     }
 
@@ -106,7 +121,7 @@ public class UsuarioController extends BaseController<Usuario, Long, UsuarioDTO>
         @ApiResponse(responseCode = "201", description = "Usuario creado correctamente",
                 content = @Content(schema = @Schema(implementation = UsuarioDTO.class))),
         @ApiResponse(responseCode = "400", description = "Datos inválidos",
-                content = @Content(schema = @Schema(example = "{ \"error\": \"Los datos enviados son inválidos o faltan campos obligatorios\" }"))),
+                content = @Content(schema = @Schema(example = "{ \"error\": \"Datos inválidos.\", \"detalles\": [\"El correo electrónico no es válido\", \"La contraseña debe tener mínimo 8 caracteres\"] }"))),
         @ApiResponse(responseCode = "401", description = "No autorizado",
                 content = @Content(schema = @Schema(example = "{ \"error\": \"No tiene permiso para usar este endpoint\" }"))),
         @ApiResponse(responseCode = "500", description = "Error interno del servidor",
@@ -125,7 +140,17 @@ public class UsuarioController extends BaseController<Usuario, Long, UsuarioDTO>
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        UsuarioDTO created = service.save(usuarioDTO);
+        UsuarioDTO created;
+        try {
+            created = service.save(usuarioDTO);
+        } catch (EmailInvalidoException | IdInvalidaException | RolInexistenteException | ContrasenaInvalidaException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("error: ", "Datos inválidos.",
+                            "detalles: ", ex.getMessage()));
+        } catch (InsufficientSavingPermissionsException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("detalles", ex.getMessage()));
+        }
 
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
 

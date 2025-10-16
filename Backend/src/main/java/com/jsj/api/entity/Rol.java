@@ -24,9 +24,6 @@ public class Rol {
     @Column(nullable = false, unique = true, length = 225)
     private String nombre;
 
-    @OneToMany(mappedBy = "rol")
-    private Set<Usuario> usuarios = new HashSet<>();
-
     @ManyToMany
     @JoinTable(
             name = "permisos_roles",
@@ -49,14 +46,6 @@ public class Rol {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public Set<Usuario> getUsuarios() {
-        return usuarios;
-    }
-
-    public void setUsuarios(Set<Usuario> usuarios) {
-        this.usuarios = usuarios;
     }
 
     public Set<Permiso> getPermisos() {

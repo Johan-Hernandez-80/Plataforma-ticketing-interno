@@ -9,13 +9,9 @@ package com.jsj.api.exception;
  *
  * @author Juan José Molano Franco
  */
-public class UsuarioInexistenteException extends Exception {
+public class InsufficientSavingPermissionsException extends Exception {
 
-    public UsuarioInexistenteException(Long usuarioId) {
-        super(String.valueOf(usuarioId));
-    }
-
-    public UsuarioInexistenteException(String message) {
+    public InsufficientSavingPermissionsException(String message) {
         super(message);
     }
 

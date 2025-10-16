@@ -6,6 +6,7 @@ package com.jsj.api.entity.dao;
 
 import com.jsj.api.entity.Rol;
 import com.jsj.api.repository.RolRepository;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public class RolDAO {
-    
+
     private final RolRepository repo;
 
     public RolDAO(RolRepository repo) {
@@ -25,13 +26,22 @@ public class RolDAO {
     public Rol getRolUsuario() {
         return repo.getRolUsuario();
     }
-    
+
     public Rol getRolAgente() {
         return repo.getRolAgente();
     }
-    
+
     public boolean isIdRolAnAgente(Long rolId) {
         return ((RolRepository) repo).existsByIdAndNombre(rolId, "agente");
+    }
+
+    public Optional<String> findRolNombreById(Long rolId) {
+        return repo.findById(rolId)
+                .map(Rol::getNombre);
+    }
+
+    public boolean existsById(Long rolId) {
+        return repo.existsById(rolId);
     }
 
 }

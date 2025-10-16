@@ -9,6 +9,8 @@ import com.jsj.api.entity.*;
 import com.jsj.api.entity.dto.*;
 import com.jsj.api.service.TicketService;
 import com.jsj.api.entity.mapper.BaseMapper;
+import com.jsj.api.exception.InsufficientSavingPermissionsException;
+import com.jsj.api.security.CurrentUser;
 import java.util.Set;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +30,8 @@ public class HistorialTicketFilter extends BaseFilter<HistorialTicket, Historial
     @Override
     public HistorialTicketDTO filterDTO(HistorialTicketDTO dto) {
         
+        Set<String> permissions = CurrentUser.getPermissions();
+        
         if (!permissions.contains("view_historial_ticket_id")) { dto.setId(null); }
         if (!permissions.contains("view_historial_ticket_ticket_id")) { dto.setTicketId(null); }
         if (!permissions.contains("view_historial_ticket_estado_anterior")) { dto.setEstadoAnterior(null); }
@@ -38,7 +42,9 @@ public class HistorialTicketFilter extends BaseFilter<HistorialTicket, Historial
     }
 
     @Override
-    public HistorialTicket filterEntity(HistorialTicket entity) {
+    public HistorialTicket filterEntityToSave(HistorialTicket entity) {
+        
+        Set<String> permissions = CurrentUser.getPermissions();
         
         if (!permissions.contains("update_historial_ticket_id")) { entity.setId(null); }
         if (!permissions.contains("update_historial_ticket_ticket_id")) { entity.setTicket(null); }
@@ -47,5 +53,13 @@ public class HistorialTicketFilter extends BaseFilter<HistorialTicket, Historial
         if (!permissions.contains("update_historial_ticket_fecha_creacion")) { entity.setFechaCreacion(null); }
         
         return entity;
+    }
+
+    @Override
+    HistorialTicket filterEntityToUpdate(HistorialTicket entity, HistorialTicketDTO dto) throws InsufficientSavingPermissionsException {
+        
+        Set<String> permissions = CurrentUser.getPermissions();
+        
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

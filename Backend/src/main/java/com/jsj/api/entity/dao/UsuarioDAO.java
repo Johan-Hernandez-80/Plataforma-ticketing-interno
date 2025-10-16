@@ -11,6 +11,8 @@ import com.jsj.api.entity.filter.BaseFilter;
 import com.jsj.api.entity.filter.UsuarioFilter;
 import com.jsj.api.entity.mapper.BaseMapper;
 import com.jsj.api.entity.mapper.UsuarioMapper;
+import com.jsj.api.exception.InsufficientSavingPermissionsException;
+import com.jsj.api.exception.UsuarioInexistenteException;
 import com.jsj.api.repository.UsuarioRepository;
 import com.jsj.api.security.CurrentUser;
 import java.util.Optional;
@@ -45,27 +47,25 @@ public class UsuarioDAO extends BaseDAO<Usuario, Long, UsuarioDTO, UsuarioMapper
         return repo.existsById(idUsuario);
     }
 
-    public UsuarioDTO updateUsuario(Long idUsuario, UsuarioDTO dto) {
+    public UsuarioDTO updateUsuario(Long idUsuario, UsuarioDTO dto) throws UsuarioInexistenteException, InsufficientSavingPermissionsException {
         Optional<Usuario> opt = repo.findById(idUsuario);
         if (opt.isEmpty()) {
-            return null;
+            throw new UsuarioInexistenteException("El usuario no existe");
         }
         Usuario entity = opt.get();
         
+        filter.filterEntityToUpdate(entity, dto);
         mapper.updateEntityFromDTO(dto, entity);
-        
-        filter.filterEntity(entity);
         
         return filter.filterDTO(mapper.toDTO(repo.save(entity)));
     }
     
-    public UsuarioDTO save(UsuarioDTO dto, Rol rol) {
+    public UsuarioDTO save(UsuarioDTO dto) throws InsufficientSavingPermissionsException {
         Usuario entity = mapper.toEntity(dto);
-        entity.setRol(rol);
         
-        filter.filterEntity(entity);
+        filter.filterEntityToSave(entity);
         
-        return filter.filterDTO(mapper.toDTO(repo.save(entity)));
+        return mapper.toDTO(repo.save(entity));
     }
 
     public boolean isAdmin(Long currentUserId) {
@@ -82,6 +82,14 @@ public class UsuarioDAO extends BaseDAO<Usuario, Long, UsuarioDTO, UsuarioMapper
 
     public boolean isTicketBelongsToUsuario(Long idUsuario, Long idTicket) {
         return repo.isTicketBelongsToUsuario(idUsuario, idTicket);
+    }
+
+    public boolean existsByEmailPersonal(String email) {
+        return repo.existsByEmailPersonal(email);
+    }
+
+    public boolean existsByEmailCorporativo(String emailCorporativo) {
+        return repo.existsByEmailCorporativo(emailCorporativo);
     }
 
 }
