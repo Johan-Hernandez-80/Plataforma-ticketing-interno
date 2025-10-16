@@ -20,28 +20,28 @@ import org.springframework.data.repository.query.Param;
  */
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
-    @Query("""
-        SELECT t FROM Ticket t
-        WHERE (:estado IS NULL OR t.estado = :estado)
-        AND (:prioridad IS NULL OR t.prioridad = :prioridad)
-        AND (:usuarioId IS NULL OR t.usuarioId = :usuarioId)
-    """)
-    List<Ticket> findTickets(
-            @Param("estado") String estado,
-            @Param("prioridad") String prioridad,
-            @Param("usuarioId") Long usuarioId);
+  @Query("""
+          SELECT t FROM Ticket t
+          WHERE (:estado IS NULL OR t.estado = :estado)
+          AND (:prioridad IS NULL OR t.prioridad = :prioridad)
+          AND (:usuarioId IS NULL OR t.usuarioId = :usuarioId)
+      """)
+  List<Ticket> findTickets(
+      @Param("estado") String estado,
+      @Param("prioridad") String prioridad,
+      @Param("usuarioId") Long usuarioId);
 
-    @Query("""
-        SELECT t FROM Ticket t
-        WHERE (:estado IS NULL OR t.estado = :estado)
-        AND (:prioridad IS NULL OR t.prioridad = :prioridad)
-        AND (:usuarioId IS NULL OR t.usuarioId = :usuarioId)
-        AND (:fechaCreacion IS NULL OR DATE(t.fechaCreacion) = :fechaCreacion)
-    """)
-    List<Ticket> findTickets(
-            @Param("estado") String estado,
-            @Param("prioridad") String prioridad,
-            @Param("usuarioId") Long usuarioId,
-            @Param("fechaCreacion") LocalDate fechaCreacion);
+  @Query("""
+          SELECT t FROM Ticket t
+          WHERE (:estado IS NULL OR t.estado = :estado)
+          AND (:prioridad IS NULL OR t.prioridad = :prioridad)
+          AND (:agenteId IS NULL OR t.agenteId = :agenteId)
+          AND (:fechaCreacion IS NULL OR DATE(t.fechaCreacion) = :fechaCreacion)
+      """)
+  List<Ticket> findTickets(
+      @Param("estado") String estado,
+      @Param("prioridad") String prioridad,
+      @Param("agenteId") Long agenteId,
+      @Param("fechaCreacion") LocalDate fechaCreacion);
 
 }
