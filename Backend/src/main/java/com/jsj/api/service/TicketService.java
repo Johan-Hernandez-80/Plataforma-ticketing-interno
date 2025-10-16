@@ -36,155 +36,168 @@ import org.springframework.stereotype.Service;
 @Service
 public class TicketService extends BaseService<Ticket, Long, TicketDTO, TicketDAO> {
 
-    private final UsuarioDAO usuarioDao;
-    private final CategoriaDAO categoriaDao;
-    private final ComentarioDAO comentarioDao;
+  private final UsuarioDAO usuarioDao;
+  private final CategoriaDAO categoriaDao;
+  private final ComentarioDAO comentarioDao;
 
-    public TicketService(UsuarioDAO usuarioDao, CategoriaDAO categoriaDao, ComentarioDAO comentarioDao, TicketDAO dao) {
-        super(dao);
-        this.usuarioDao = usuarioDao;
-        this.categoriaDao = categoriaDao;
-        this.comentarioDao = comentarioDao;
+  public TicketService(UsuarioDAO usuarioDao, CategoriaDAO categoriaDao, ComentarioDAO comentarioDao, TicketDAO dao) {
+    super(dao);
+    this.usuarioDao = usuarioDao;
+    this.categoriaDao = categoriaDao;
+    this.comentarioDao = comentarioDao;
+  }
+
+  public TicketDTO save(TicketDTO dto) throws CategoriaInexistenteException, UsuarioInexistenteException,
+      PrioridadInvalidaException, EstadoInvalidoException, InsufficientSavingPermissionsException,
+      TituloInvalidoException, DescripcionInvalidaException {
+    validarUsuarioIdSave(dto.getUsuarioId());
+
+    validarCategoriaIdSave(dto.getCategoriaId());
+
+    dto.setPrioridad(validarPrioridadSave(dto.getPrioridad()));
+
+    dto.setEstado(validarEstadoSave(dto.getEstado()));
+
+    validarTituloSave(dto.getTitulo());
+
+    validarDescripcionSave(dto.getDescripcion());
+
+    return dao.save(dto);
+  }
+
+  public List<TicketDTO> findTickets(String estado, String prioridad, Long usuarioId)
+      throws UsuarioInexistenteException, PrioridadInvalidaException, EstadoInvalidoException {
+    Long currentUserId = Long.parseLong(CurrentUser.getUserId());
+
+    if (!usuarioDao.isAdmin(currentUserId)) {
+      if (currentUserId != usuarioId) {
+        return null;
+      }
     }
 
-    public TicketDTO save(TicketDTO dto) throws CategoriaInexistenteException, UsuarioInexistenteException, PrioridadInvalidaException, EstadoInvalidoException, InsufficientSavingPermissionsException, TituloInvalidoException, DescripcionInvalidaException {
-        validarUsuarioIdSave(dto.getUsuarioId());
+    validarUsuarioIdSave(usuarioId);
 
-        validarCategoriaIdSave(dto.getCategoriaId());
+    estado = validarEstadoSave(estado);
 
-        dto.setPrioridad(validarPrioridadSave(dto.getPrioridad()));
+    prioridad = validarPrioridadSave(prioridad);
 
-        dto.setEstado(validarEstadoSave(dto.getEstado()));
-        
-        validarTituloSave(dto.getTitulo());
-                
-        validarDescripcionSave(dto.getDescripcion());
+    return dao.findTickets(estado, prioridad, usuarioId);
+  }
 
-        return dao.save(dto);
-    }
+  public TicketDTO findById(Long idTicket) throws NotAuthorizedException {
+    Long idUsuario = Long.parseLong(CurrentUser.getUserId());
 
-    public List<TicketDTO> findTickets(String estado, String prioridad, Long usuarioId) throws UsuarioInexistenteException, PrioridadInvalidaException, EstadoInvalidoException {
-        Long currentUserId = Long.parseLong(CurrentUser.getUserId());
-
-        if (!usuarioDao.isAdmin(currentUserId)) {
-            if (currentUserId != usuarioId) {
-                return null;
-            }
+    if (!usuarioDao.isAdmin(idUsuario)) {
+      if (usuarioDao.isAgente(idUsuario)) {
+        if (!usuarioDao.isAgenteAssignedToTicket(idUsuario, idTicket)) {
+          throw new NotAuthorizedException("Not authorized");
         }
+      } else if (!usuarioDao.isTicketBelongsToUsuario(idUsuario, idTicket)) {
+        throw new NotAuthorizedException("Not authorized");
 
-        validarUsuarioIdSave(usuarioId);
-
-        estado = validarEstadoSave(estado);
-
-        prioridad = validarPrioridadSave(prioridad);
-
-        return dao.findTickets(estado, prioridad, usuarioId);
+      }
     }
 
-    public TicketDTO findById(Long idTicket) throws NotAuthorizedException {
-        Long idUsuario = Long.parseLong(CurrentUser.getUserId());
+    return dao.findTicketById(idTicket);
+  }
 
-        if (!usuarioDao.isAdmin(idUsuario)) {
-            if (usuarioDao.isAgente(idUsuario)) {
-                if (!usuarioDao.isAgenteAssignedToTicket(idUsuario, idTicket)) {
-                    throw new NotAuthorizedException("Not authorized");
-                }
-            } else if (!usuarioDao.isTicketBelongsToUsuario(idUsuario, idTicket)) {
-                throw new NotAuthorizedException("Not authorized");
+  public List<ComentarioDTO> findComentariosByTicketId(Long idTicket) throws TicketInexistenteException {
+    validarTicket(idTicket);
+    return comentarioDao.findComentariosByTicketId(idTicket);
+  }
 
-            }
-        }
+  public ComentarioDTO addComentario(Long idTicket, ComentarioDTO comentarioDTO) throws TicketInexistenteException {
+    validarTicket(idTicket);
+    return comentarioDao.save(comentarioDTO);
+  }
 
-        return dao.findTicketById(idTicket);
+  public TicketDTO updatePrioridad(Long idTicket, String prioridad)
+      throws PrioridadInvalidaException, TicketInexistenteException {
+    prioridad = validarPrioridadSave(prioridad);
+    validarTicket(idTicket);
+    return dao.updatePrioridad(idTicket, prioridad);
+  }
+
+  public TicketDTO cerrarTicket(Long idTicket) throws TicketInexistenteException {
+    validarTicket(idTicket);
+    return dao.cerrarTicket(idTicket);
+  }
+
+  public TicketDTO reasignarTicket(Long idTicket, Long agenteId)
+      throws TicketInexistenteException, AgenteInexistenteException {
+    validarTicket(idTicket);
+    validarAgente(agenteId);
+    return dao.reasignarTicket(idTicket, usuarioDao.findById(agenteId).get());
+  }
+
+  public List<TicketDTO> findTicketsFiltrados(String estado, String prioridad, Long agenteId, LocalDate fecha)
+      throws PrioridadInvalidaException, EstadoInvalidoException, AgenteInexistenteException {
+
+    String prioridadVer = validarPrioridadSave(prioridad);
+    String estadoVer = validarEstadoSave(estado);
+    validarAgente(agenteId);
+
+    return dao.findTicketsFiltrados(estadoVer, prioridadVer, agenteId, fecha);
+  }
+
+  private String validarPrioridadSave(String prioridad) throws PrioridadInvalidaException {
+    if (prioridad == null) {
+      return null;
     }
-
-    public List<ComentarioDTO> findComentariosByTicketId(Long idTicket) throws TicketInexistenteException {
-        validarTicket(idTicket);
-        return comentarioDao.findComentariosByTicketId(idTicket);
+    if (!TicketConstants.isPrioridadIgnoringCaps(prioridad)) {
+      throw new PrioridadInvalidaException(String.format("La prioridad %s no es válida", prioridad));
     }
+    return TicketConstants.getPrioridad(prioridad);
+  }
 
-    public ComentarioDTO addComentario(Long idTicket, ComentarioDTO comentarioDTO) throws TicketInexistenteException {
-        validarTicket(idTicket);
-        return comentarioDao.save(comentarioDTO);
+  private String validarEstadoSave(String estado) throws EstadoInvalidoException {
+    if (estado == null) {
+      return null;
     }
-
-    public TicketDTO updatePrioridad(Long idTicket, String prioridad) throws PrioridadInvalidaException, TicketInexistenteException {
-        prioridad = validarPrioridadSave(prioridad);
-        validarTicket(idTicket);
-        return dao.updatePrioridad(idTicket, prioridad);
+    if (!TicketConstants.isEstadoIgnoringCaps(estado)) {
+      throw new EstadoInvalidoException(String.format("El estado %s no es válido", estado));
     }
+    return TicketConstants.getEstado(estado);
+  }
 
-    public TicketDTO cerrarTicket(Long idTicket) throws TicketInexistenteException {
-        validarTicket(idTicket);
-        return dao.cerrarTicket(idTicket);
+  private void validarAgente(Long agenteId) throws AgenteInexistenteException {
+    if (!usuarioDao.isAgente(agenteId)) {
+      throw new AgenteInexistenteException(String.format("El agente con id %s no existe", agenteId));
     }
+  }
 
-    public TicketDTO reasignarTicket(Long idTicket, Long agenteId) throws TicketInexistenteException, AgenteInexistenteException {
-        validarTicket(idTicket);
-        validarAgente(agenteId);
-        return dao.reasignarTicket(idTicket, usuarioDao.findById(agenteId).get());
+  private void validarTicket(Long idTicket) throws TicketInexistenteException {
+    if (!dao.existsById(idTicket)) {
+      throw new TicketInexistenteException(String.format("El ticket con id %s no existe", idTicket));
     }
+  }
 
-    public List<TicketDTO> findTicketsFiltrados(String estado, String prioridad, Long agenteId, LocalDate fecha) throws PrioridadInvalidaException, EstadoInvalidoException, AgenteInexistenteException {
-        String prioridadVer = validarPrioridadSave(prioridad);
-        String estadoVer = validarEstadoSave(estado);
-        validarAgente(agenteId);
-
-        return dao.findTicketsFiltrados(estadoVer, prioridadVer, agenteId, fecha);
+  private void validarUsuarioIdSave(Long usuarioId) throws UsuarioInexistenteException {
+    if (usuarioId == null || !usuarioDao.existsById(usuarioId)) {
+      throw new UsuarioInexistenteException(String.format("El usuario con id %s no existe", usuarioId));
     }
+  }
 
-    private String validarPrioridadSave(String prioridad) throws PrioridadInvalidaException {
-        if (!TicketConstants.isPrioridadIgnoringCaps(prioridad)) {
-            throw new PrioridadInvalidaException(String.format("La prioridad %s no es válida", prioridad));
-        }
-        return TicketConstants.getPrioridad(prioridad);
+  private void validarCategoriaIdSave(Long categoriaId) throws CategoriaInexistenteException {
+    if (categoriaId == null || !categoriaDao.existsById(categoriaId)) {
+      throw new CategoriaInexistenteException(String.format("La categoría con id %s no existe", categoriaId));
     }
+  }
 
-    private String validarEstadoSave(String estado) throws EstadoInvalidoException {
-        if (!TicketConstants.isEstadoIgnoringCaps(estado)) {
-            throw new EstadoInvalidoException(String.format("El estado %s no es válido", estado));
-        }
-        return TicketConstants.getEstado(estado);
+  private void validarTituloSave(String titulo) throws TituloInvalidoException {
+    if (titulo != null) {
+      if (titulo.length() > 255) {
+        throw new TituloInvalidoException("El titulo no puede superar los 255 caracteres");
+      }
     }
+  }
 
-    private void validarAgente(Long agenteId) throws AgenteInexistenteException {
-        if (!usuarioDao.isAgente(agenteId)) {
-            throw new AgenteInexistenteException(String.format("El agente con id %s no existe", agenteId));
-        }
+  private void validarDescripcionSave(String descripcion) throws DescripcionInvalidaException {
+    if (descripcion != null) {
+      if (descripcion.length() > 1000) {
+        throw new DescripcionInvalidaException("La descripción no puede superar los 255 caracteres");
+      }
     }
-
-    private void validarTicket(Long idTicket) throws TicketInexistenteException {
-        if (!dao.existsById(idTicket)) {
-            throw new TicketInexistenteException(String.format("El ticket con id %s no existe", idTicket));
-        }
-    }
-
-    private void validarUsuarioIdSave(Long usuarioId) throws UsuarioInexistenteException {
-        if (usuarioId == null || !usuarioDao.existsById(usuarioId)) {
-            throw new UsuarioInexistenteException(String.format("El usuario con id %s no existe", usuarioId));
-        }
-    }
-
-    private void validarCategoriaIdSave(Long categoriaId) throws CategoriaInexistenteException {
-        if (categoriaId == null || !categoriaDao.existsById(categoriaId)) {
-            throw new CategoriaInexistenteException(String.format("La categoría con id %s no existe", categoriaId));
-        }
-    }
-
-    private void validarTituloSave(String titulo) throws TituloInvalidoException {
-        if (titulo != null) {
-            if (titulo.length() > 255) {
-                throw new TituloInvalidoException("El titulo no puede superar los 255 caracteres");
-            }
-        }
-    }
-
-    private void validarDescripcionSave(String descripcion) throws DescripcionInvalidaException {
-        if (descripcion != null) {
-            if (descripcion.length() > 1000) {
-                throw new DescripcionInvalidaException("La descripción no puede superar los 255 caracteres");
-            }
-        }
-    }
+  }
 
 }

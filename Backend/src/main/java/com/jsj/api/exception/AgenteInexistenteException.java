@@ -10,13 +10,13 @@ package com.jsj.api.exception;
  * @author Juan José Molano Franco
  */
 public class AgenteInexistenteException extends Exception {
-    
-    public AgenteInexistenteException(Long id) {
-        super(String.valueOf(id));
-    }
 
-    public AgenteInexistenteException(String message) {
-        super(message);
-    }
+  public AgenteInexistenteException(Long id) {
+    super(String.valueOf(id));
+  }
+
+  public AgenteInexistenteException(String message) {
+    super(message);
+  }
 
 }

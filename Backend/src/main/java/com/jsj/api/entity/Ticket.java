@@ -40,6 +40,9 @@ public class Ticket {
     @Column(nullable = false, length = 225)
     private String estado;
 
+    @Column(nullable = false, length = 225)
+    private Long agenteId;
+
     @Column(nullable = false, updatable = false, insertable = false,
             columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime fechaCreacion;
