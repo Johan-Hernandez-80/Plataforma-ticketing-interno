@@ -20,7 +20,6 @@ import org.mapstruct.ReportingPolicy;
 public interface UsuarioMapper extends BaseMapper<Usuario, UsuarioDTO> {
 
     @Override
-    @Mapping(source = "rol.id", target = "rolId")
     UsuarioDTO toDTO(Usuario entity);
 
     @Override
@@ -28,5 +27,5 @@ public interface UsuarioMapper extends BaseMapper<Usuario, UsuarioDTO> {
 
     @Override
     void updateEntityFromDTO(UsuarioDTO dto, @MappingTarget Usuario entity);
-    
+
 }

@@ -34,7 +34,7 @@ public class ComentarioDAO extends BaseDAO<Comentario, Long, ComentarioDTO, Come
     }
 
     public ComentarioDTO save(ComentarioDTO comentarioDTO) {
-        Comentario entity = repo.save(filter.filterEntity(mapper.toEntity(comentarioDTO)));
+        Comentario entity = repo.save(filter.filterEntityToSave(mapper.toEntity(comentarioDTO)));
 
         return filter.filterDTO(mapper.toDTO(entity));
     }

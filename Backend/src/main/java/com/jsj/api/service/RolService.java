@@ -7,6 +7,7 @@ package com.jsj.api.service;
 import com.jsj.api.entity.Rol;
 import com.jsj.api.entity.dao.RolDAO;
 import com.jsj.api.repository.RolRepository;
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 /**
@@ -28,6 +29,10 @@ public class RolService {
 
     public Rol getRolAgente() {
         return dao.getRolAgente();
+    }
+
+    public Optional<String> findRolNombreById(Long rolId) {
+        return dao.findRolNombreById(rolId);
     }
 
 }

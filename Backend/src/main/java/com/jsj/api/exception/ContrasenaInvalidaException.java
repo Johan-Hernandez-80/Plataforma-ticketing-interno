@@ -9,13 +9,9 @@ package com.jsj.api.exception;
  *
  * @author Juan José Molano Franco
  */
-public class UsuarioInexistenteException extends Exception {
+public class ContrasenaInvalidaException extends Exception {
 
-    public UsuarioInexistenteException(Long usuarioId) {
-        super(String.valueOf(usuarioId));
-    }
-
-    public UsuarioInexistenteException(String message) {
+    public ContrasenaInvalidaException(String message) {
         super(message);
     }
 

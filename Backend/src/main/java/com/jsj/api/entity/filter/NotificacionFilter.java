@@ -7,6 +7,8 @@ package com.jsj.api.entity.filter;
 
 import com.jsj.api.entity.*;
 import com.jsj.api.entity.dto.*;
+import com.jsj.api.exception.InsufficientSavingPermissionsException;
+import com.jsj.api.security.CurrentUser;
 import java.util.Set;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +21,9 @@ public class NotificacionFilter extends BaseFilter<Notificacion, NotificacionDTO
 
     @Override
     public NotificacionDTO filterDTO(NotificacionDTO dto) {
-
+        
+        Set<String> permissions = CurrentUser.getPermissions();
+        
         if (!permissions.contains("view_notificacion_id")) { dto.setId(null); }
         if (!permissions.contains("view_notificacion_usuario_id")) { dto.setUsuarioId(null); }
         if (!permissions.contains("view_notificacion_mensaje")) { dto.setMensaje(null); }
@@ -29,13 +33,23 @@ public class NotificacionFilter extends BaseFilter<Notificacion, NotificacionDTO
     }
 
     @Override
-    public Notificacion filterEntity(Notificacion entity) {
+    public Notificacion filterEntityToSave(Notificacion entity) {
 
+        Set<String> permissions = CurrentUser.getPermissions();
+        
         if (!permissions.contains("update_notificacion_id")) { entity.setId(null); }
         if (!permissions.contains("update_notificacion_usuario_id")) { entity.setUsuario(null); }
         if (!permissions.contains("update_notificacion_mensaje")) { entity.setMensaje(null); }
         if (!permissions.contains("update_notificacion_fecha_creacion")) { entity.setFechaCreacion(null); }
 
         return entity;
+    }
+
+    @Override
+    Notificacion filterEntityToUpdate(Notificacion entity, NotificacionDTO dto) throws InsufficientSavingPermissionsException {
+        
+        Set<String> permissions = CurrentUser.getPermissions();
+        
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
