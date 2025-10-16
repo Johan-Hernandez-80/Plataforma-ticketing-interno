@@ -69,11 +69,11 @@ public class UsuarioDAO extends BaseDAO<Usuario, Long, UsuarioDTO, UsuarioMapper
         return mapper.toDTO(repo.save(entity));
     }
 
-    public boolean isAdmin(Long currentUserId) {
+    public int isAdmin(Long currentUserId) {
         return repo.isAdmin(currentUserId);
     }
 
-    public boolean isAgente(Long id) {
+    public int isAgente(Long id) {
         return repo.isAgente(id);
     }
 

@@ -61,54 +61,54 @@ public class OpenApiConfig implements WebMvcConfigurer {
 
                 schema.getProperties().forEach((propName, propSchema) -> {
                     Schema<?> prop = (Schema<?>) propSchema;
+                    String field = String.valueOf(propName);
 
-                    String field = String.valueOf(propName); // force it to String
-
-                    if (prop.getDescription() != null && !prop.getDescription().isBlank()) {
-                        return;
+                    // Set description if missing
+                    if (prop.getDescription() == null || prop.getDescription().isBlank()) {
+                        switch (field) {
+                            case "id" ->
+                                prop.setDescription("Identificador único del " + entity + ".");
+                            case "usuarioId" ->
+                                prop.setDescription("ID del usuario relacionado con el " + entity + ".");
+                            case "categoriaId" ->
+                                prop.setDescription("ID de la categoría relacionada con el " + entity + ".");
+                            case "agenteId" ->
+                                prop.setDescription("ID del agente asignado al " + entity + ".");
+                            case "titulo" ->
+                                prop.setDescription("Título del " + entity + ".");
+                            case "descripcion" ->
+                                prop.setDescription("Descripción del " + entity + ".");
+                            case "prioridad" ->
+                                prop.setDescription("Prioridad del " + entity + " (Urgente, Importante, Programado).");
+                            case "estado" ->
+                                prop.setDescription("Estado del " + entity + " (Pendiente, En progreso, Cerrado).");
+                            case "fechaCreacion" ->
+                                prop.setDescription("Fecha de creación del " + entity + ".");
+                            case "fechaCierre" ->
+                                prop.setDescription("Fecha de cierre del " + entity + ".");
+                            default ->
+                                prop.setDescription("Atributo " + propName + " del " + entity + ".");
+                        }
                     }
 
+                    // Set example
                     switch (field) {
-                        case "id" ->
-                            prop.setDescription("Unique identifier of the " + entity + ".");
-                        case "fechaCreacion" ->
-                            prop.setDescription("Creation timestamp of the " + entity + ".");
-                        case "fechaCierre" ->
-                            prop.setDescription("Closing timestamp of the " + entity + ".");
-                        case "usuarioId" ->
-                            prop.setDescription("Identifier of the user related to the " + entity + ".");
-                        case "categoriaId" ->
-                            prop.setDescription("Identifier of the category related to the " + entity + ".");
-                        case "rolId" ->
-                            prop.setDescription("Identifier of the role related to the " + entity + ".");
-                        case "agenteId" ->
-                            prop.setDescription("Identifier of the agent related to the " + entity + ".");
-                        case "estado" ->
-                            prop.setDescription("Current status of the " + entity + ".");
-                        case "descripcion" ->
-                            prop.setDescription("Detailed description of the " + entity + ".");
+                        case "id", "usuarioId", "categoriaId", "agenteId" ->
+                            prop.setExample(1);
                         case "titulo" ->
-                            prop.setDescription("Title of the " + entity + ".");
-                        case "comentario" ->
-                            prop.setDescription("Comment content.");
-                        case "mensaje" ->
-                            prop.setDescription("Notification message.");
-                        case "email" ->
-                            prop.setDescription("Email address of the usuario.");
-                        case "password", "contrasena" ->
-                            prop.setDescription("Password of the usuario.");
-                        case "nombre" ->
-                            prop.setDescription("Name of the " + entity + ".");
-                        case "departamento" ->
-                            prop.setDescription("Department of the usuario.");
-                        case "estadoAnterior" ->
-                            prop.setDescription("Previous status of the ticket.");
-                        case "estadoNuevo" ->
-                            prop.setDescription("New status of the ticket.");
+                            prop.setExample("Problema de red");
+                        case "descripcion" ->
+                            prop.setExample("No hay conexión a internet");
                         case "prioridad" ->
-                            prop.setDescription("Priority of the " + entity + " (ABIERTO, EN PROGRESO, RESUELTO, CERRADO).");
+                            prop.setExample("Urgente");
+                        case "estado" ->
+                            prop.setExample("Pendiente");
+                        case "fechaCreacion" ->
+                            prop.setExample("2025-10-14 09:30:00");
+                        case "fechaCierre" ->
+                            prop.setExample("2025-10-16 16:45:00");
                         default ->
-                            prop.setDescription("Attribute " + propName + " of the " + entity + ".");
+                            prop.setExample(null);
                     }
                 });
             });

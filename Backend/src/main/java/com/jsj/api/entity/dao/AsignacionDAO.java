@@ -9,6 +9,7 @@ import com.jsj.api.entity.dto.AsignacionDTO;
 import com.jsj.api.entity.filter.AsignacionFilter;
 import com.jsj.api.entity.mapper.AsignacionMapper;
 import com.jsj.api.repository.AsignacionRepository;
+import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -20,6 +21,14 @@ public class AsignacionDAO extends BaseDAO<Asignacion, Long, AsignacionDTO, Asig
 
     public AsignacionDAO(AsignacionMapper mapper, AsignacionFilter filter, AsignacionRepository repo) {
         super(mapper, filter, repo);
+    }
+    
+    public Optional<Asignacion> findByAgenteIdAndTicketId(Long agenteId, Long ticketId) {
+        return repo.findByAgenteIdAndTicketId(agenteId, ticketId);
+    }
+
+    public boolean existsByAgenteIdAndTicketId(Long agenteId, Long idTicket) {
+        return false;
     }
 
 }

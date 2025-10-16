@@ -70,6 +70,7 @@ public class TicketFilter extends BaseFilter<Ticket, TicketDTO> {
         Set<String> permissions = CurrentUser.getPermissions();
 
         entity.setId(null);
+        entity.setFechaCreacion(null);
 
         if (!permissions.contains("update_ticket_usuario_id")
                 || !permissions.contains("update_ticket_categoria_id")

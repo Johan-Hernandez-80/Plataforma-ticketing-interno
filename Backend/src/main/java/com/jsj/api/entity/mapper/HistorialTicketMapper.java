@@ -20,7 +20,6 @@ import org.mapstruct.ReportingPolicy;
 public interface HistorialTicketMapper extends BaseMapper<HistorialTicket, HistorialTicketDTO> {
 
     @Override
-    @Mapping(source = "ticket.id", target = "ticketId")
     public HistorialTicketDTO toDTO(HistorialTicket entity);
 
     @Override

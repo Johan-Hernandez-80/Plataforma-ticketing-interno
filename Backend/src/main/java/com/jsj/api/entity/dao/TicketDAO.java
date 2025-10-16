@@ -65,13 +65,7 @@ public class TicketDAO extends BaseDAO<Ticket, Long, TicketDTO, TicketMapper, Ti
 
     public TicketDTO cerrarTicket(Long idTicket) {
         Ticket ticket = repo.findById(idTicket).get();
-        ticket.setEstado("Cerrado");
-        return filter.filterDTO(mapper.toDTO(repo.save(ticket)));
-    }
-
-    public TicketDTO reasignarTicket(Long idTicket, Usuario agente) {
-        Ticket ticket = repo.findById(idTicket).get();
-        ticket.setUsuarioId(agente.getId());
+        ticket.setEstado(TicketConstants.getEstado("Cerrado"));
         return filter.filterDTO(mapper.toDTO(repo.save(ticket)));
     }
 

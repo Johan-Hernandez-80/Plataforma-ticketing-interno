@@ -23,7 +23,7 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "rol_id", nullable = false)
+    @Column(nullable = false)
     private Long rolId;
 
     @Column(nullable = false, length = 225)

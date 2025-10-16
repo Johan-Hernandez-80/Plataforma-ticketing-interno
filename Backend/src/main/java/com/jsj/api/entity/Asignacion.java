@@ -21,13 +21,11 @@ public class Asignacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "ticket_id", nullable = false)
-    private Ticket ticket;
+    @Column(nullable = false)
+    private Long ticketId;
 
-    @ManyToOne
-    @JoinColumn(name = "agente_id", nullable = false)
-    private Usuario agente;
+    @Column(nullable = false)
+    private Long agenteId;
 
     @Column(nullable = false, updatable = false, insertable = false,
             columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
@@ -41,20 +39,20 @@ public class Asignacion {
         this.id = id;
     }
 
-    public Ticket getTicket() {
-        return ticket;
+    public Long getTicketId() {
+        return ticketId;
     }
 
-    public void setTicket(Ticket ticket) {
-        this.ticket = ticket;
+    public void setTicketId(Long ticketId) {
+        this.ticketId = ticketId;
     }
 
-    public Usuario getAgente() {
-        return agente;
+    public Long getAgenteId() {
+        return agenteId;
     }
 
-    public void setAgente(Usuario agente) {
-        this.agente = agente;
+    public void setAgenteId(Long agenteId) {
+        this.agenteId = agenteId;
     }
 
     public LocalDateTime getFechaCreacion() {

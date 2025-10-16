@@ -15,6 +15,8 @@ import com.jsj.api.service.BaseService;
 import com.jsj.api.entity.filter.TicketFilter;
 import com.jsj.api.entity.filter.UsuarioFilter;
 import com.jsj.api.exception.AgenteInexistenteException;
+import com.jsj.api.exception.AsignacionInexistenteException;
+import com.jsj.api.exception.CampoInvalidoException;
 import com.jsj.api.exception.CategoriaInexistenteException;
 import com.jsj.api.exception.DescripcionInvalidaException;
 import com.jsj.api.exception.EstadoInvalidoException;
@@ -125,7 +127,7 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO> {
     })
     @GetMapping
     public ResponseEntity<?> getTickets(
-            @Parameter(description = "Estado del ticket (ej: En progreso, Programado, Cerrado)")
+            @Parameter(description = "Estado del ticket (ej: En progreso, Pendiente, Cerrado)")
             @RequestParam(required = false) String estado,
             @Parameter(description = "Prioridad del ticket (ej: Urgente, Importante, Programado)")
             @RequestParam(required = false) String prioridad,
@@ -196,7 +198,7 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO> {
         }
 
         if (ticket == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(Map.of("error", "No se encontró el ticket solicitado."));
         }
 
@@ -230,7 +232,6 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO> {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(Map.of("error", "No se encontro un ticket con este id"));
         }
-
         return ResponseEntity.ok(comentarios);
     }
 
@@ -244,6 +245,8 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO> {
                 content = @Content(schema = @Schema(implementation = ComentarioDTO.class))),
         @ApiResponse(responseCode = "400", description = "Datos inválidos",
                 content = @Content(schema = @Schema(example = "{ \"error\": \"Los datos enviados son inválidos o faltan campos obligatorios\" }"))),
+        @ApiResponse(responseCode = "401", description = "Permisos insuficientes",
+                content = @Content(schema = @Schema(example = "{ \"error\": \"No tiene suficientes permisos\" }"))),
         @ApiResponse(responseCode = "404", description = "Ticket no encontrado",
                 content = @Content(schema = @Schema(example = "{ \"error\": \"El ticket no existe o no fue encontrado\" }"))),
         @ApiResponse(responseCode = "500", description = "Error interno del servidor",
@@ -259,7 +262,7 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO> {
                     required = true,
                     content = @Content(schema = @Schema(implementation = ComentarioDTO.class))
             )
-            @RequestBody ComentarioDTO comentarioDTO
+            @Valid @RequestBody ComentarioDTO comentarioDTO
     ) {
         ComentarioDTO created;
         try {
@@ -267,6 +270,12 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO> {
         } catch (TicketInexistenteException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(Map.of("error", "El ticket no existe o no fue encontrado"));
+        } catch (CampoInvalidoException | UsuarioInexistenteException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("error", ex.getMessage()));
+        } catch (InsufficientSavingPermissionsException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(Map.of("error", ex.getMessage()));
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
@@ -357,7 +366,7 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO> {
                     content = @Content(schema = @Schema(example = "{ \"agenteId\": 123 }"))
             )
             @RequestBody Map<String, Long> body
-    ) {
+    ) throws AsignacionInexistenteException {
         if (!"admin".equalsIgnoreCase(CurrentUser.getRole())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }

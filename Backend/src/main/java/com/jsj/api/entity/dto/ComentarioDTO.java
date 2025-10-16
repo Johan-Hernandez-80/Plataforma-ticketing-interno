@@ -4,9 +4,11 @@
  */
 package com.jsj.api.entity.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import lombok.Data;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Size;
 
 /**
  *
@@ -14,14 +16,20 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 @Data
 @Schema(
-    description = "DTO for Comentario. Only includes attributes the current user has permission to view. Field visibility depends on the user's roles and permissions."
+        description = "DTO para Comentario. Solo incluye los atributos a los que el usuario tiene permiso de ver. La visibilidad de campos depende del rol del usuario."
 )
 public class ComentarioDTO {
 
     private Long id;
+
     private Long ticketId;
+
     private Long usuarioId;
+
+    @Size(max = 1000, message = "El comentario no puede superar 1000 caracteres")
     private String comentario;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fechaCreacion;
 
     public Long getId() {

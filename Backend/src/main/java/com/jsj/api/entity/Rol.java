@@ -24,14 +24,6 @@ public class Rol {
     @Column(nullable = false, unique = true, length = 225)
     private String nombre;
 
-    @ManyToMany
-    @JoinTable(
-            name = "permisos_roles",
-            joinColumns = @JoinColumn(name = "rol_id"),
-            inverseJoinColumns = @JoinColumn(name = "permiso_id")
-    )
-    private Set<Permiso> permisos = new HashSet<>();
-
     public Long getId() {
         return id;
     }
@@ -46,14 +38,6 @@ public class Rol {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public Set<Permiso> getPermisos() {
-        return permisos;
-    }
-
-    public void setPermisos(Set<Permiso> permisos) {
-        this.permisos = permisos;
     }
 
 }

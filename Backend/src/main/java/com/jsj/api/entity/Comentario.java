@@ -21,13 +21,11 @@ public class Comentario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "ticket_id", nullable = false)
-    private Ticket ticket;
-
-    @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario;
+    @Column(nullable = false)
+    private Long ticketId;
+    
+    @Column(nullable = false)
+    private Long usuarioId;
 
     @Column(length = 1000)
     private String comentario;
@@ -44,20 +42,20 @@ public class Comentario {
         this.id = id;
     }
 
-    public Ticket getTicket() {
-        return ticket;
+    public Long getTicketId() {
+        return ticketId;
     }
 
-    public void setTicket(Ticket ticket) {
-        this.ticket = ticket;
+    public void setTicketId(Long ticketId) {
+        this.ticketId = ticketId;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Long getUsuarioId() {
+        return usuarioId;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuarioId(Long usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
     public String getComentario() {

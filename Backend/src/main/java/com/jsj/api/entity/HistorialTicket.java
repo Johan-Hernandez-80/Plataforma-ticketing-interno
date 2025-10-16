@@ -21,9 +21,8 @@ public class HistorialTicket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "ticket_id")
-    private Ticket ticket;
+    @Column(nullable = false)
+    private Long ticketId;
 
     @Column(nullable = false, length = 255)
     private String estadoAnterior;
@@ -43,12 +42,12 @@ public class HistorialTicket {
         this.id = id;
     }
 
-    public Ticket getTicket() {
-        return ticket;
+    public Long getTicketId() {
+        return ticketId;
     }
 
-    public void setTicket(Ticket ticket) {
-        this.ticket = ticket;
+    public void setTicketId(Long ticketId) {
+        this.ticketId = ticketId;
     }
 
     public String getEstadoAnterior() {

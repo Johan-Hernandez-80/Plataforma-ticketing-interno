@@ -8,6 +8,7 @@ import com.jsj.api.entity.Comentario;
 import com.jsj.api.entity.dto.ComentarioDTO;
 import com.jsj.api.entity.filter.ComentarioFilter;
 import com.jsj.api.entity.mapper.ComentarioMapper;
+import com.jsj.api.exception.InsufficientSavingPermissionsException;
 import com.jsj.api.repository.ComentarioRepository;
 import com.jsj.api.security.CurrentUser;
 import java.util.List;
@@ -33,8 +34,8 @@ public class ComentarioDAO extends BaseDAO<Comentario, Long, ComentarioDTO, Come
                 .toList();
     }
 
-    public ComentarioDTO save(ComentarioDTO comentarioDTO) {
-        Comentario entity = repo.save(filter.filterEntityToSave(mapper.toEntity(comentarioDTO)));
+    public ComentarioDTO save(ComentarioDTO dto) throws InsufficientSavingPermissionsException {
+        Comentario entity = repo.save(filter.filterEntityToSave(mapper.toEntity(dto)));
 
         return filter.filterDTO(mapper.toDTO(entity));
     }

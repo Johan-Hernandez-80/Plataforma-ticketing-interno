@@ -20,7 +20,6 @@ import org.mapstruct.ReportingPolicy;
 public interface NotificacionMapper extends BaseMapper<Notificacion, NotificacionDTO> {
 
     @Override
-    @Mapping(source = "usuario.id", target = "usuarioId")
     public NotificacionDTO toDTO(Notificacion entity);
 
     @Override

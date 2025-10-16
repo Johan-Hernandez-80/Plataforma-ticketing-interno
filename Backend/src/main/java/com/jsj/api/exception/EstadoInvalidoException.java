@@ -12,6 +12,7 @@ package com.jsj.api.exception;
 public class EstadoInvalidoException extends Exception {
 
     public EstadoInvalidoException(String estado) {
+        super(estado);
     }
 
 }
