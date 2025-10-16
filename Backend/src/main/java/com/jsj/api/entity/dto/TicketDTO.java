@@ -4,9 +4,15 @@
  */
 package com.jsj.api.entity.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.time.LocalDateTime;
 import lombok.Data;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 /**
  *
@@ -14,18 +20,30 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 @Data
 @Schema(
-    description = "DTO for Ticket. Only includes attributes the current user has permission to view. Field visibility depends on the user's roles and permissions."
+        description = "DTO para Ticket. Solo incluye los atributos a los que el usuario tiene permiso de ver. La visibilidad de campos depende del rol del usuario."
 )
 public class TicketDTO {
 
     private Long id;
+
     private Long usuarioId;
+
     private Long categoriaId;
+
+    @Size(max = 255, message = "El título no puede superar 255 caracteres")
     private String titulo;
+
+    @Size(max = 1000, message = "La descripción no puede superar 1000 caracteres")
     private String descripcion;
+
     private String prioridad;
+
     private String estado;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fechaCreacion;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fechaCierre;
 
     public Long getId() {
@@ -68,22 +86,6 @@ public class TicketDTO {
         this.descripcion = descripcion;
     }
 
-    public String getPrioridad() {
-        return prioridad;
-    }
-
-    public void setPrioridad(String prioridad) {
-        this.prioridad = prioridad;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
     public LocalDateTime getFechaCreacion() {
         return fechaCreacion;
     }
@@ -98,6 +100,22 @@ public class TicketDTO {
 
     public void setFechaCierre(LocalDateTime fechaCierre) {
         this.fechaCierre = fechaCierre;
+    }
+
+    public String getPrioridad() {
+        return prioridad;
+    }
+
+    public void setPrioridad(String prioridad) {
+        this.prioridad = prioridad;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
 }

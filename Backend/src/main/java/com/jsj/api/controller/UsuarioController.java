@@ -11,6 +11,7 @@ import com.jsj.api.entity.dto.*;
 import com.jsj.api.exception.ContrasenaInvalidaException;
 import com.jsj.api.exception.EmailInvalidoException;
 import com.jsj.api.exception.IdInvalidaException;
+import com.jsj.api.exception.ImmutableFieldException;
 import com.jsj.api.exception.InsufficientSavingPermissionsException;
 import com.jsj.api.exception.RolInexistenteException;
 import com.jsj.api.exception.UsuarioInexistenteException;
@@ -20,6 +21,7 @@ import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.responses.*;
 import io.swagger.v3.oas.annotations.tags.*;
+import jakarta.validation.Valid;
 import java.util.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -93,7 +95,7 @@ public class UsuarioController extends BaseController<Usuario, Long, UsuarioDTO>
                     required = true,
                     content = @Content(schema = @Schema(implementation = UsuarioDTO.class))
             )
-            @RequestBody UsuarioDTO usuarioDTO) {
+            @Valid @RequestBody UsuarioDTO usuarioDTO) {
 
         UsuarioDTO updated;
         try {
@@ -104,7 +106,7 @@ public class UsuarioController extends BaseController<Usuario, Long, UsuarioDTO>
         } catch (InsufficientSavingPermissionsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of("detalles", ex.getMessage()));
-        } catch (EmailInvalidoException | IdInvalidaException | RolInexistenteException ex) {
+        } catch (EmailInvalidoException | IdInvalidaException | RolInexistenteException | ImmutableFieldException ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(Map.of("error: ", "Datos inválidos.",
                             "detalles: ", ex.getMessage()));
@@ -134,7 +136,7 @@ public class UsuarioController extends BaseController<Usuario, Long, UsuarioDTO>
                     required = true,
                     content = @Content(schema = @Schema(implementation = UsuarioDTO.class))
             )
-            @RequestBody UsuarioDTO usuarioDTO) {
+            @Valid @RequestBody UsuarioDTO usuarioDTO) {
 
         if (!"admin".equalsIgnoreCase(CurrentUser.getRole())) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

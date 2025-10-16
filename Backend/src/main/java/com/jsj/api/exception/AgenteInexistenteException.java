@@ -15,4 +15,8 @@ public class AgenteInexistenteException extends Exception {
         super(String.valueOf(id));
     }
 
+    public AgenteInexistenteException(String message) {
+        super(message);
+    }
+
 }

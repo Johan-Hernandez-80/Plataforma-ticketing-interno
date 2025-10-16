@@ -14,6 +14,7 @@ import com.jsj.api.entity.dto.UsuarioDTO;
 import com.jsj.api.exception.ContrasenaInvalidaException;
 import com.jsj.api.exception.EmailInvalidoException;
 import com.jsj.api.exception.IdInvalidaException;
+import com.jsj.api.exception.ImmutableFieldException;
 import com.jsj.api.exception.InsufficientSavingPermissionsException;
 import com.jsj.api.exception.RolInexistenteException;
 import com.jsj.api.exception.UsuarioInexistenteException;
@@ -69,7 +70,7 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioDTO, Usuar
         return notificacionDAO.getNotificacionesByIdUsuario(idUsuario);
     }
 
-    public UsuarioDTO updateUsuario(Long idUsuario, UsuarioDTO dto) throws UsuarioInexistenteException, InsufficientSavingPermissionsException, RolInexistenteException, IdInvalidaException, EmailInvalidoException {
+    public UsuarioDTO updateUsuario(Long idUsuario, UsuarioDTO dto) throws UsuarioInexistenteException, InsufficientSavingPermissionsException, RolInexistenteException, IdInvalidaException, EmailInvalidoException, ImmutableFieldException {
         validarIdUpdate(idUsuario, dto.getId());
         validarEmailsUpdate(dto.getEmailPersonal(), dto.getEmailCorporativo());
         validarRolIdUpdate(dto.getRolId());

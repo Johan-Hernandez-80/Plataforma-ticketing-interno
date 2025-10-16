@@ -15,4 +15,8 @@ public class TicketInexistenteException extends Exception {
         super(String.valueOf(id));
     }
 
+    public TicketInexistenteException(String message) {
+        super(message);
+    }
+
 }

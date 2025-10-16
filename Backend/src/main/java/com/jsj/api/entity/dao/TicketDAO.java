@@ -11,6 +11,7 @@ import com.jsj.api.entity.dto.ComentarioDTO;
 import com.jsj.api.entity.dto.TicketDTO;
 import com.jsj.api.entity.filter.TicketFilter;
 import com.jsj.api.entity.mapper.TicketMapper;
+import com.jsj.api.exception.InsufficientSavingPermissionsException;
 import com.jsj.api.repository.TicketRepository;
 import com.jsj.api.security.CurrentUser;
 import java.time.LocalDate;
@@ -31,7 +32,8 @@ public class TicketDAO extends BaseDAO<Ticket, Long, TicketDTO, TicketMapper, Ti
         super(mapper, filter, repo);
     }
 
-    public TicketDTO save(TicketDTO dto) {
+    public TicketDTO save(TicketDTO dto) throws InsufficientSavingPermissionsException {
+        dto.setId(null);
         Ticket entity = mapper.toEntity(dto);
 
         filter.filterEntityToSave(entity);
@@ -69,7 +71,7 @@ public class TicketDAO extends BaseDAO<Ticket, Long, TicketDTO, TicketMapper, Ti
 
     public TicketDTO reasignarTicket(Long idTicket, Usuario agente) {
         Ticket ticket = repo.findById(idTicket).get();
-        ticket.setUsuario(agente);
+        ticket.setUsuarioId(agente.getId());
         return filter.filterDTO(mapper.toDTO(repo.save(ticket)));
     }
 

@@ -22,13 +22,11 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario;
+    @Column(name = "usuario_id", nullable = false)
+    private Long usuarioId;
 
-    @ManyToOne
-    @JoinColumn(name = "categoria_id", nullable = false)
-    private Categoria categoria;
+    @Column(name = "categoria_id", nullable = false)
+    private Long categoriaId;
 
     @Column(nullable = false, length = 225)
     private String titulo;
@@ -49,15 +47,6 @@ public class Ticket {
     @Column(name = "fecha_cierre")
     private LocalDateTime fechaCierre;
 
-    @OneToMany(mappedBy = "ticket")
-    private List<Comentario> comentarios;
-
-    @OneToMany(mappedBy = "ticket")
-    private List<Asignacion> asignaciones;
-
-    @OneToMany(mappedBy = "ticket")
-    private List<HistorialTicket> historial;
-
     public Long getId() {
         return id;
     }
@@ -66,20 +55,20 @@ public class Ticket {
         this.id = id;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Long getUsuarioId() {
+        return usuarioId;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuarioId(Long usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public Long getCategoriaId() {
+        return categoriaId;
     }
 
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
+    public void setCategoriaId(Long categoriaId) {
+        this.categoriaId = categoriaId;
     }
 
     public String getTitulo() {
@@ -128,30 +117,6 @@ public class Ticket {
 
     public void setFechaCierre(LocalDateTime fechaCierre) {
         this.fechaCierre = fechaCierre;
-    }
-
-    public List<Comentario> getComentarios() {
-        return comentarios;
-    }
-
-    public void setComentarios(List<Comentario> comentarios) {
-        this.comentarios = comentarios;
-    }
-
-    public List<Asignacion> getAsignaciones() {
-        return asignaciones;
-    }
-
-    public void setAsignaciones(List<Asignacion> asignaciones) {
-        this.asignaciones = asignaciones;
-    }
-
-    public List<HistorialTicket> getHistorial() {
-        return historial;
-    }
-
-    public void setHistorial(List<HistorialTicket> historial) {
-        this.historial = historial;
     }
 
 }

@@ -20,8 +20,6 @@ import org.mapstruct.ReportingPolicy;
 public interface TicketMapper extends BaseMapper<Ticket, TicketDTO> {
 
     @Override
-    @Mapping(source = "usuario.id", target = "usuarioId")
-    @Mapping(source = "categoria.id", target = "categoriaId")
     public TicketDTO toDTO(Ticket entity);
 
     @Override

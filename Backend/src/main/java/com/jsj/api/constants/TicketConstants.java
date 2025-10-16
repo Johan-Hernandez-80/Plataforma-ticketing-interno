@@ -4,6 +4,7 @@
  */
 package com.jsj.api.constants;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -30,7 +31,7 @@ public final class TicketConstants {
     }
 
     private static Set<String> capitalize(Set<String> set) {
-        Set<String> capsSet = Set.of();
+        Set<String> capsSet = new HashSet<>();
         for (String s : set) {
             capsSet.add(s.toUpperCase());
         }

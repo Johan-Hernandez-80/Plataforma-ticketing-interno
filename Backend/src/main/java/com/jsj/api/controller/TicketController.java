@@ -13,11 +13,15 @@ import com.jsj.api.entity.mapper.TicketMapper;
 import com.jsj.api.security.CurrentUser;
 import com.jsj.api.service.BaseService;
 import com.jsj.api.entity.filter.TicketFilter;
+import com.jsj.api.entity.filter.UsuarioFilter;
 import com.jsj.api.exception.AgenteInexistenteException;
 import com.jsj.api.exception.CategoriaInexistenteException;
+import com.jsj.api.exception.DescripcionInvalidaException;
 import com.jsj.api.exception.EstadoInvalidoException;
+import com.jsj.api.exception.InsufficientSavingPermissionsException;
 import com.jsj.api.exception.NotAuthorizedException;
 import com.jsj.api.exception.PrioridadInvalidaException;
+import com.jsj.api.exception.TituloInvalidoException;
 import com.jsj.api.exception.UsuarioInexistenteException;
 import com.jsj.api.service.TicketService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +30,11 @@ import io.swagger.v3.oas.annotations.*;
 import io.swagger.v3.oas.annotations.media.*;
 import io.swagger.v3.oas.annotations.responses.*;
 import io.swagger.v3.oas.annotations.tags.*;
+import jakarta.validation.Valid;
 import java.time.LocalDate;
 import java.util.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +47,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/tickets")
 @Tag(name = "Tickets", description = "Operaciones relacionadas con los tiquetes")
 public class TicketController extends BaseController<Ticket, Long, TicketDTO> {
+
+    private static final Logger log = LoggerFactory.getLogger(UsuarioFilter.class);
 
     private final TicketService service;
 
@@ -58,6 +67,8 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO> {
                 content = @Content(schema = @Schema(implementation = TicketDTO.class))),
         @ApiResponse(responseCode = "400", description = "Datos inválidos",
                 content = @Content(schema = @Schema(example = "{ \"error\": \"Datos inválidos en la solicitud.\", \"detalles\": [\"Campo obligatorio faltante o incorrecto\"] }"))),
+        @ApiResponse(responseCode = "401", description = "No autorizado",
+                content = @Content(schema = @Schema(example = "{ \"error\": \"Usuario no autorizado.\" }"))),
         @ApiResponse(responseCode = "404", description = "Recurso no encontrado",
                 content = @Content(schema = @Schema(example = "{ \"error\": \"Recurso no encontrado.\", \"detalles\": \"Usuario o categoría inexistente\" }"))),
         @ApiResponse(responseCode = "500", description = "Error interno del servidor",
@@ -70,31 +81,28 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO> {
                     required = true,
                     content = @Content(schema = @Schema(implementation = TicketDTO.class))
             )
-            @RequestBody TicketDTO ticketDTO) {
+            @Valid @RequestBody TicketDTO ticketDTO) {
 
         TicketDTO created;
         try {
             created = service.save(ticketDTO);
-        } catch (CategoriaInexistenteException ex) {
+        } catch (UsuarioInexistenteException | CategoriaInexistenteException ex) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(Map.of(
                             "error", "Recurso no encontrado.",
-                            "detalle", "La categoría " + ticketDTO.getCategoriaId() + " no existe en la base de datos."
+                            "detalle", ex.getMessage()
                     ));
-        } catch (UsuarioInexistenteException ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+        } catch (DescripcionInvalidaException | TituloInvalidoException | EstadoInvalidoException | PrioridadInvalidaException ex) {
+            log.info("Error: ", ex);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("error", "Parámetro invalido",
+                            "detalle", ex.getMessage()));
+        } catch (InsufficientSavingPermissionsException ex) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body(Map.of(
                             "error", "Recurso no encontrado.",
-                            "detalle", "El usuario " + ticketDTO.getUsuarioId() + " no existe en la base de datos."
+                            "detalle", ex.getMessage()
                     ));
-        } catch (PrioridadInvalidaException ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("error", "Prioridad invalida",
-                            "detalle", String.format("La prioridad %s es inválida", ticketDTO.getPrioridad())));
-        } catch (EstadoInvalidoException ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(Map.of("error", "Estado inválido",
-                            "detalle", String.format("La prioridad %s es inválida", ticketDTO.getPrioridad())));
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
