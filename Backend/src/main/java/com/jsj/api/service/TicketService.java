@@ -13,6 +13,7 @@ import com.jsj.api.exception.CategoriaInexistenteException;
 import com.jsj.api.exception.UsuarioInexistenteException;
 import com.jsj.api.entity.Ticket;
 import com.jsj.api.entity.dao.AsignacionDAO;
+import com.jsj.api.entity.dto.PrioridadDTO;
 import com.jsj.api.entity.dao.CategoriaDAO;
 import com.jsj.api.entity.dao.ComentarioDAO;
 import com.jsj.api.entity.dao.TicketDAO;
@@ -137,10 +138,10 @@ public class TicketService extends BaseService<Ticket, Long, TicketDTO, TicketDA
     return comentarioDao.save(dto);
   }
 
-  public TicketDTO updatePrioridad(Long idTicket, String prioridad)
+  public TicketDTO updatePrioridad(Long idTicket, PrioridadDTO prioridadDTO)
       throws PrioridadInvalidaException, TicketInexistenteException {
 
-    prioridad = validarPrioridadSave(prioridad);
+    String prioridad = validarPrioridadSave(prioridadDTO.getPrioridad());
     validarTicketIdExistance(idTicket);
     return dao.updatePrioridad(idTicket, prioridad);
   }
