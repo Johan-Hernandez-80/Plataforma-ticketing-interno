@@ -28,61 +28,59 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class TicketDAO extends BaseDAO<Ticket, Long, TicketDTO, TicketMapper, TicketFilter, TicketRepository> {
 
-  public TicketDAO(TicketMapper mapper, TicketFilter filter, TicketRepository repo) {
-    super(mapper, filter, repo);
-  }
+    public TicketDAO(TicketMapper mapper, TicketFilter filter, TicketRepository repo) {
+        super(mapper, filter, repo);
+    }
 
-  public TicketDTO save(TicketDTO dto) throws InsufficientSavingPermissionsException {
-    dto.setId(null);
-    Ticket entity = mapper.toEntity(dto);
+    public TicketDTO save(TicketDTO dto) throws InsufficientSavingPermissionsException {
+        dto.setId(null);
+        Ticket entity = mapper.toEntity(dto);
 
-    filter.filterEntityToSave(entity);
+        filter.filterEntityToSave(entity);
 
-    return filter.filterDTO(mapper.toDTO(repo.save(entity)));
-  }
+        return filter.filterDTO(mapper.toDTO(repo.save(entity)));
+    }
 
-  public List<TicketDTO> findTickets(String estado, String prioridad, Long usuarioId) {
-    return repo.findTickets(estado, prioridad, usuarioId)
-        .stream()
-        .map(mapper::toDTO)
-        .map(dto -> filter.filterDTO(dto))
-        .toList();
-  }
+    public List<TicketDTO> findTickets(String estado, String prioridad, Long usuarioId) {
+        return repo.findTickets(estado, prioridad, usuarioId)
+                .stream()
+                .map(mapper::toDTO)
+                .map(dto -> filter.filterDTO(dto))
+                .toList();
+    }
 
-  public TicketDTO findTicketById(Long idTicket) {
-    return findById(idTicket)
-        .map(mapper::toDTO)
-        .map(dto -> filter.filterDTO(dto))
-        .orElse(null);
-  }
+    public TicketDTO findTicketById(Long idTicket) {
+        return findById(idTicket)
+                .map(mapper::toDTO)
+                .map(dto -> filter.filterDTO(dto))
+                .orElse(null);
+    }
 
-  public TicketDTO updatePrioridad(Long idTicket, String prioridad) {
-    Ticket ticket = repo.findById(idTicket).get();
-    ticket.setPrioridad(prioridad);
-    return filter.filterDTO(mapper.toDTO(repo.save(ticket)));
+    public TicketDTO updatePrioridad(Long idTicket, String prioridad) {
+        Ticket ticket = repo.findById(idTicket).get();
+        ticket.setPrioridad(prioridad);
+        return filter.filterDTO(mapper.toDTO(repo.save(ticket)));
 
-  }
+    }
 
-  public TicketDTO cerrarTicket(Long idTicket) {
-    Ticket ticket = repo.findById(idTicket).get();
-    ticket.setEstado("Cerrado");
-    return filter.filterDTO(mapper.toDTO(repo.save(ticket)));
-  }
+    public TicketDTO cerrarTicket(Long idTicket) {
+        Ticket ticket = repo.findById(idTicket).get();
+        ticket.setEstado(TicketConstants.getEstado("Cerrado"));
+        return filter.filterDTO(mapper.toDTO(repo.save(ticket)));
+    }
 
-  public TicketDTO reasignarTicket(Long idTicket, Usuario agente) {
-    Ticket ticket = repo.findById(idTicket).get();
-    ticket.setUsuarioId(agente.getId());
-    return filter.filterDTO(mapper.toDTO(repo.save(ticket)));
-  }
+    public TicketDTO reasignarTicket(Long idTicket, Usuario agente) {
+        Ticket ticket = repo.findById(idTicket).get();
+        ticket.setUsuarioId(agente.getId());
+        return filter.filterDTO(mapper.toDTO(repo.save(ticket)));
+    }
 
-  public List<TicketDTO> findTicketsFiltrados(String estadoVer, String prioridadVer, Long agenteId, LocalDate fecha) {
-    List<TicketDTO> list = repo.findTickets(estadoVer, prioridadVer, agenteId, fecha)
-        .stream()
-        .map(mapper::toDTO)
-        .map(dto -> filter.filterDTO(dto))
-        .toList();
-
-    return list;
-  }
+    public List<TicketDTO> findTicketsFiltrados(String estadoVer, String prioridadVer, Long agenteId, LocalDate fecha) {
+        return repo.findTickets(estadoVer, prioridadVer, agenteId, fecha)
+                .stream()
+                .map(mapper::toDTO)
+                .map(dto -> filter.filterDTO(dto))
+                .toList();
+    }
 
 }

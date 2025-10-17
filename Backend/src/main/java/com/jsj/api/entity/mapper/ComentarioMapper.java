@@ -19,8 +19,6 @@ import org.mapstruct.ReportingPolicy;
 public interface ComentarioMapper extends BaseMapper<Comentario, ComentarioDTO> {
 
     @Override
-    @Mapping(source = "ticket.id", target = "ticketId")
-    @Mapping(source = "usuario.id", target = "usuarioId")
     public ComentarioDTO toDTO(Comentario entity);
 
     @Override

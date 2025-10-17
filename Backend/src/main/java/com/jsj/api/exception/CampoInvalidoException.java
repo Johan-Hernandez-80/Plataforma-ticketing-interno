@@ -9,10 +9,10 @@ package com.jsj.api.exception;
  *
  * @author Juan José Molano Franco
  */
-public class PrioridadInvalidaException extends Exception {
+public class CampoInvalidoException extends Exception {
 
-    public PrioridadInvalidaException(String prioridad) {
-        super(prioridad);
+    public CampoInvalidoException(String message) {
+        super(message);
     }
 
 }

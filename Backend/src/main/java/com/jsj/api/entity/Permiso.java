@@ -22,9 +22,6 @@ public class Permiso {
     @Column(nullable = false, unique = true, length = 255)
     private String nombre;
 
-    @ManyToMany(mappedBy = "permisos")
-    private Set<Rol> roles = new HashSet<>();
-
     public Integer getId() {
         return id;
     }
@@ -41,12 +38,4 @@ public class Permiso {
         this.nombre = nombre;
     }
 
-    public Set<Rol> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<Rol> roles) {
-        this.roles = roles;
-    }
-    
 }

@@ -20,8 +20,6 @@ import org.mapstruct.ReportingPolicy;
 public interface AsignacionMapper extends BaseMapper<Asignacion, AsignacionDTO> {
 
     @Override
-    @Mapping(source = "ticket.id", target = "ticketId")
-    @Mapping(source = "agente.id", target = "agenteId")
     public AsignacionDTO toDTO(Asignacion entity);
 
     @Override

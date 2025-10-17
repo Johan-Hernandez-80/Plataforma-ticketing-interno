@@ -21,9 +21,8 @@ public class Notificacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario;
+    @Column(nullable = false)
+    private Long usuarioId;
 
     @Column(nullable = false, length = 225)
     private String mensaje;
@@ -40,12 +39,12 @@ public class Notificacion {
         this.id = id;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Long getUsuarioId() {
+        return usuarioId;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setUsuarioId(Long usuarioId) {
+        this.usuarioId = usuarioId;
     }
 
     public String getMensaje() {

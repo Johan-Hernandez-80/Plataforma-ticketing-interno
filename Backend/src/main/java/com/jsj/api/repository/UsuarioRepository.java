@@ -16,37 +16,48 @@ import org.springframework.data.repository.query.Param;
  */
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-    @Query("""
-            SELECT p.nombre FROM Permiso p
-            JOIN Rol r ON p MEMBER OF r.permisos
-            JOIN Usuario u ON u.rolId = r.id
-            WHERE u.id = :userId
-        """)
+    @Query(
+            value = "SELECT p.nombre "
+            + "FROM permisos p "
+            + "JOIN permisos_roles pr ON pr.permiso_id = p.id "
+            + "JOIN roles r ON r.id = pr.rol_id "
+            + "JOIN usuarios u ON u.rol_id = r.id "
+            + "WHERE u.id = :userId",
+            nativeQuery = true
+    )
     Set<String> getPermissionsById(@Param("userId") Long userId);
 
-    @Query("SELECT u FROM Usuario u WHERE u.emailPersonal = :emailPersonal")
-    Usuario findByEmailPersonal(@Param("emailPersonal") String emailPersonal);
+    Usuario findByEmailPersonal(String emailPersonal);
 
-    @Query("SELECT u FROM Usuario u WHERE u.emailCorporativo = :emailCorporativo")
-    Usuario findByEmailCorporativo(@Param("emailCorporativo") String emailCorporativo);
+    Usuario findByEmailCorporativo(String emailCorporativo);
+
+    @Query(
+            value = """
+        SELECT CASE WHEN COUNT(u.id) > 0 THEN true ELSE false END
+        FROM usuarios u
+        JOIN roles r ON u.rol_id = r.id
+        WHERE u.id = :usuarioId AND r.nombre = 'admin'
+    """,
+            nativeQuery = true
+    )
+    int isAdmin(@Param("usuarioId") Long usuarioId);
+
+    @Query(
+            value = """
+        SELECT CASE WHEN COUNT(u.id) > 0 THEN true ELSE false END
+        FROM usuarios u
+        JOIN roles r ON u.rol_id = r.id
+        WHERE u.id = :usuarioId AND r.nombre = 'agente'
+    """,
+            nativeQuery = true
+    )
+    int isAgente(@Param("usuarioId") Long usuarioId);
 
     @Query("""
-            SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END
-            FROM Usuario u, Rol r
-            WHERE u.rolId = r.id AND u.id = :usuarioId AND r.nombre = 'admin'
-        """)
-    boolean isAdmin(@Param("usuarioId") Long usuarioId);
-
-    @Query("""
-            SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END
-            FROM Usuario u, Rol r
-            WHERE u.rolId = r.id AND u.id = :usuarioId AND r.nombre = 'agente'
-        """)
-    boolean isAgente(@Param("usuarioId") Long usuarioId);
-
-    @Query("SELECT CASE WHEN COUNT(a) > 0 THEN true ELSE false END "
-            + "FROM Asignacion a "
-            + "WHERE a.agente.id = :agenteId AND a.ticket.id = :ticketId")
+        SELECT CASE WHEN COUNT(a) > 0 THEN true ELSE false END
+        FROM Asignacion a
+        WHERE a.agenteId = :agenteId AND a.ticketId = :ticketId
+    """)
     boolean isAgenteAssignedToTicket(@Param("agenteId") Long agenteId,
             @Param("ticketId") Long ticketId);
 
@@ -61,5 +72,4 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     boolean existsByEmailPersonal(String emailPersonal);
 
     boolean existsByEmailCorporativo(String emailCorporativo);
-
 }
