@@ -28,6 +28,8 @@ public class TicketDTO {
 
     private Long usuarioId;
 
+    private Long agenteId;
+
     private Long categoriaId;
 
     @Size(max = 255, message = "El título no puede superar 255 caracteres")
@@ -60,6 +62,14 @@ public class TicketDTO {
 
     public void setUsuarioId(Long usuarioId) {
         this.usuarioId = usuarioId;
+    }
+
+    public Long getAgenteId() {
+        return agenteId;
+    }
+
+    public void setAgenteId(Long agenteId) {
+        this.agenteId = agenteId;
     }
 
     public Long getCategoriaId() {
