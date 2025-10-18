@@ -35,8 +35,13 @@ public class UsuarioServiceTest {
     @InjectMocks
     UsuarioService service;
 
+    // ============================================================
+    // SECCIÓN 1: updateUsuario()
+    // ============================================================
+
+    // CASO 1: Usuario se actualiza correctamente
     @Test
-    public void updateServiceDeberiaRetornarUsuarioDTOConNuevosDatosCuandoTodoEsValido() throws Exception{
+    public void updateUsuario_DeberiaRetornarUsuarioDTOConNuevosDatos_CuandoTodoEsValido() throws Exception{
         //Arrange
         Long idUsuarioValido = 1L;
         UsuarioDTO usuarioDTOValido = new UsuarioDTO();
@@ -54,8 +59,9 @@ public class UsuarioServiceTest {
         verify(dao, times(1)).updateUsuario(any(Long.class), any(UsuarioDTO.class));
     }
 
+    // CASO 2: Usuario inexistente
     @Test
-    public void updateServiceDeberiaLanzarUsuarioInexistenteExceptionCuandoUsuarioNoExiste() throws Exception {
+    public void updateUsuario_DeberiaLanzarUsuarioInexistenteException_CuandoUsuarioNoExiste() throws Exception {
         // ---------- ARRANGE ----------
         Long idInexistente = 99L;
         UsuarioDTO usuarioDTO = new UsuarioDTO();
@@ -76,6 +82,7 @@ public class UsuarioServiceTest {
         verify(dao, times(1)).updateUsuario(any(Long.class), any(UsuarioDTO.class));
     }
 
+    // CASO 3: Sin los permisos necesarios
     @Test
     public void updateUsuario_DeberiaLanzarInsufficientSavingPermissionsException_CuandoNoTienePermisos() throws Exception {
         Long id = 1L;
@@ -92,9 +99,7 @@ public class UsuarioServiceTest {
         verify(dao, times(1)).updateUsuario(any(), any());
     }
 
-    // ======================================================
-    // CASO 3: Rol inexistente
-    // ======================================================
+    // CASO 4: Rol inexistente
     @Test
     public void updateUsuario_DeberiaLanzarRolInexistenteException_CuandoRolNoExiste() throws Exception {
         Long id = 1L;
@@ -110,9 +115,7 @@ public class UsuarioServiceTest {
         verify(rolDAO, times(1)).existsById(any());
     }
 
-    // ======================================================
-    // CASO 4: ID inválida
-    // ======================================================
+    // CASO 5: ID inválida
     @Test
     public void updateUsuario_DeberiaLanzarIdInvalidaException_CuandoElIdEsInvalido() throws Exception {
         Long id = -2L;
@@ -127,11 +130,9 @@ public class UsuarioServiceTest {
         verify(dao, times(0)).updateUsuario(any(), any());
     }
 
-    // ======================================================
-    // CASO 5: Email inválido
-    // ======================================================
+    // CASO 6: Email personal inválido
     @Test
-    public void updateUsuario_DeberiaLanzarEmailInvalidoException_CuandoEmailEsInvalido() throws Exception {
+    public void updateUsuario_DeberiaLanzarEmailInvalidoException_CuandoEmailPersonalEsInvalido() throws Exception {
         Long id = 1L;
         UsuarioDTO dto = new UsuarioDTO();
         dto.setEmailPersonal("email-existente");
@@ -145,9 +146,23 @@ public class UsuarioServiceTest {
         verify(dao, times(1)).existsByEmailPersonal(any());
     }
 
-    // ======================================================
-    // CASO 6: Campo inmutable modificado
-    // ======================================================
+    // CASO 7: Email corporativo inválido
+    @Test
+    public void updateUsuario_DeberiaLanzarEmailInvalidoException_CuandoEmailCorporativoEsInvalido() throws Exception {
+        Long id = 1L;
+        UsuarioDTO dto = new UsuarioDTO();
+        dto.setEmailPersonal("email-existente");
+        when(dao.existsByEmailPersonal(any())).thenReturn(true);
+
+        EmailInvalidoException ex = assertThrows(
+                EmailInvalidoException.class,
+                () -> service.updateUsuario(id, dto)
+        );
+
+        verify(dao, times(1)).existsByEmailPersonal(any());
+    }
+
+    // CASO 8: Campo inmutable modificado
     @Test
     public void updateUsuario_DeberiaLanzarImmutableFieldException_CuandoCampoInmutableSeModifica() throws Exception {
         Long id = 1L;
