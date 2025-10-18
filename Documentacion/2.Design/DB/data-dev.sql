@@ -1,45 +1,44 @@
 use ticketing;
 
--- Insertar admin
-insert into usuarios (rol_id, nombre, email_personal, email_corporativo, contrasena, departamento)
-values (
-    (select id from roles where nombre = 'admin'),
-    'Admin Principal',
-    null,
-    'admin@empresa.com',
-    '$2a$10$XALQrXT9eqQbU3GiK674f.zHtJ2Eusuev1vQku/Bc78jDpCOA0smO',
-    'Administración'
+-- Usuarios
+insert into usuarios (rol_id, nombre, email_personal, email_corporativo, contrasena, departamento) values
+((select id from roles where nombre='admin'), 'Jaime Martinez', null, 'admin@empresa.com', '$2a$10$Env5ZVj0B85eaUfb87ox3utFuofSnOzPb0eiBPZLcmkncVIyXrcX2', 'Administración'),
+((select id from roles where nombre='agente'), 'José González', 'agente.personal@correo.com', 'agente@empresa.com', '$2a$10$Kbyl6uYEU9CscEiJ8RPYI.bvy5d3P3hV7aKtlw4fn7zKctI/7TEyG', 'Soporte'),
+((select id from roles where nombre='usuario'), 'María Zambrano', 'usuario.personal@correo.com', 'usuario@empresa.com', '$2a$10$WPtSUPCTZpX.8FF7AVoSrO/ahIJCx/GA9lZtv3ZNqY0R073G691AO', 'General');
+
+-- Categorías
+insert into categorias (nombre, descripcion) values
+('Soporte Técnico', 'Tickets relacionados con problemas técnicos'),
+('Recursos Humanos', 'Consultas o solicitudes de empleados');
+
+-- Tickets
+insert into tickets (usuario_id, categoria_id, agente_id, titulo, descripcion, prioridad, estado)
+values
+((select id from usuarios where nombre='María Zambrano'),
+ (select id from categorias where nombre='Soporte Técnico'),
+ (select id from usuarios where nombre='José González'),
+ 'No puedo iniciar sesión',
+ 'El usuario no puede acceder al sistema desde su cuenta.',
+ 'Urgente',
+ 'Pendiente'
 );
 
--- Insertar agente
-insert into usuarios (rol_id, nombre, email_personal, email_corporativo, contrasena, departamento)
-values (
-    (select id from roles where nombre = 'agente'),
-    'Agente Soporte',
-    'agente.personal@correo.com',
-    'agente@empresa.com',
-    '$2a$10$CAJ8XEgQlLP3J/W9pejFPeNqBGDPxru15L5TRpKp5e6bn2/cnXmWy',
-    'Soporte'
-);
+-- Comentarios
+insert into comentarios (ticket_id, usuario_id, comentario)
+values
+((select id from tickets where titulo='No puedo iniciar sesión'),
+ (select id from usuarios where nombre='María Zambrano'),
+ 'Intenté restablecer mi contraseña, pero sigue sin funcionar.');
 
--- Insertar usuario
-insert into usuarios (rol_id, nombre, email_personal, email_corporativo, contrasena, departamento)
-values (
-    (select id from roles where nombre = 'usuario'),
-    'Usuario Final',
-    'usuario.personal@correo.com',
-    'usuario@empresa.com',
-    '$2a$10$mcFrZ.SKqpDX78UxCnfqQufiwPujp28e67TZ59TwyEgdJ73RBG4he',
-    'General'
-);
+-- History
+insert into historial_tickets (ticket_id, estado_anterior, estado_nuevo)
+values
+((select id from tickets where titulo='No puedo iniciar sesión'),
+ 'Pendiente',
+ 'En progreso');
 
--- Insertar categoría
-insert into categorias (nombre, descripcion)
-values ('Soporte Técnico', 'Tickets relacionados con problemas técnicos');
-
--- Insertar notificación
+-- Notifications
 insert into notificaciones (usuario_id, mensaje)
-values (
-    (select id from usuarios where email_corporativo = 'usuario@empresa.com'),
-    'Su ticket ha sido creado exitosamente.'
-);
+values
+((select id from usuarios where nombre='María Zambrano'),
+ 'Su ticket ha sido actualizado a "En progreso".');

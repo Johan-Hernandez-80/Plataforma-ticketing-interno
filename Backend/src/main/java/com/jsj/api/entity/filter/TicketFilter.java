@@ -43,6 +43,9 @@ public class TicketFilter extends BaseFilter<Ticket, TicketDTO> {
         if (!permissions.contains("view_ticket_categoria_id")) {
             dto.setCategoriaId(null);
         }
+        if (!permissions.contains("view_ticket_agente_id")) {
+            dto.setAgenteId(null);
+        }
         if (!permissions.contains("view_ticket_titulo")) {
             dto.setTitulo(null);
         }
@@ -74,6 +77,7 @@ public class TicketFilter extends BaseFilter<Ticket, TicketDTO> {
 
         if (!permissions.contains("update_ticket_usuario_id")
                 || !permissions.contains("update_ticket_categoria_id")
+                || !permissions.contains("update_ticket_agente_id")
                 || !permissions.contains("update_ticket_titulo")
                 || !permissions.contains("update_ticket_descripcion")
                 || !permissions.contains("update_ticket_prioridad")
@@ -110,6 +114,14 @@ public class TicketFilter extends BaseFilter<Ticket, TicketDTO> {
                 entity.setCategoriaId(dto.getCategoriaId());
             } else {
                 throw new InsufficientSavingPermissionsException("No tiene permisos para actualizar la id de la categoría del ticket");
+            }
+        }
+        
+        if (dto.getAgenteId() != null) {
+            if (permissions.contains("update_ticket_agente_id")) {
+                entity.setAgenteId(dto.getAgenteId());
+            } else {
+                throw new InsufficientSavingPermissionsException("No tiene permisos para actualizar la id del agente asignado al ticket");
             }
         }
 

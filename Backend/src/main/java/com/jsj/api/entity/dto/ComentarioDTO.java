@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import lombok.Data;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 /**
@@ -24,6 +25,7 @@ public class ComentarioDTO {
 
     private Long ticketId;
 
+    @NotNull
     private Long usuarioId;
 
     @Size(max = 1000, message = "El comentario no puede superar 1000 caracteres")
