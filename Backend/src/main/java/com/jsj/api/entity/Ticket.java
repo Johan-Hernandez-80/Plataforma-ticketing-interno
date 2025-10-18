@@ -27,6 +27,9 @@ public class Ticket {
 
     @Column(nullable = false)
     private Long categoriaId;
+    
+    @Column(nullable = false)
+    private Long agenteId;
 
     @Column(nullable = false, length = 225)
     private String titulo;
@@ -40,15 +43,20 @@ public class Ticket {
     @Column(nullable = false, length = 225)
     private String estado;
 
-    @Column(nullable = false, length = 225)
-    private Long agenteId;
-
     @Column(nullable = false, updatable = false, insertable = false,
             columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime fechaCreacion;
 
     @Column(name = "fecha_cierre")
     private LocalDateTime fechaCierre;
+
+    public Long getAgenteId() {
+        return agenteId;
+    }
+
+    public void setAgenteId(Long agenteId) {
+        this.agenteId = agenteId;
+    }
 
     public Long getId() {
         return id;

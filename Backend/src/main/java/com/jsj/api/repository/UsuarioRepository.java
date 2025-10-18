@@ -54,10 +54,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     int isAgente(@Param("usuarioId") Long usuarioId);
 
     @Query("""
-        SELECT CASE WHEN COUNT(a) > 0 THEN true ELSE false END
-        FROM Asignacion a
-        WHERE a.agenteId = :agenteId AND a.ticketId = :ticketId
-    """)
+    SELECT CASE WHEN COUNT(t) > 0 THEN true ELSE false END
+    FROM Ticket t
+    WHERE t.agenteId = :agenteId AND t.id = :ticketId
+""")
     boolean isAgenteAssignedToTicket(@Param("agenteId") Long agenteId,
             @Param("ticketId") Long ticketId);
 

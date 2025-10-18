@@ -76,7 +76,7 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO> {
     TicketDTO created;
     try {
       created = service.save(ticketDTO);
-    } catch (UsuarioInexistenteException | CategoriaInexistenteException ex) {
+    } catch (AgenteInexistenteException | UsuarioInexistenteException | CategoriaInexistenteException ex) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND)
           .body(Map.of(
               "error", "Recurso no encontrado.",

@@ -48,19 +48,13 @@ insert into permisos (nombre) values
 ('view_ticket_id'), ('update_ticket_id'),
 ('view_ticket_usuario_id'), ('update_ticket_usuario_id'),
 ('view_ticket_categoria_id'), ('update_ticket_categoria_id'),
+('view_ticket_agente_id'), ('update_ticket_agente_id'),
 ('view_ticket_titulo'), ('update_ticket_titulo'),
 ('view_ticket_descripcion'), ('update_ticket_descripcion'),
 ('view_ticket_prioridad'), ('update_ticket_prioridad'),
 ('view_ticket_estado'), ('update_ticket_estado'),
 ('view_ticket_fecha_creacion'), ('update_ticket_fecha_creacion'),
 ('view_ticket_fecha_cierre'), ('update_ticket_fecha_cierre');
-
--- ASIGNACION
-insert into permisos (nombre) values
-('view_asignacion_id'), ('update_asignacion_id'),
-('view_asignacion_ticket_id'), ('update_asignacion_ticket_id'),
-('view_asignacion_agente_id'), ('update_asignacion_agente_id'),
-('view_asignacion_fecha_creacion'), ('update_asignacion_fecha_creacion');
 
 -- COMENTARIO
 insert into permisos (nombre) values
@@ -142,6 +136,7 @@ select 2, id from permisos where nombre in (
   'view_ticket_id',
   'view_ticket_usuario_id',
   'view_ticket_categoria_id',
+  'view_ticket_agente_id',
   'view_ticket_titulo',
   'view_ticket_descripcion',
   'view_ticket_prioridad',
@@ -151,22 +146,13 @@ select 2, id from permisos where nombre in (
   'update_ticket_id',
   'update_ticket_usuario_id',
   'update_ticket_categoria_id',
+  'update_ticket_agente_id',
   'update_ticket_titulo',
   'update_ticket_descripcion',
   'update_ticket_prioridad',
   'update_ticket_estado',
   'update_ticket_fecha_creacion',
   'update_ticket_fecha_cierre',
-
-  -- ===== ASIGNACION =====
-  'view_asignacion_id',
-  'view_asignacion_ticket_id',
-  'view_asignacion_agente_id',
-  'view_asignacion_fecha_creacion',
-  'update_asignacion_id',
-  'update_asignacion_ticket_id',
-  'update_asignacion_agente_id',
-  'update_asignacion_fecha_creacion',
 
   -- ===== COMENTARIO =====
   'view_comentario_id',
@@ -252,6 +238,7 @@ select 3, id from permisos where nombre in (
   'view_ticket_id',
   'view_ticket_usuario_id',
   'view_ticket_categoria_id',
+  'view_ticket_agente_id',
   'view_ticket_titulo',
   'view_ticket_descripcion',
   'view_ticket_prioridad',
@@ -261,22 +248,13 @@ select 3, id from permisos where nombre in (
   'update_ticket_id',
   'update_ticket_usuario_id',
   'update_ticket_categoria_id',
+  'update_ticket_agente_id',
   'update_ticket_titulo',
   'update_ticket_descripcion',
   'update_ticket_prioridad',
   'update_ticket_estado',
   'update_ticket_fecha_creacion',
   'update_ticket_fecha_cierre',
-
-  -- ===== ASIGNACION =====
-  'view_asignacion_id',
-  'view_asignacion_ticket_id',
-  'view_asignacion_agente_id',
-  'view_asignacion_fecha_creacion',
-  'update_asignacion_id',
-  'update_asignacion_ticket_id',
-  'update_asignacion_agente_id',
-  'update_asignacion_fecha_creacion',
 
   -- ===== COMENTARIO =====
   'view_comentario_id',

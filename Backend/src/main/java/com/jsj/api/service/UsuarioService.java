@@ -64,7 +64,7 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioDTO, Usuar
     }
 
     public List<NotificacionDTO> getNotificacionesById(Long idUsuario) {
-        if (dao.existsById(idUsuario)) {
+        if (!dao.existsById(idUsuario)) {
             return null;
         }
         return notificacionDAO.getNotificacionesByIdUsuario(idUsuario);

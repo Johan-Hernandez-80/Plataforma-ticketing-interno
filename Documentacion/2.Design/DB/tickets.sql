@@ -47,6 +47,7 @@ create table tickets (
     id int auto_increment primary key,
     usuario_id int not null,
     categoria_id int not null,
+    agente_id int not null,
     titulo varchar(255) not null,
     descripcion varchar(1000) not null,
     prioridad varchar(255) not null,
@@ -64,19 +65,9 @@ create table tickets (
 	foreign key (usuario_id) references usuarios(id),
 
     constraint fk_tickets_categorias
-	foreign key (categoria_id) references categorias(id)
-);
-
-create table asignaciones (
-    id int auto_increment primary key,
-    ticket_id int not null,
-    agente_id int not null,
-    fecha_creacion timestamp not null default current_timestamp,
-
-    constraint fk_asignaciones_tickets
-	foreign key (ticket_id) references tickets(id),
-
-    constraint fk_asignaciones_usuarios
+	foreign key (categoria_id) references categorias(id),
+	
+    constraint fk_tickets_agentes
 	foreign key (agente_id) references usuarios(id)
 );
 

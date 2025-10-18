@@ -26,8 +26,10 @@ public class TicketDTO {
 
     private Long id;
 
+    @NotNull
     private Long usuarioId;
 
+    @NotNull
     private Long agenteId;
 
     private Long categoriaId;
