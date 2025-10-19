@@ -6,8 +6,10 @@ import com.jsj.api.entity.dao.RolDAO;
 import com.jsj.api.entity.dao.UsuarioDAO;
 import com.jsj.api.entity.dto.UsuarioDTO;
 import com.jsj.api.exception.*;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.function.Executable;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -35,46 +37,39 @@ public class UsuarioServiceTest {
     @InjectMocks
     UsuarioService service;
 
+    Long idValido;
+    Long idInvalido;
+    UsuarioDTO usuario;
+
+    @BeforeEach
+    void setUp() {
+        idValido = 1L;
+        idInvalido = -99L;
+        usuario = new UsuarioDTO();
+    }
+
     // ============================================================
     // SECCIÓN 1: updateUsuario()
     // ============================================================
 
-    // CASO 1: Usuario se actualiza correctamente
-    @Test
-    public void updateUsuario_DeberiaRetornarUsuarioDTOConNuevosDatos_CuandoTodoEsValido() throws Exception{
-        //Arrange
-        Long idUsuarioValido = 1L;
-        UsuarioDTO usuarioDTOValido = new UsuarioDTO();
-        usuarioDTOValido.setEmailPersonal("email@email.com");
-        usuarioDTOValido.setContrasena("123456");
-        when(dao.updateUsuario(any(Long.class), any(UsuarioDTO.class))).thenReturn(usuarioDTOValido);
-
-        //Act
-        UsuarioDTO resultado = service.updateUsuario(idUsuarioValido, usuarioDTOValido);
-
-        //Assert
-        assertNotNull(resultado, "El resultado no debería ser nulo");
-        assertEquals("email@email.com", resultado.getEmailPersonal(), "El email personal del usuario debe coincidir");
-        assertEquals("123456", resultado.getContrasena(), "La contrasena del usuario debe coincidir");
-        verify(dao, times(1)).updateUsuario(any(Long.class), any(UsuarioDTO.class));
-    }
-
-    // CASO 2: Usuario inexistente
+    // CASO 1: Usuario inexistente
     @Test
     public void updateUsuario_DeberiaLanzarUsuarioInexistenteException_CuandoUsuarioNoExiste() throws Exception {
         // ---------- ARRANGE ----------
-        Long idInexistente = 99L;
-        UsuarioDTO usuarioDTO = new UsuarioDTO();
-        usuarioDTO.setEmailPersonal("noexiste@email.com");
-        usuarioDTO.setContrasena("123456");
+        usuario.setId(idValido);
+        usuario.setEmailPersonal("emailNoExiste@email.com");
+        usuario.setContrasena("123456");
 
         when(dao.updateUsuario(any(Long.class), any(UsuarioDTO.class)))
                 .thenThrow(new UsuarioInexistenteException("Usuario no encontrado"));
 
-        // ---------- ACT & ASSERT ----------
+        // ---------- ACT ----------
+        Executable accion = () -> service.updateUsuario(idValido, usuario);
+
+        // ---------- ASSERT ----------
         UsuarioInexistenteException exception = assertThrows(
                 UsuarioInexistenteException.class,
-                () -> service.updateUsuario(idInexistente, usuarioDTO),
+                accion,
                 "Debe lanzar UsuarioInexistenteException si el usuario no existe"
         );
 
@@ -82,103 +77,172 @@ public class UsuarioServiceTest {
         verify(dao, times(1)).updateUsuario(any(Long.class), any(UsuarioDTO.class));
     }
 
-    // CASO 3: Sin los permisos necesarios
+    // CASO 2: Sin los permisos necesarios
     @Test
     public void updateUsuario_DeberiaLanzarInsufficientSavingPermissionsException_CuandoNoTienePermisos() throws Exception {
-        Long id = 1L;
-        UsuarioDTO dto = new UsuarioDTO();
-        when(dao.updateUsuario(any(), any()))
+        // ---------- ARRANGE ----------
+        usuario.setId(idValido);
+        usuario.setEmailPersonal("emailNoExiste@email.com");
+        usuario.setContrasena("123456");
+
+        when(dao.updateUsuario(any(Long.class), any(UsuarioDTO.class)))
                 .thenThrow(new InsufficientSavingPermissionsException("No tiene permisos"));
 
+        // ---------- ACT ----------
+        Executable accion = () -> service.updateUsuario(idValido, usuario);
+
+        // ---------- ASSERT ----------
         InsufficientSavingPermissionsException ex = assertThrows(
                 InsufficientSavingPermissionsException.class,
-                () -> service.updateUsuario(id, dto)
+                accion,
+                "Debe lanzar InsufficientSavingPermissionsException si no tiene permisos"
         );
 
         assertEquals("No tiene permisos", ex.getMessage());
-        verify(dao, times(1)).updateUsuario(any(), any());
+        verify(dao, times(1)).updateUsuario(any(Long.class), any(UsuarioDTO.class));
     }
 
-    // CASO 4: Rol inexistente
+    // CASO 3: Rol inexistente
     @Test
     public void updateUsuario_DeberiaLanzarRolInexistenteException_CuandoRolNoExiste() throws Exception {
-        Long id = 1L;
-        UsuarioDTO dto = new UsuarioDTO();
-        dto.setRolId(999L);
-        when(rolDAO.existsById(any())).thenReturn(false);
+        // ---------- ARRANGE ----------
+        usuario.setId(idValido);
+        usuario.setEmailPersonal("emailExiste@email.com");
+        usuario.setContrasena("123456");
+        usuario.setRolId(99L);
 
+        when(rolDAO.existsById(any(Long.class))).thenReturn(false);
+
+        // ---------- ACT ----------
+        Executable accion = () -> service.updateUsuario(idValido, usuario);
+
+        // ---------- ASSERT ----------
         RolInexistenteException ex = assertThrows(
                 RolInexistenteException.class,
-                () -> service.updateUsuario(id, dto)
+                accion,
+                "Debe lanzar RolInexistenteException si el rol no existe"
         );
 
-        verify(rolDAO, times(1)).existsById(any());
+        verify(rolDAO, times(1)).existsById(any(Long.class));
     }
 
-    // CASO 5: ID inválida
+    // CASO 4: ID inválida
     @Test
     public void updateUsuario_DeberiaLanzarIdInvalidaException_CuandoElIdEsInvalido() throws Exception {
-        Long id = -2L;
-        UsuarioDTO dto = new UsuarioDTO();
-        dto.setId(id);
+        // ---------- ARRANGE ----------
+        usuario.setId(idInvalido);
+        usuario.setEmailPersonal("emailExiste@email.com");
+        usuario.setContrasena("123456");
+        usuario.setRolId(99L);
 
+        // ---------- ACT ----------
+        Executable accion = () -> service.updateUsuario(idValido, usuario);
+
+        // ---------- ASSERT ----------
         IdInvalidaException ex = assertThrows(
                 IdInvalidaException.class,
-                () -> service.updateUsuario(id, dto)
+                accion,
+                "Debe lanzar IdInvalidaException si el ID es inválido"
         );
 
-        verify(dao, times(0)).updateUsuario(any(), any());
+        verify(dao, times(0)).updateUsuario(any(Long.class), any(UsuarioDTO.class));
     }
 
-    // CASO 6: Email personal inválido
+    // CASO 5: Email personal inválido
     @Test
     public void updateUsuario_DeberiaLanzarEmailInvalidoException_CuandoEmailPersonalEsInvalido() throws Exception {
-        Long id = 1L;
-        UsuarioDTO dto = new UsuarioDTO();
-        dto.setEmailPersonal("email-existente");
-        when(dao.existsByEmailPersonal(any())).thenReturn(true);
+        // ---------- ARRANGE ----------
+        usuario.setId(idValido);
+        usuario.setEmailPersonal("emailExiste@email.com");
+        usuario.setContrasena("123456");
+        usuario.setRolId(99L);
 
+        when(dao.existsByEmailPersonal(any(String.class))).thenReturn(true);
+
+        // ---------- ACT ----------
+        Executable accion = () -> service.updateUsuario(idValido, usuario);
+
+        // ---------- ASSERT ----------
         EmailInvalidoException ex = assertThrows(
                 EmailInvalidoException.class,
-                () -> service.updateUsuario(id, dto)
+                accion,
+                "Debe lanzar EmailInvalidoException si el email personal es inválido"
         );
 
-        verify(dao, times(1)).existsByEmailPersonal(any());
+        verify(dao, times(1)).existsByEmailPersonal(any(String.class));
     }
 
-    // CASO 7: Email corporativo inválido
     @Test
     public void updateUsuario_DeberiaLanzarEmailInvalidoException_CuandoEmailCorporativoEsInvalido() throws Exception {
-        Long id = 1L;
-        UsuarioDTO dto = new UsuarioDTO();
-        dto.setEmailPersonal("email-existente");
-        when(dao.existsByEmailPersonal(any())).thenReturn(true);
+        // ---------- ARRANGE ----------
+        usuario.setId(idValido);
+        usuario.setEmailCorporativo("emailCorporativo@empresa.com");
+        usuario.setContrasena("123456");
+        usuario.setRolId(99L);
 
+        when(dao.existsByEmailCorporativo(any(String.class))).thenReturn(true);
+
+        // ---------- ACT ----------
+        Executable accion = () -> service.updateUsuario(idValido, usuario);
+
+        // ---------- ASSERT ----------
         EmailInvalidoException ex = assertThrows(
                 EmailInvalidoException.class,
-                () -> service.updateUsuario(id, dto)
+                accion,
+                "Debe lanzar EmailInvalidoException si el email corporativo es inválido"
         );
 
-        verify(dao, times(1)).existsByEmailPersonal(any());
+        verify(dao, times(1)).existsByEmailCorporativo(any(String.class));
     }
 
-    // CASO 8: Campo inmutable modificado
+
     @Test
     public void updateUsuario_DeberiaLanzarImmutableFieldException_CuandoCampoInmutableSeModifica() throws Exception {
-        Long id = 1L;
-        UsuarioDTO dto = new UsuarioDTO();
-        dto.setId(1L);
-        dto.setEmailCorporativo("nuevo@email.com");
+        // ---------- ARRANGE ----------
+        usuario.setId(idValido);
+        usuario.setEmailCorporativo("emailCorporativo@empresa.com");
+        usuario.setContrasena("123456");
+        usuario.setRolId(99L);
 
-        doThrow(new ImmutableFieldException("Campo inmutable modificado"))
-                .when(dao).updateUsuario(any(), any());
+        when(rolDAO.existsById(any(Long.class))).thenReturn(true);
+        when(dao.updateUsuario(any(Long.class), any(UsuarioDTO.class)))
+                .thenThrow(new ImmutableFieldException("Campo inmutable modificado"));
 
+        // ---------- ACT ----------
+        Executable accion = () -> service.updateUsuario(idValido, usuario);
+
+        // ---------- ASSERT ----------
         ImmutableFieldException ex = assertThrows(
                 ImmutableFieldException.class,
-                () -> service.updateUsuario(id, dto)
+                accion,
+                "Debe lanzar ImmutableFieldException si se modifica un campo inmutable"
         );
 
         assertEquals("Campo inmutable modificado", ex.getMessage());
-        verify(dao, times(1)).updateUsuario(any(), any());
+        verify(dao, times(1)).updateUsuario(any(Long.class), any(UsuarioDTO.class));
+    }
+
+
+    @Test
+    public void updateUsuario_DeberiaRetornarUsuarioDTOConNuevosDatos_CuandoTodoEsValido() throws Exception {
+        // ---------- ARRANGE ----------
+        usuario.setId(idValido);
+        usuario.setEmailCorporativo("emailCorporativo@empresa.com");
+        usuario.setEmailPersonal("email@email.com");
+        usuario.setContrasena("123456");
+        usuario.setRolId(99L);
+
+        when(dao.updateUsuario(any(Long.class), any(UsuarioDTO.class))).thenReturn(usuario);
+        when(rolDAO.existsById(any(Long.class))).thenReturn(true);
+
+        // ---------- ACT ----------
+        UsuarioDTO resultado = service.updateUsuario(idValido, usuario);
+
+        // ---------- ASSERT ----------
+        assertNotNull(resultado, "El resultado no debería ser nulo");
+        assertEquals("email@email.com", resultado.getEmailPersonal(), "El email personal del usuario debe coincidir");
+        assertEquals("123456", resultado.getContrasena(), "La contraseña del usuario debe coincidir");
+
+        verify(dao, times(1)).updateUsuario(any(Long.class), any(UsuarioDTO.class));
     }
 }
