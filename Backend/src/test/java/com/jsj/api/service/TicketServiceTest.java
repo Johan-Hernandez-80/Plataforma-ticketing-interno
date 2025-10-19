@@ -1,6 +1,5 @@
 package com.jsj.api.service;
 
-import com.jsj.api.constants.TicketConstants;
 import com.jsj.api.entity.dao.ComentarioDAO;
 import com.jsj.api.entity.dao.TicketDAO;
 import com.jsj.api.entity.dao.UsuarioDAO;
@@ -215,64 +214,103 @@ public class TicketServiceTest {
     }
 
 
-    // CASO 3: Comenterio nulo
+    // CASO 3: Comentario nulo
     @Test
     void addComentario_DeberiaLanzarCampoInvalidoException_CuandoComentarioEsNulo() throws Exception {
+        // ---------- ARRANGE ----------
+        comentarioValido.setComentario(null);
+        comentarioValido.setUsuarioId(idUsuarioValido);
         when(dao.existsById(idTicketValido)).thenReturn(true);
         when(usuarioDao.existsById(idUsuarioValido)).thenReturn(true);
-        comentarioValido.setComentario(null);
 
-        assertThrows(CampoInvalidoException.class, () ->
-                service.addComentario(idTicketValido, comentarioValido)
+        // ---------- ACT ----------
+        Executable accion = () -> service.addComentario(idTicketValido, comentarioValido);
+
+        // ---------- ASSERT ----------
+        CampoInvalidoException ex = assertThrows(
+                CampoInvalidoException.class,
+                accion,
+                "Debe lanzar CampoInvalidoException si el comentario es nulo"
         );
 
         verify(comentarioDao, never()).save(any(ComentarioDTO.class));
     }
+
 
     // CASO 4: Comentario muy largo
     @Test
     void addComentario_DeberiaLanzarCampoInvalidoException_CuandoComentarioEsDemasiadoLargo() throws Exception {
-        when(dao.existsById(idTicketValido)).thenReturn(true);
-        when(usuarioDao.existsById(idUsuarioValido)).thenReturn(true);
+        // ---------- ARRANGE ----------
         comentarioValido.setComentario("A".repeat(1200));
+        comentarioValido.setUsuarioId(idUsuarioValido);
+        when(dao.existsById(idTicketValido)).thenReturn(true);
+        when(usuarioDao.existsById(any())).thenReturn(true);
 
-        assertThrows(CampoInvalidoException.class, () ->
-                service.addComentario(idTicketValido, comentarioValido)
+        // ---------- ACT ----------
+        Executable accion = () -> service.addComentario(idTicketValido, comentarioValido);
+
+        // ---------- ASSERT ----------
+        CampoInvalidoException ex = assertThrows(
+                CampoInvalidoException.class,
+                accion,
+                "Debe lanzar CampoInvalidoException si el comentario supera el tamaño máximo permitido"
         );
 
         verify(comentarioDao, never()).save(any(ComentarioDTO.class));
     }
 
+
     // CASO 5: Dao indica falta de permisos
     @Test
     void addComentario_DeberiaLanzarInsufficientSavingPermissionsException_CuandoElDaoLoIndica() throws Exception {
-        when(dao.existsById(idTicketValido)).thenReturn(true);
-        when(usuarioDao.existsById(idUsuarioValido)).thenReturn(true);
-        when(comentarioDao.save(any(ComentarioDTO.class))).thenThrow(new InsufficientSavingPermissionsException("Sin permisos"));
+        // ---------- ARRANGE ----------
+        comentarioValido.setComentario("Comentario de prueba");
+        comentarioValido.setUsuarioId(idUsuarioValido);
 
-        assertThrows(InsufficientSavingPermissionsException.class, () ->
-                service.addComentario(idTicketValido, comentarioValido)
+        when(dao.existsById(idTicketValido)).thenReturn(true);
+        when(usuarioDao.existsById(any())).thenReturn(true);
+        when(comentarioDao.save(any(ComentarioDTO.class)))
+                .thenThrow(new InsufficientSavingPermissionsException("Sin permisos"));
+
+        // ---------- ACT ----------
+        Executable accion = () -> service.addComentario(idTicketValido, comentarioValido);
+
+        // ---------- ASSERT ----------
+        InsufficientSavingPermissionsException ex = assertThrows(
+                InsufficientSavingPermissionsException.class,
+                accion,
+                "Debe lanzar InsufficientSavingPermissionsException si el DAO indica falta de permisos"
         );
 
         verify(comentarioDao, times(1)).save(any(ComentarioDTO.class));
     }
 
+
     // CASO 6: Caso exitoso
     @Test
     void addComentario_DeberiaRetornarComentarioDTO_CuandoTodoEsValido() throws Exception {
-        when(dao.existsById(idTicketValido)).thenReturn(true);
-        when(usuarioDao.existsById(idUsuarioValido)).thenReturn(true);
-        when(comentarioDao.save(any(ComentarioDTO.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        // ---------- ARRANGE ----------
+        comentarioValido.setComentario("Comentario de prueba");
+        comentarioValido.setUsuarioId(idUsuarioValido);
 
+        when(dao.existsById(idTicketValido)).thenReturn(true);
+        when(usuarioDao.existsById(any())).thenReturn(true);
+        when(comentarioDao.save(any(ComentarioDTO.class)))
+                .thenReturn(comentarioValido);
+
+        // ---------- ACT ----------
         ComentarioDTO resultado = service.addComentario(idTicketValido, comentarioValido);
 
-        assertNotNull(resultado);
-        assertEquals(idTicketValido, resultado.getTicketId());
-        assertNull(resultado.getId());
-        assertNull(resultado.getFechaCreacion());
-        assertEquals("Este es un comentario válido.", resultado.getComentario());
+        // ---------- ASSERT ----------
+        assertNotNull(resultado, "El resultado no debe ser nulo");
+        assertEquals(idTicketValido, resultado.getTicketId(), "Debe mantener el ID del ticket");
+        assertNull(resultado.getId(), "El ID del comentario debe ser nulo antes de persistirlo");
+        assertNull(resultado.getFechaCreacion(), "La fecha de creación debe ser nula antes de persistir");
+        assertEquals("Comentario de prueba", resultado.getComentario(), "El comentario debe coincidir con el original");
+
         verify(comentarioDao, times(1)).save(any(ComentarioDTO.class));
     }
+
 
   // ============================================================
   // SECCIÓN 3: updatePrioridad()
@@ -281,23 +319,37 @@ public class TicketServiceTest {
     // CASO 1: Prioridad inválida
     @Test
     void updatePrioridad_DeberiaLanzarPrioridadInvalidaException_CuandoLaPrioridadNoEsValida() {
+        // ---------- ARRANGE ----------
         PrioridadDTO prioridadInvalida = new PrioridadDTO("Tardio");
-        prioridadInvalida.setPrioridad("SUPER-ALTA");
 
-        assertThrows(PrioridadInvalidaException.class, () ->
-                service.updatePrioridad(idTicketValido, prioridadInvalida)
+        // ---------- ACT ----------
+        Executable accion = () -> service.updatePrioridad(idTicketValido, prioridadInvalida);
+
+        // ---------- ASSERT ----------
+        PrioridadInvalidaException ex = assertThrows(
+                PrioridadInvalidaException.class,
+                accion,
+                "Debe lanzar PrioridadInvalidaException si la prioridad no es válida"
         );
 
         verify(dao, never()).updatePrioridad(anyLong(), anyString());
     }
 
+
     // CASO 2: Ticket inexistente
     @Test
     void updatePrioridad_DeberiaLanzarTicketInexistenteException_CuandoElTicketNoExiste() {
+        // ---------- ARRANGE ----------
         when(dao.existsById(idTicketValido)).thenReturn(false);
 
-        assertThrows(TicketInexistenteException.class, () ->
-                service.updatePrioridad(idTicketValido, prioridadValida)
+        // ---------- ACT ----------
+        Executable accion = () -> service.updatePrioridad(idTicketValido, prioridadValida);
+
+        // ---------- ASSERT ----------
+        TicketInexistenteException ex = assertThrows(
+                TicketInexistenteException.class,
+                accion,
+                "Debe lanzar TicketInexistenteException si el ticket no existe"
         );
 
         verify(dao, times(1)).existsById(idTicketValido);
@@ -307,16 +359,23 @@ public class TicketServiceTest {
     // CASO 3: Caso exitoso
     @Test
     void updatePrioridad_DeberiaRetornarTicketDTO_CuandoTodoEsValido() throws Exception {
+        // ---------- ARRANGE ----------
+        ticketActualizado.setId(idTicketValido);
+        ticketActualizado.setPrioridad("Importante");
         when(dao.existsById(idTicketValido)).thenReturn(true);
-        when(dao.updatePrioridad(idTicketValido, "ALTA")).thenReturn(ticketActualizado);
+        when(dao.updatePrioridad(idTicketValido, "Importante")).thenReturn(ticketActualizado);
 
+        // ---------- ACT ----------
         TicketDTO resultado = service.updatePrioridad(idTicketValido, prioridadValida);
 
-        assertNotNull(resultado);
-        assertEquals(idTicketValido, resultado.getId());
-        assertEquals("ALTA", resultado.getPrioridad());
-        verify(dao, times(1)).updatePrioridad(idTicketValido, "ALTA");
+        // ---------- ASSERT ----------
+        assertNotNull(resultado, "El resultado no debe ser nulo");
+        assertEquals(idTicketValido, resultado.getId(), "El ID del ticket debe coincidir");
+        assertEquals("Importante", resultado.getPrioridad(), "La prioridad debe actualizarse correctamente");
+
+        verify(dao, times(1)).updatePrioridad(idTicketValido, "Importante");
     }
+
 
   // ============================================================
   // SECCIÓN 4: cerrarTicket()
@@ -325,10 +384,17 @@ public class TicketServiceTest {
     // CASO 1: Ticket inexistente
     @Test
     void cerrarTicket_DeberiaLanzarTicketInexistenteException_CuandoElTicketNoExiste() {
+        // ---------- ARRANGE ----------
         when(dao.existsById(idTicketValido)).thenReturn(false);
 
-        assertThrows(TicketInexistenteException.class, () ->
-                service.cerrarTicket(idTicketValido)
+        // ---------- ACT ----------
+        Executable accion = () -> service.cerrarTicket(idTicketValido);
+
+        // ---------- ASSERT ----------
+        TicketInexistenteException ex = assertThrows(
+                TicketInexistenteException.class,
+                accion,
+                "Debe lanzar TicketInexistenteException si el ticket no existe"
         );
 
         verify(dao, times(1)).existsById(idTicketValido);
@@ -338,14 +404,22 @@ public class TicketServiceTest {
     // CASO 2: Caso exitoso
     @Test
     void cerrarTicket_DeberiaRetornarTicketDTO_CuandoElTicketExiste() throws Exception {
+        // ---------- ARRANGE ----------
+        ticketCerrado.setId(idTicketValido);
+        ticketCerrado.setEstado("CERRADO");
+
         when(dao.existsById(idTicketValido)).thenReturn(true);
         when(dao.cerrarTicket(idTicketValido)).thenReturn(ticketCerrado);
 
+        // ---------- ACT ----------
         TicketDTO resultado = service.cerrarTicket(idTicketValido);
 
-        assertNotNull(resultado);
-        assertEquals(idTicketValido, resultado.getId());
-        assertEquals("CERRADO", resultado.getEstado());
+        // ---------- ASSERT ----------
+        assertNotNull(resultado, "El resultado no debe ser nulo");
+        assertEquals(idTicketValido, resultado.getId(), "El ID del ticket debe coincidir");
+        assertEquals("CERRADO", resultado.getEstado(), "El estado del ticket debe actualizarse a CERRADO");
+
         verify(dao, times(1)).cerrarTicket(idTicketValido);
     }
+
 }
