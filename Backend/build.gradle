@@ -44,7 +44,10 @@ dependencies {
 
         annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // 🔹 Dependencias para testing
+	  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mockito:mockito-core'
+    testImplementation 'org.testcontainers:junit-jupiter'
 
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }

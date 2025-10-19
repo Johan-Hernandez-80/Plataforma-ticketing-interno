@@ -11,7 +11,7 @@ public class PrioridadDTO {
 
   String prioridad;
 
-  PrioridadDTO(String prioridad) {
+  public PrioridadDTO(String prioridad) {
     this.prioridad = prioridad;
   }
 
