@@ -21,16 +21,21 @@ import jakarta.validation.constraints.Size;
 )
 public class ComentarioDTO {
 
+    @Schema(example = "1")
     private Long id;
 
+    @Schema(example = "1")
     private Long ticketId;
 
+    @Schema(example = "1")
     @NotNull
     private Long usuarioId;
 
+    @Schema(example = "Se encontró que la impresora estaba desconectada")
     @Size(max = 1000, message = "El comentario no puede superar 1000 caracteres")
     private String comentario;
 
+    @Schema(example = "2025-10-19 13:15:01")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fechaCreacion;
 

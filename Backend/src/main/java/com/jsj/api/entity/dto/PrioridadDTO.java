@@ -9,6 +9,7 @@ import lombok.Data;
 )
 public class PrioridadDTO {
 
+  @Schema(example = "Urgente")
   String prioridad;
 
   public PrioridadDTO(String prioridad) {

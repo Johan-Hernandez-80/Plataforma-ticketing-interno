@@ -223,6 +223,7 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO> {
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Prioridad actualizada correctamente", content = @Content(schema = @Schema(implementation = TicketDTO.class))),
       @ApiResponse(responseCode = "400", description = "Datos inválidos", content = @Content(schema = @Schema(example = "{ \"error\": \"El valor de la prioridad no es válido\" }"))),
+      @ApiResponse(responseCode = "401", description = "No autorizado", content = @Content(schema = @Schema(example = "{ \"error\": \"No tiene permiso de enviar notificaciones\" }"))),
       @ApiResponse(responseCode = "404", description = "Ticket no encontrado", content = @Content(schema = @Schema(example = "{ \"error\": \"El ticket no existe\" }"))),
       @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content(schema = @Schema(example = "{ \"error\": \"Error interno del servidor. Intente nuevamente más tarde.\" }")))
   })
@@ -239,13 +240,17 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO> {
     } catch (PrioridadInvalidaException ex) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
           .body(Map.of("error", "El valor de la prioridad no es válido"));
-    }
+    } catch (InsufficientSavingPermissionsException ex) {
+       return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+          .body(Map.of("error", "No tiene permiso de enviar notificaciones"));
+      }
   }
 
   @Operation(summary = "Cerrar un ticket", description = "Permite cerrar un ticket existente cambiando su estado a 'cerrado'.")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Ticket cerrado correctamente", content = @Content(schema = @Schema(implementation = TicketDTO.class))),
       @ApiResponse(responseCode = "400", description = "Solicitud inválida", content = @Content(schema = @Schema(example = "{ \"error\": \"Solicitud inválida para cerrar el ticket\" }"))),
+      @ApiResponse(responseCode = "401", description = "No autorizado", content = @Content(schema = @Schema(example = "{ \"error\": \"No tiene permiso de enviar notificaciones\" }"))),
       @ApiResponse(responseCode = "404", description = "Ticket no encontrado", content = @Content(schema = @Schema(example = "{ \"error\": \"El ticket no fue encontrado\" }"))),
       @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content(schema = @Schema(example = "{ \"error\": \"Error interno del servidor. Intente nuevamente más tarde.\" }")))
   })
@@ -258,7 +263,10 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO> {
     } catch (TicketInexistenteException ex) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND)
           .body(Map.of("error", "El ticket no fue encontrado"));
-    }
+    } catch (InsufficientSavingPermissionsException ex) {
+          return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+          .body(Map.of("error", "No tiene permiso de enviar notificaciones"));
+      }
   }
 
   @Operation(summary = "Reasignar un ticket a un agente", description = "Permite al administrador reasignar un ticket existente a un agente disponible.")
@@ -284,7 +292,10 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO> {
     } catch (TicketInexistenteException | AgenteInexistenteException ex) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND)
           .body(Map.of("error", "No se encontró el ticket o el agente solicitado"));
-    }
+    } catch (InsufficientSavingPermissionsException ex) {
+          return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+          .body(Map.of("error", "No tiene permiso de enviar notificaciones"));
+      }
   }
 
   @Operation(summary = "Consultar tickets filtrados", description = "Permite obtener todos los tickets aplicando filtros por estado, prioridad, agente o fecha.")

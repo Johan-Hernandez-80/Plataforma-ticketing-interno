@@ -17,7 +17,10 @@ import lombok.Data;
 )
 public class LoginRequest {
 
+    @Schema(example = "usuario@empresa.com")
     private String email;
+    
+    @Schema(example = "1234")
     private String password;
 
     public String getEmail() {

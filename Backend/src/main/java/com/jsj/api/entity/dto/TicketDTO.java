@@ -24,29 +24,39 @@ import jakarta.validation.constraints.Size;
 )
 public class TicketDTO {
 
+    @Schema(example = "1")
     private Long id;
 
+    @Schema(example = "1")
     @NotNull
     private Long usuarioId;
 
+    @Schema(example = "1")
     @NotNull
     private Long agenteId;
 
+    @Schema(example = "1")
     private Long categoriaId;
 
+    @Schema(example = "La impresora no sirve")
     @Size(max = 255, message = "El título no puede superar 255 caracteres")
     private String titulo;
 
+    @Schema(example = "Ya intenté apagarla y volverla a encender pero no funcionó")
     @Size(max = 1000, message = "La descripción no puede superar 1000 caracteres")
     private String descripcion;
 
+    @Schema(example = "Importante")
     private String prioridad;
 
+    @Schema(example = "Pendiente")
     private String estado;
 
+    @Schema(example = "2025-10-19 13:15:01")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fechaCreacion;
 
+    @Schema(example = "2025-10-19 17:45:33")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime fechaCierre;
 

@@ -1,6 +1,5 @@
 package com.jsj.api.service;
 
-
 import com.jsj.api.entity.dao.NotificacionDAO;
 import com.jsj.api.entity.dao.RolDAO;
 import com.jsj.api.entity.dao.UsuarioDAO;
@@ -51,7 +50,6 @@ public class UsuarioServiceTest {
     // ============================================================
     // SECCIÓN 1: updateUsuario()
     // ============================================================
-
     // CASO 1: Usuario inexistente
     @Test
     public void updateUsuario_DeberiaLanzarUsuarioInexistenteException_CuandoUsuarioNoExiste() throws Exception {
@@ -195,7 +193,6 @@ public class UsuarioServiceTest {
         verify(dao, times(1)).existsByEmailCorporativo(any(String.class));
     }
 
-
     @Test
     public void updateUsuario_DeberiaLanzarImmutableFieldException_CuandoCampoInmutableSeModifica() throws Exception {
         // ---------- ARRANGE ----------
@@ -221,7 +218,6 @@ public class UsuarioServiceTest {
         assertEquals("Campo inmutable modificado", ex.getMessage());
         verify(dao, times(1)).updateUsuario(any(Long.class), any(UsuarioDTO.class));
     }
-
 
     @Test
     public void updateUsuario_DeberiaRetornarUsuarioDTOConNuevosDatos_CuandoTodoEsValido() throws Exception {

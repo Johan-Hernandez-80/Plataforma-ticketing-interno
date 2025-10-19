@@ -18,27 +18,34 @@ import lombok.Data;
 )
 public class UsuarioDTO {
 
+    @Schema(example = "1")
     private Long id;
 
+    @Schema(example = "1")
     private Long rolId;
 
+    @Schema(example = "Juan Armando")
     @Size(max = 255, message = "El nombre no puede superar 255 caracteres")
     private String nombre;
 
+    @Schema(example = "juan@email.com")
     @Email(message = "El correo personal no es válido")
     @Pattern(regexp = "\\S+", message = "El correo personal no debe contener espacios en blanco")
     @Size(max = 255, message = "El correo personal no puede superar 255 caracteres")
     private String emailPersonal;
 
+    @Schema(example = "juan@empresa.com")
     @Email(message = "El correo corporativo no es válido")
     @Pattern(regexp = "\\S+", message = "El correo corporativo no debe contener espacios en blanco")
     @Size(max = 255, message = "El correo corporativo no puede superar 255 caracteres")
     private String emailCorporativo;
 
+    @Schema(example = "juan1234")
     @Pattern(regexp = "\\S+", message = "La contraseña no debe contener espacios en blanco")
     @Size(max = 255, message = "La contraseña no puede superar 255 caracteres")
     private String contrasena;
 
+    @Schema(example = "Contaduría")
     @Size(max = 255, message = "El departamento no puede superar 255 caracteres")
     private String departamento;
 
