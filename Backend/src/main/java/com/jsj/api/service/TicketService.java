@@ -11,6 +11,7 @@ import com.jsj.api.constants.TicketConstants;
 import com.jsj.api.exception.CategoriaInexistenteException;
 import com.jsj.api.exception.UsuarioInexistenteException;
 import com.jsj.api.entity.Ticket;
+import com.jsj.api.entity.Usuario;
 import com.jsj.api.entity.dto.PrioridadDTO;
 import com.jsj.api.entity.dao.CategoriaDAO;
 import com.jsj.api.entity.dao.ComentarioDAO;
@@ -46,13 +47,15 @@ public class TicketService extends BaseService<Ticket, Long, TicketDTO, TicketDA
     private final UsuarioDAO usuarioDao;
     private final CategoriaDAO categoriaDao;
     private final ComentarioDAO comentarioDao;
+    private final NotificacionService notificacionService;
     private static final Logger log = LoggerFactory.getLogger(UsuarioFilter.class);
 
-    public TicketService(UsuarioDAO usuarioDao, CategoriaDAO categoriaDao, ComentarioDAO comentarioDao, TicketDAO dao) {
+    public TicketService(UsuarioDAO usuarioDao, CategoriaDAO categoriaDao, ComentarioDAO comentarioDao, NotificacionService notificacionService, TicketDAO dao) {
         super(dao);
         this.usuarioDao = usuarioDao;
         this.categoriaDao = categoriaDao;
         this.comentarioDao = comentarioDao;
+        this.notificacionService = notificacionService;
     }
 
     public TicketDTO save(TicketDTO dto) throws CategoriaInexistenteException,
@@ -132,34 +135,40 @@ public class TicketService extends BaseService<Ticket, Long, TicketDTO, TicketDA
         dto.setFechaCreacion(null);
         dto.setTicketId(idTicket);
         dto.setId(null);
+        Ticket ticket = dao.findById(idTicket).get();
+        notificacionService.notifyComentario(idTicket, ticket.getUsuarioId(), ticket.getTitulo());
         return comentarioDao.save(dto);
     }
 
     public TicketDTO updatePrioridad(Long idTicket, PrioridadDTO prioridadDTO)
-            throws PrioridadInvalidaException, TicketInexistenteException {
+            throws PrioridadInvalidaException, TicketInexistenteException, InsufficientSavingPermissionsException {
 
         String prioridad = validarPrioridadSave(prioridadDTO.getPrioridad());
         validarTicketIdExistance(idTicket);
+        Ticket ticket = dao.findById(idTicket).get();
+        notificacionService.notifyPrioridad(idTicket, ticket.getUsuarioId(), ticket.getTitulo(), prioridadDTO.getPrioridad());
         return dao.updatePrioridad(idTicket, prioridad);
     }
 
     public TicketDTO cerrarTicket(Long idTicket)
-            throws TicketInexistenteException {
+            throws TicketInexistenteException, InsufficientSavingPermissionsException {
 
         validarTicketIdExistance(idTicket);
+        Ticket ticket = dao.findById(idTicket).get();
+        notificacionService.notifyCierre(idTicket, ticket.getUsuarioId(), ticket.getTitulo());
         return dao.cerrarTicket(idTicket);
     }
 
     public TicketDTO reasignarTicket(Long idTicket, Long agenteId)
             throws TicketInexistenteException, AgenteInexistenteException,
-            AsignacionInexistenteException {
+            AsignacionInexistenteException, InsufficientSavingPermissionsException {
 
-        // validarTicketIdExistance(idTicket);
-        // validarAgenteIdExistance(agenteId);
-        // validarAsignacionExistance(agenteId, idTicket);
-        // asignacionDao.reasignar(agenteId, idTicket);
-        // return
-        return null;
+        validarTicketIdExistance(idTicket);
+        validarAgenteIdExistance(agenteId);
+        Ticket ticket = dao.findById(idTicket).get();
+        Usuario usuario = usuarioDao.findById(agenteId).get();
+        notificacionService.notifyReasignacion(idTicket, ticket.getUsuarioId(), ticket.getTitulo(), usuario.getNombre(), usuario.getEmailCorporativo());
+        return dao.reasignar(agenteId, idTicket);
     }
 
     public List<TicketDTO> findTicketsFiltrados(String estado, String prioridad,

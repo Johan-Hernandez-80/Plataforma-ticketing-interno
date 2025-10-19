@@ -85,4 +85,10 @@ public class TicketDAO extends BaseDAO<Ticket, Long, TicketDTO, TicketMapper, Ti
         .toList();
   }
 
+    public TicketDTO reasignar(Long agenteId, Long idTicket) {
+        Ticket ticket = repo.findById(idTicket).get();
+        ticket.setAgenteId(agenteId);
+        return filter.filterDTO(mapper.toDTO(repo.save(ticket)));
+    }
+
 }

@@ -57,7 +57,7 @@ public class OpenApiConfig implements WebMvcConfigurer {
                     return;
                 }
 
-                String entity = schemaName.replace("DTO", "").toLowerCase();
+                String entity = schemaName.endsWith("DTO") ? schemaName.replace("DTO", "").toLowerCase() : schemaName.toLowerCase();
 
                 schema.getProperties().forEach((propName, propSchema) -> {
                     Schema<?> prop = (Schema<?>) propSchema;
@@ -70,10 +70,14 @@ public class OpenApiConfig implements WebMvcConfigurer {
                                 prop.setDescription("Identificador único del " + entity + ".");
                             case "usuarioId" ->
                                 prop.setDescription("ID del usuario relacionado con el " + entity + ".");
+                            case "rolId" ->
+                                prop.setDescription("ID del rol asignado al " + entity + ".");
                             case "categoriaId" ->
                                 prop.setDescription("ID de la categoría relacionada con el " + entity + ".");
                             case "agenteId" ->
                                 prop.setDescription("ID del agente asignado al " + entity + ".");
+                            case "ticketId" ->
+                                prop.setDescription("ID del ticket relacionado con el " + entity + ".");
                             case "titulo" ->
                                 prop.setDescription("Título del " + entity + ".");
                             case "descripcion" ->
@@ -86,6 +90,24 @@ public class OpenApiConfig implements WebMvcConfigurer {
                                 prop.setDescription("Fecha de creación del " + entity + ".");
                             case "fechaCierre" ->
                                 prop.setDescription("Fecha de cierre del " + entity + ".");
+                            case "nombre" ->
+                                prop.setDescription("Nombre del " + entity + ".");
+                            case "emailPersonal" ->
+                                prop.setDescription("Correo personal del " + entity + ".");
+                            case "emailCorporativo" ->
+                                prop.setDescription("Correo corporativo del " + entity + ".");
+                            case "contrasena" ->
+                                prop.setDescription("Contraseña del " + entity + ".");
+                            case "departamento" ->
+                                prop.setDescription("Departamento del " + entity + ".");
+                            case "mensaje" ->
+                                prop.setDescription("Mensaje de la notificación del " + entity + ".");
+                            case "email" ->
+                                prop.setDescription("Correo electrónico del " + entity + " (personal o corporativo).");
+                            case "password" ->
+                                prop.setDescription("Contraseña del " + entity + ".");
+                            case "comentario" ->
+                                prop.setDescription("Comentario asociado al " + entity + ".");
                             default ->
                                 prop.setDescription("Atributo " + propName + " del " + entity + ".");
                         }
@@ -93,7 +115,7 @@ public class OpenApiConfig implements WebMvcConfigurer {
 
                     // Set example
                     switch (field) {
-                        case "id", "usuarioId", "categoriaId", "agenteId" ->
+                        case "id", "usuarioId", "rolId", "categoriaId", "agenteId", "ticketId" ->
                             prop.setExample(1);
                         case "titulo" ->
                             prop.setExample("Problema de red");
@@ -107,6 +129,24 @@ public class OpenApiConfig implements WebMvcConfigurer {
                             prop.setExample("2025-10-14 09:30:00");
                         case "fechaCierre" ->
                             prop.setExample("2025-10-16 16:45:00");
+                        case "nombre" ->
+                            prop.setExample("Juan Armando");
+                        case "emailPersonal" ->
+                            prop.setExample("juan@email.com");
+                        case "emailCorporativo" ->
+                            prop.setExample("juan@empresa.com");
+                        case "contrasena" ->
+                            prop.setExample("juan1234");
+                        case "departamento" ->
+                            prop.setExample("Contaduría");
+                        case "mensaje" ->
+                            prop.setExample("Nueva notificación asignada");
+                        case "email" ->
+                            prop.setExample("usuario@empresa.com");
+                        case "password" ->
+                            prop.setExample("1234");
+                        case "comentario" ->
+                            prop.setExample("Se encontró que la impresora estaba desconectada");
                         default ->
                             prop.setExample(null);
                     }
@@ -114,5 +154,4 @@ public class OpenApiConfig implements WebMvcConfigurer {
             });
         };
     }
-
 }

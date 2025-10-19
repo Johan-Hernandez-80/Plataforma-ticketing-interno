@@ -6,6 +6,7 @@ package com.jsj.api.entity.dto;
 
 import lombok.Data;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Size;
 
 /**
  *
@@ -13,12 +14,19 @@ import io.swagger.v3.oas.annotations.media.Schema;
  */
 @Data
 @Schema(
-    description = "DTO for Categoria. Only includes attributes the current user has permission to view. Field visibility depends on the user's roles and permissions."
+        description = "DTO for Categoria. Only includes attributes the current user has permission to view. Field visibility depends on the user's roles and permissions."
 )
 public class CategoriaDTO {
 
+    @Schema(example = "1")
     private Long id;
+    
+    @Schema(example = "Electrónica")
+    @Size(max = 255, message = "La categoría no puede superar 255 caracteres")
     private String nombre;
+    
+    @Schema(example = "Casos relacionados con dispositivos electrónicos")
+    @Size(max = 255, message = "La descripción no puede superar 255 caracteres")
     private String descripcion;
 
     public Long getId() {
