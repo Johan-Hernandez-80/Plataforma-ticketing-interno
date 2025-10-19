@@ -30,14 +30,14 @@ values
  (select id from usuarios where nombre='María Zambrano'),
  'Intenté restablecer mi contraseña, pero sigue sin funcionar.');
 
--- History
+-- Historial
 insert into historial_tickets (ticket_id, estado_anterior, estado_nuevo)
 values
 ((select id from tickets where titulo='No puedo iniciar sesión'),
  'Pendiente',
  'En progreso');
 
--- Notifications
+-- Notificaciones
 insert into notificaciones (usuario_id, mensaje)
 values
 ((select id from usuarios where nombre='María Zambrano'),
