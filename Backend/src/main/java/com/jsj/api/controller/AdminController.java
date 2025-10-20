@@ -24,6 +24,33 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import java.io.ByteArrayOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.util.Map;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+
 /**
  *
  * @author Juan José Molano Franco
@@ -31,7 +58,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/admin")
 @Tag(name = "Admin", description = "Operaciones relacionadas con el admin")
-public class AdminController  {
+public class AdminController {
 
     private final AdminService service;
 
@@ -66,4 +93,54 @@ public class AdminController  {
         return ResponseEntity.ok(estadisticas);
     }
 
+    @Operation(
+            summary = "Exportar informes del sistema en PDF",
+            description = "Permite al administrador exportar los informes del sistema en formato PDF. "
+            + "El archivo generado contiene las métricas y estadísticas actuales del sistema, "
+            + "y se devuelve como archivo descargable."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(
+                responseCode = "200",
+                description = "Archivo PDF generado correctamente",
+                content = @Content(
+                        mediaType = "application/pdf",
+                        schema = @Schema(type = "string", format = "binary")
+                )
+        ),
+        @ApiResponse(
+                responseCode = "401",
+                description = "Autorización inválida",
+                content = @Content(
+                        schema = @Schema(example = "{ \"error\": \"Autorización inválida.\", \"detalle\": \"Token no válido o expirado.\" }")
+                )
+        ),
+        @ApiResponse(
+                responseCode = "500",
+                description = "Error interno del servidor",
+                content = @Content(
+                        schema = @Schema(example = "{ \"error\": \"Error interno del servidor. Intente nuevamente más tarde.\" }")
+                )
+        )
+    })
+    @GetMapping("/estadisticas/exportar/pdf")
+    public ResponseEntity<?> exportarInformePDF() {
+        if (!"admin".equalsIgnoreCase(CurrentUser.getRole())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        try {
+            byte[] pdfBytes = service.generateSystemReportPdf();
+            String fileName = "informe_" + LocalDate.now() + ".pdf";
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileName + "\"")
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .body(pdfBytes);
+
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "Error interno del servidor. Intente nuevamente más tarde."));
+        }
+    }
 }
