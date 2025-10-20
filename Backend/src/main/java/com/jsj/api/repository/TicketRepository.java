@@ -44,4 +44,10 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
       @Param("agenteId") Long agenteId,
       @Param("fechaCreacion") LocalDate fechaCreacion);
 
+  @Query("SELECT COUNT(t) FROM Ticket t WHERE t.estado <> 'Cerrado'")
+  long countTicketsAbiertos();
+  
+  @Query("SELECT COUNT(t) FROM Ticket t WHERE t.estado = 'Cerrado'")
+  long countTicketsCerrados();
+  
 }

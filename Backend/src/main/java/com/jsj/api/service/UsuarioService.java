@@ -157,5 +157,5 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioDTO, Usuar
             throw new RolInexistenteException("El rol no existe");
         }
     }
-
+    
 }

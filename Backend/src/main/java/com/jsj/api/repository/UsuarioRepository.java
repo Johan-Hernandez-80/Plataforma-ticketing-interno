@@ -72,4 +72,11 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     boolean existsByEmailPersonal(String emailPersonal);
 
     boolean existsByEmailCorporativo(String emailCorporativo);
+
+    @Query(value = "SELECT COUNT(*) FROM usuarios u JOIN roles r ON u.rol_id = r.id WHERE r.nombre = 'usuario'", nativeQuery = true)
+    long countEmpleadosActivos();
+
+    @Query(value = "SELECT COUNT(*) FROM usuarios u JOIN roles r ON u.rol_id = r.id WHERE r.nombre = 'agente'", nativeQuery = true)
+    long countAgentesActivos();
+
 }

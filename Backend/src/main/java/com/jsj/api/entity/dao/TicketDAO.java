@@ -91,4 +91,12 @@ public class TicketDAO extends BaseDAO<Ticket, Long, TicketDTO, TicketMapper, Ti
         return filter.filterDTO(mapper.toDTO(repo.save(ticket)));
     }
 
+    public long countTicketsAbiertos() {
+        return repo.countTicketsAbiertos();
+    }
+
+    public long countTicketsCerrados() {
+        return repo.countTicketsCerrados();
+    }
+
 }

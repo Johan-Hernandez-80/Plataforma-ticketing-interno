@@ -1,5 +1,5 @@
 -- Make sure we are using the right DB
-use ticketing;
+use ticketing_test;
 
 -- Insert admin user
 insert into usuarios (rol_id, nombre, email_personal, email_corporativo, contrasena, departamento)
