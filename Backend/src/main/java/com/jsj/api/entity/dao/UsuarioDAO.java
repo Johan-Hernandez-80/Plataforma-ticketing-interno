@@ -93,4 +93,12 @@ public class UsuarioDAO extends BaseDAO<Usuario, Long, UsuarioDTO, UsuarioMapper
         return repo.existsByEmailCorporativo(emailCorporativo);
     }
 
+    public long countEmpleadosActivos() {
+        return repo.countEmpleadosActivos();
+    }
+
+    public long countAgentesActivos() {
+        return repo.countAgentesActivos();
+    }
+
 }
