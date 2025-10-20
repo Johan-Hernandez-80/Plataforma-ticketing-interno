@@ -313,8 +313,15 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO> {
       List<TicketDTO> tickets = service.findTicketsFiltrados(estado, prioridad, agenteId, fecha);
       return ResponseEntity.ok(tickets);
     } catch (Exception ex) {
+      // logueo detallado para depuración
+      log.error("Error filtrando tickets con estado='{}' prioridad='{}' agenteId='{}' fecha='{}'", estado, prioridad, agenteId, fecha, ex);
+      // DEBUG: devolver detalle temporalmente para identificar la excepción exacta
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-          .body(Map.of("error", "Filtros inválidos o valores no reconocidos"));
+          .body(Map.of(
+              "error", "Filtros inválidos o valores no reconocidos",
+              "exception", ex.getClass().getSimpleName(),
+              "message", ex.getMessage()
+          ));
     }
   }
 
