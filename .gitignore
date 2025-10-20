@@ -32,7 +32,7 @@ out/
 /dist/
 /nbdist/
 /.nb-gradle/
-
+/gradle.properties
 ### VS Code ###
 .vscode/
 
@@ -41,3 +41,4 @@ out/
 /evil/nbproject/private/
 /JavaApplication20/nbproject/private/
 /JavaApplication21/nbproject/private/
+

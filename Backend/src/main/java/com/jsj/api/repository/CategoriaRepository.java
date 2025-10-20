@@ -5,12 +5,22 @@
 package com.jsj.api.repository;
 
 import com.jsj.api.entity.Categoria;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
- *
- * @author Juan José Molano Franco
+ * JPA repository for Categoria entities.
  */
+@Repository // opcional
 public interface CategoriaRepository extends JpaRepository<Categoria, Long> {
 
+    // Opcional: comprobar existencia por nombre (útil para validaciones)
+    boolean existsByNombre(String nombre);
+
+    // Opcional: búsqueda exacta por nombre
+    Categoria findByNombre(String nombre);
+
+    // Opcional: búsqueda por texto para autocompletar/filtrado
+    List<Categoria> findByNombreContainingIgnoreCase(String fragment);
 }
