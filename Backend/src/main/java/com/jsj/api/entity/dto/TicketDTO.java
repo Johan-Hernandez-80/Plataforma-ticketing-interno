@@ -28,11 +28,9 @@ public class TicketDTO {
     private Long id;
 
     @Schema(example = "1")
-    @NotNull
     private Long usuarioId;
 
     @Schema(example = "1")
-    @NotNull
     private Long agenteId;
 
     @Schema(example = "1")

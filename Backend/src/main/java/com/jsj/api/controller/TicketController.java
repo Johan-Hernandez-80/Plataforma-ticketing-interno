@@ -72,7 +72,6 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO> {
   @PostMapping
   public ResponseEntity<?> createTicket(
       @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Datos del nuevo ticket", required = true, content = @Content(schema = @Schema(implementation = TicketDTO.class))) @Valid @RequestBody TicketDTO ticketDTO) {
-
     TicketDTO created;
     try {
       created = service.save(ticketDTO);
@@ -109,7 +108,7 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO> {
   public ResponseEntity<?> getTickets(
       @Parameter(description = "Estado del ticket (ej: En progreso, Pendiente, Cerrado)") @RequestParam(required = false) String estado,
       @Parameter(description = "Prioridad del ticket (ej: Urgente, Importante, Programado)") @RequestParam(required = false) String prioridad,
-      @Parameter(description = "ID del usuario creador del ticket") @RequestParam(name = "usuario_id", required = false) Long usuarioId) {
+      @Parameter(description = "ID del usuario creador del ticket") @RequestParam(required = false) Long usuarioId) {
 
     List<TicketDTO> tickets;
     try {

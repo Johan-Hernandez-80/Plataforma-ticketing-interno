@@ -39,7 +39,7 @@ public class ComentarioFilter extends BaseFilter<Comentario, ComentarioDTO> {
         if (!permissions.contains("view_comentario_usuario_id")) {
             dto.setUsuarioId(null);
         }
-        if (!permissions.contains("view_comentario_comentario")) {
+        if (!permissions.contains("view_comentario_texto")) {
             dto.setComentario(null);
         }
         if (!permissions.contains("view_comentario_fecha_creacion")) {

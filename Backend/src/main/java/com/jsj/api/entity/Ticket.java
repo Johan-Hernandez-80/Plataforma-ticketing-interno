@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 /**
  *
@@ -27,7 +28,7 @@ public class Ticket {
 
     @Column(nullable = false)
     private Long categoriaId;
-    
+
     @Column(nullable = false)
     private Long agenteId;
 
@@ -45,6 +46,7 @@ public class Ticket {
 
     @Column(nullable = false, updatable = false, insertable = false,
             columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @CreationTimestamp
     private LocalDateTime fechaCreacion;
 
     @Column(name = "fecha_cierre")

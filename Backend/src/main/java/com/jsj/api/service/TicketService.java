@@ -197,7 +197,7 @@ public class TicketService extends BaseService<Ticket, Long, TicketDTO, TicketDA
 
     private String validarEstadoSave(String estado) throws EstadoInvalidoException {
         if (estado == null) {
-            return null;
+            return TicketConstants.getEstado("Pendiente");
         }
         if (!TicketConstants.isEstadoIgnoringCaps(estado)) {
             throw new EstadoInvalidoException(String.format("El estado %s no es válido", estado));
@@ -264,7 +264,7 @@ public class TicketService extends BaseService<Ticket, Long, TicketDTO, TicketDA
     }
 
     private void validarAgenteIdSave(Long agenteId) throws AgenteInexistenteException {
-        if (agenteId == null || !usuarioDao.existsById(agenteId)) {
+        if (agenteId != null && !usuarioDao.existsById(agenteId)) {
             throw new AgenteInexistenteException(String.format("El usuario con id %s no existe", agenteId));
         }
     }

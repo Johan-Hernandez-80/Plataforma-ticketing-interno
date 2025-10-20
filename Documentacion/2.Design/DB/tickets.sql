@@ -47,7 +47,7 @@ create table tickets (
     id int auto_increment primary key,
     usuario_id int not null,
     categoria_id int not null,
-    agente_id int not null,
+    agente_id int null,
     titulo varchar(255) not null,
     descripcion varchar(1000) not null,
     prioridad varchar(255) not null,
