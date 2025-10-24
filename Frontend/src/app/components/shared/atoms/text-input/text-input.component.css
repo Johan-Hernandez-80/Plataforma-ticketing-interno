@@ -1,0 +1,20 @@
+input {
+  width: 30rem;
+  height: 4rem;
+  background-color: #eff2fe;
+  border: solid 1px #b3b5bf;
+  border-radius: 20px;
+  font-size: 1.5rem;
+  padding-left: 1rem;
+  cursor: cursor;
+}
+
+input::placeholder {
+  color: #a7a9b2;
+  font-size: 1.5rem;
+}
+
+input:focus {
+  outline: none;
+  border: solid 2px #50aee3;
+}

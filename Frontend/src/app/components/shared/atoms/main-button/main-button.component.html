@@ -1,0 +1,6 @@
+<button type="submit" [ngStyle]="customStyles">
+  @if (iconUrl) {
+    <img [src]="iconUrl" [alt]="alt" />
+  }
+  <p>{{ placeHolder }}</p>
+</button>
