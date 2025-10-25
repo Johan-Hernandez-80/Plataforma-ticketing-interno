@@ -1,15 +1,40 @@
-* {
+div {
   margin: 0;
   height: 80px;
-}
-div {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(20, 1fr);
   width: 100vw;
   background-color: #f5f8ff;
   position: absolute;
   top: 0;
   left: 0;
-  border-bottom: 1px #50aee3;
+  border-bottom: 1px solid #50aee3;
   font-size: 32px;
+  align-items: center;
+  justify-items: center;
+}
+
+app-log-out-button {
+  position: absolute;
+  top: 79px;
+  left: 0;
+}
+
+app-main-button:nth-child(1) {
+  margin: 0 10px;
+  grid-column: 1/2;
+}
+
+p {
+  color: #1e1c4a;
+  justify-self: start;
+  grid-column: 2/18;
+}
+
+app-main-button:nth-child(3) {
+  grid-column: 18/20;
+}
+
+app-main-button:nth-child(4) {
+  grid-column: 20/-1;
 }
