@@ -2,11 +2,22 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #504be0;
   border: none;
   border-radius: 40px;
   font-size: 1.6rem;
   color: white;
   font-weight: 700;
   cursor: pointer;
+}
+
+img {
+  width: 55%;
+}
+
+.primary {
+  background-color: #504be0;
+}
+
+.secondary {
+  background-color: #50aee3;
 }

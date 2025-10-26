@@ -1,8 +1,11 @@
 app-text-input {
-  margin-bottom: 4rem;
+  margin-top: 4rem;
 }
 
 h1 {
-  margin-bottom: 52px;
   color: #1e1c4a;
+}
+
+app-main-button {
+  margin-top: 8rem;
 }

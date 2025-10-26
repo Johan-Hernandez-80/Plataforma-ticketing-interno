@@ -6,6 +6,7 @@ import { CardComponent } from "./components/shared/atoms/card/card.component";
 import { LoginCardComponent } from "./components/shared/molecules/login-card/login-card.component";
 import { LoginComponent } from "./components/pages/login/login.component";
 import { HeaderComponent } from "./components/shared/molecules/header/header.component";
+import { LogOutButtonComponent } from "./components/shared/atoms/log-out-button/log-out-button.component";
 
 @Component({
   selector: "app-root",
@@ -18,6 +19,7 @@ import { HeaderComponent } from "./components/shared/molecules/header/header.com
     LoginCardComponent,
     LoginComponent,
     HeaderComponent,
+    LogOutButtonComponent,
   ],
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css",
