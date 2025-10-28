@@ -7,6 +7,10 @@ import { LoginCardComponent } from "./components/shared/molecules/login-card/log
 import { LoginComponent } from "./components/pages/login/login.component";
 import { HeaderComponent } from "./components/shared/molecules/header/header.component";
 import { LogOutButtonComponent } from "./components/shared/atoms/log-out-button/log-out-button.component";
+import { SmallNotificationListItemComponent } from "./components/shared/atoms/small-notification-list-item/small-notification-list-item.component";
+import { SmallNotificationListComponent } from "./components/shared/molecules/small-notification-list/small-notification-list.component";
+import { ValidationCardComponent } from "./components/shared/molecules/validation-card/validation-card.component";
+import { TextAreaComponent } from "./components/shared/molecules/text-area/text-area.component";
 
 @Component({
   selector: "app-root",
@@ -20,6 +24,10 @@ import { LogOutButtonComponent } from "./components/shared/atoms/log-out-button/
     LoginComponent,
     HeaderComponent,
     LogOutButtonComponent,
+    SmallNotificationListItemComponent,
+    SmallNotificationListComponent,
+    ValidationCardComponent,
+    TextAreaComponent,
   ],
   templateUrl: "./app.component.html",
   styleUrl: "./app.component.css",

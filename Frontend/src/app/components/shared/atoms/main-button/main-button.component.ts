@@ -14,14 +14,14 @@ export class MainButtonComponent {
   @Input() alt = "";
   @Input() width: string = "";
   @Input() height: string = "";
-  @Input() type: "primary" | "secondary" = "primary";
+  @Input() type: "primary" | "secondary" | "primary-outline" = "primary";
 
   customStyles: any = {};
 
   ngOnChanges(): void {
     this.customStyles = {
-      width: this.width ? this.width : "auto",
-      height: this.height ? this.height : "auto",
+      width: this.width ? this.width : "",
+      height: this.height ? this.height : "",
     };
   }
 }

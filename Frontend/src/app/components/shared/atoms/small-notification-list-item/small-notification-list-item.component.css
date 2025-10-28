@@ -1,0 +1,23 @@
+.container {
+  display: grid;
+  width: 25rem;
+  height: 70px;
+  background-color: #fff;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+  padding: 5px;
+}
+
+.message {
+  grid-column: 1/4;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  grid-column: 4/5;
+  margin-left: 5px;
+}
