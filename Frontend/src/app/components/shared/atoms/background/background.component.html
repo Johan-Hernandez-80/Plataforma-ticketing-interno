@@ -1,5 +1,5 @@
-<main class="container">
-  @if (type === "pattern") {
+<main class="container" [ngClass]="variant === 'dark-overlay' ? variant : ''">
+  @if (variant === "pattern") {
     <img
       src="../../../../assets/circlePattern.svg"
       alt="Patron de circulos"

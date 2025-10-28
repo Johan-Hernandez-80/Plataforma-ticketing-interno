@@ -1,12 +1,13 @@
 import { Component, Input } from "@angular/core";
+import { NgClass } from "@angular/common";
 
 @Component({
   selector: "app-background",
   standalone: true,
-  imports: [],
+  imports: [NgClass],
   templateUrl: "./background.component.html",
   styleUrl: "./background.component.css",
 })
 export class BackgroundComponent {
-  @Input() type: "basic" | "pattern" = "basic";
+  @Input() variant: "basic" | "pattern" | "dark-overlay" = "basic";
 }
