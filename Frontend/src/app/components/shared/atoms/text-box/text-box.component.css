@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #c1e1f6;
+  border-radius: 20px;
+  border: 1px solid #50aee3;
+  padding: 20px;
+}
+
+div div {
+  width: 100%;
+  height: 95%;
+  overflow: scroll;
+  padding-right: 20px;
+  padding-top: 5px;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 3%,
+    black 97%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 3%,
+    black 97%,
+    transparent
+  );
+}

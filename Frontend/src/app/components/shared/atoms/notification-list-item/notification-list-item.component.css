@@ -2,12 +2,12 @@
   display: grid;
   width: 25rem;
   height: 70px;
-  background-color: #fff;
   grid-auto-flow: column;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   justify-items: center;
   align-items: center;
   padding: 5px;
+  border-bottom: 1px solid #d4d4d4;
 }
 
 .message {

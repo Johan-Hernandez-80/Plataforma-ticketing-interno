@@ -6,7 +6,7 @@ import { BackgroundComponent } from "../../shared/atoms/background/background.co
 import { HeaderComponent } from "../../shared/molecules/header/header.component";
 
 @Component({
-  selector: "app-login",
+  selector: "app-login-page",
   standalone: true,
   imports: [
     LoginCardComponent,
@@ -15,7 +15,7 @@ import { HeaderComponent } from "../../shared/molecules/header/header.component"
     BackgroundComponent,
     HeaderComponent,
   ],
-  templateUrl: "./login.component.html",
-  styleUrl: "./login.component.css",
+  templateUrl: "./loginPage.component.html",
+  styleUrl: "./loginPage.component.css",
 })
-export class LoginComponent {}
+export class LoginPageComponent {}

@@ -1,10 +1,10 @@
 import { Component } from "@angular/core";
-import { SmallNotificationListItemComponent } from "../../atoms/small-notification-list-item/small-notification-list-item.component";
+import { NotificationListItemComponent } from "../../atoms/notification-list-item/notification-list-item.component";
 
 @Component({
   selector: "app-small-notification-list",
   standalone: true,
-  imports: [SmallNotificationListItemComponent],
+  imports: [NotificationListItemComponent],
   templateUrl: "./small-notification-list.component.html",
   styleUrl: "./small-notification-list.component.css",
 })

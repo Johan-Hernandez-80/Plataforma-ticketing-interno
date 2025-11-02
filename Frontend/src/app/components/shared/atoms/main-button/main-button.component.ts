@@ -14,7 +14,7 @@ export class MainButtonComponent {
   @Input() alt = "";
   @Input() width: string = "";
   @Input() height: string = "";
-  @Input() type: "primary" | "secondary" | "primary-outline" = "primary";
+  @Input() variant: "primary" | "secondary" | "primary-outline" = "primary";
 
   customStyles: any = {};
 
