@@ -17,378 +17,108 @@
   ],
   "tags": [
     {
-      "name": "Asignaciones",
-      "description": "Operations related to Asignacion entities"
+      "name": "Usuarios",
+      "description": "Operaciones relacionadas con los usuarios"
     },
     {
       "name": "Authentication",
       "description": "Endpoints for user authentication and JWT token retrieval"
     },
     {
-      "name": "HistorialTickets",
-      "description": "Operations related to HistorialTicket entities"
-    },
-    {
-      "name": "Notificaciones",
-      "description": "Operations related to Notificacion entities"
-    },
-    {
-      "name": "Usuarios",
-      "description": "Operations related to Usuario entities"
+      "name": "Admin",
+      "description": "Operaciones relacionadas con el admin"
     },
     {
       "name": "Categorias",
-      "description": "Operations related to Categoria entities"
-    },
-    {
-      "name": "Comentarios",
-      "description": "Operations related to Comentario entities"
+      "description": "Operaciones relacionadas con las categorías"
     },
     {
       "name": "Tickets",
-      "description": "Operations related to Ticket entities"
+      "description": "Operaciones relacionadas con los tiquetes"
     }
   ],
   "paths": {
-    "/usuarios": {
-      "get": {
-        "tags": [
-          "Usuarios"
-        ],
-        "summary": "Get all Usuarios",
-        "description": "Retrieves all Usuario entities.",
-        "operationId": "getAll",
-        "responses": {
-          "200": {
-            "description": "List of Usuarios",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/UsuarioDTO"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden – insufficient permissions"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Usuarios"
-        ],
-        "summary": "Create a new Usuario",
-        "description": "Creates a new Usuario entity with the given DTO.",
-        "operationId": "create",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UsuarioDTO"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Usuario created successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsuarioDTO"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden – insufficient permissions"
-          }
-        }
-      }
-    },
-    "/tickets": {
-      "get": {
-        "tags": [
-          "Tickets"
-        ],
-        "summary": "Get all Tickets",
-        "description": "Retrieves all Ticket entities.",
-        "operationId": "getAll_1",
-        "responses": {
-          "200": {
-            "description": "List of Tickets",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TicketDTO"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden – insufficient permissions"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Tickets"
-        ],
-        "summary": "Create a new Ticket",
-        "description": "Creates a new Ticket entity with the given DTO.",
-        "operationId": "create_1",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TicketDTO"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Ticket created successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TicketDTO"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden – insufficient permissions"
-          }
-        }
-      }
-    },
-    "/notificaciones": {
-      "get": {
-        "tags": [
-          "Notificaciones"
-        ],
-        "summary": "Get all Notificaciones",
-        "description": "Retrieves all Notificacion entities.",
-        "operationId": "getAll_2",
-        "responses": {
-          "200": {
-            "description": "List of Notificaciones",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/NotificacionDTO"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden – insufficient permissions"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Notificaciones"
-        ],
-        "summary": "Create a new Notificacion",
-        "description": "Creates a new Notificacion entity with the given DTO.",
-        "operationId": "create_2",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NotificacionDTO"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Notificacion created successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NotificacionDTO"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden – insufficient permissions"
-          }
-        }
-      }
-    },
-    "/historialtickets": {
-      "get": {
-        "tags": [
-          "HistorialTickets"
-        ],
-        "summary": "Get all HistorialTickets",
-        "description": "Retrieves all HistorialTicket entities.",
-        "operationId": "getAll_3",
-        "responses": {
-          "200": {
-            "description": "List of HistorialTickets",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/HistorialTicketDTO"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden – insufficient permissions"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "HistorialTickets"
-        ],
-        "summary": "Create a new HistorialTicket",
-        "description": "Creates a new HistorialTicket entity with the given DTO.",
-        "operationId": "create_3",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/HistorialTicketDTO"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "HistorialTicket created successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HistorialTicketDTO"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden – insufficient permissions"
-          }
-        }
-      }
-    },
-    "/comentarios": {
-      "get": {
-        "tags": [
-          "Comentarios"
-        ],
-        "summary": "Get all Comentarios",
-        "description": "Retrieves all Comentario entities.",
-        "operationId": "getAll_4",
-        "responses": {
-          "200": {
-            "description": "List of Comentarios",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ComentarioDTO"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden – insufficient permissions"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Comentarios"
-        ],
-        "summary": "Create a new Comentario",
-        "description": "Creates a new Comentario entity with the given DTO.",
-        "operationId": "create_4",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ComentarioDTO"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Comentario created successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ComentarioDTO"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden – insufficient permissions"
-          }
-        }
-      }
-    },
-    "/categorias": {
+    "/categorias/{id}": {
       "get": {
         "tags": [
           "Categorias"
         ],
-        "summary": "Get all Categorias",
-        "description": "Retrieves all Categoria entities.",
-        "operationId": "getAll_5",
+        "summary": "Obtener categoría por ID",
+        "description": "Devuelve una categoría por su ID.",
+        "operationId": "getById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID de la categoría a consultar",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
         "responses": {
           "200": {
-            "description": "List of Categorias",
+            "description": "Categoría encontrada",
             "content": {
-              "application/json": {
+              "*/*": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/CategoriaDTO"
+                  "$ref": "#/components/schemas/CategoriaDTO"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Categoría no encontrada",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Categoría no encontrada"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Error interno del servidor."
                   }
                 }
               }
             }
           },
           "403": {
-            "description": "Forbidden – insufficient permissions"
+            "description": "Acceso denegado. Token inválido o expirado."
           }
         }
       },
-      "post": {
+      "put": {
         "tags": [
           "Categorias"
         ],
-        "summary": "Create a new Categoria",
-        "description": "Creates a new Categoria entity with the given DTO.",
-        "operationId": "create_5",
+        "summary": "Actualizar categoría",
+        "description": "Actualiza los datos de una categoría existente.",
+        "operationId": "update",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID de la categoría a actualizar",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -401,31 +131,144 @@
         },
         "responses": {
           "200": {
-            "description": "Categoria created successfully",
+            "description": "Categoría actualizada correctamente",
             "content": {
-              "application/json": {
+              "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/CategoriaDTO"
                 }
               }
             }
           },
+          "400": {
+            "description": "Datos inválidos o nombre ya en uso",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Datos inválidos"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Permisos insuficientes",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "No autorizado"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Categoría no encontrada",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Categoría no encontrada"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Error interno del servidor."
+                  }
+                }
+              }
+            }
+          },
           "403": {
-            "description": "Forbidden – insufficient permissions"
+            "description": "Acceso denegado. Token inválido o expirado."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Categorias"
+        ],
+        "summary": "Eliminar categoría",
+        "description": "Elimina una categoría por su ID.",
+        "operationId": "delete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID de la categoría a eliminar",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Categoría eliminada correctamente",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Categoría no encontrada",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Categoría no encontrada"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Error interno del servidor."
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Acceso denegado. Token inválido o expirado."
           }
         }
       }
     },
-    "/auth/register": {
+    "/usuarios": {
       "post": {
         "tags": [
-          "Authentication"
+          "Usuarios"
         ],
-        "summary": "Register new user",
-        "description": "Creates a new user account with encrypted password and assigned role",
-        "operationId": "register",
+        "summary": "Crear cuenta de usuario",
+        "description": "Permite al administrador crear cuentas de usuarios con rol de empleado o agente. Si los datos enviados son inválidos o ocurre un error interno, se devuelven los errores correspondientes.",
+        "operationId": "createUsuario",
         "requestBody": {
-          "description": "User data for registration",
+          "description": "Datos del nuevo usuario",
           "content": {
             "application/json": {
               "schema": {
@@ -436,10 +279,10 @@
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "User registered successfully",
+          "201": {
+            "description": "Usuario creado correctamente",
             "content": {
-              "application/json": {
+              "*/*": {
                 "schema": {
                   "$ref": "#/components/schemas/UsuarioDTO"
                 }
@@ -447,16 +290,648 @@
             }
           },
           "400": {
-            "description": "Validation errors"
+            "description": "Datos inválidos",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Datos inválidos.",
+                    "detalles": [
+                      "El correo electrónico no es válido",
+                      "La contraseña debe tener mínimo 8 caracteres"
+                    ]
+                  }
+                }
+              }
+            }
           },
-          "409": {
-            "description": "Database constraint violation or duplicate key"
+          "401": {
+            "description": "No autorizado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "No tiene permiso para usar este endpoint"
+                  }
+                }
+              }
+            }
           },
           "500": {
-            "description": "Internal server error"
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Error interno del servidor. Intente nuevamente más tarde."
+                  }
+                }
+              }
+            }
           },
           "403": {
-            "description": "Forbidden – insufficient permissions"
+            "description": "Acceso denegado. Token inválido o expirado."
+          }
+        }
+      }
+    },
+    "/tickets": {
+      "get": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Consultar tickets",
+        "description": "Permite a un empleado autenticado obtener la lista de tickets creados, filtrando opcionalmente por estado, prioridad y usuario.",
+        "operationId": "getTickets",
+        "parameters": [
+          {
+            "name": "estado",
+            "in": "query",
+            "description": "Estado del ticket (ej: En progreso, Pendiente, Cerrado)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "prioridad",
+            "in": "query",
+            "description": "Prioridad del ticket (ej: Urgente, Importante, Programado)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "usuarioId",
+            "in": "query",
+            "description": "ID del usuario creador del ticket",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tickets obtenidos correctamente",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TicketDTO"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parámetros de consulta inválidos",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Parámetros de consulta inválidos.",
+                    "detalles": [
+                      "El valor 'urgenteee' no es una prioridad válida"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Autorización inválida",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Autorización inválida.",
+                    "detalle": [
+                      "No tiene permiso para ver los tiquetes del usuario con id 78"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Error interno del servidor. Intente nuevamente más tarde."
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Acceso denegado. Token inválido o expirado."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Crear un nuevo ticket",
+        "description": "Permite a un empleado autenticado crear un nuevo ticket en el sistema, proporcionando los datos requeridos como categoría, título, descripción y prioridad.",
+        "operationId": "createTicket",
+        "requestBody": {
+          "description": "Datos del nuevo ticket",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Ticket creado correctamente",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos inválidos",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Datos inválidos en la solicitud.",
+                    "detalles": [
+                      "Campo obligatorio faltante o incorrecto"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Usuario no autorizado."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Recurso no encontrado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Recurso no encontrado.",
+                    "detalles": "Usuario o categoría inexistente"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Error interno del servidor. Intente nuevamente más tarde."
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Acceso denegado. Token inválido o expirado."
+          }
+        }
+      }
+    },
+    "/tickets/{ticketId}/comments": {
+      "post": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Agregar un comentario a un ticket",
+        "description": "Permite a un agente agregar un comentario a un ticket existente, siempre que tenga permiso para hacerlo.",
+        "operationId": "createComentario",
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "path",
+            "description": "ID del ticket al cual se agregará el comentario",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Datos del comentario",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComentarioDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Comentario creado correctamente",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ComentarioDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos inválidos",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Los datos enviados son inválidos o faltan campos obligatorios"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Permisos insuficientes",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "No tiene suficientes permisos"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ticket no encontrado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "El ticket no existe o no fue encontrado"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Error interno del servidor. Intente nuevamente más tarde."
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Acceso denegado. Token inválido o expirado."
+          }
+        }
+      }
+    },
+    "/tickets/{idTicket}": {
+      "get": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Obtener información de un ticket por ID",
+        "description": "Devuelve los detalles completos de un ticket existente, siempre que el usuario tenga permisos para consultarlo.",
+        "operationId": "getTicketById",
+        "parameters": [
+          {
+            "name": "idTicket",
+            "in": "path",
+            "description": "ID del ticket a consultar",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ticket obtenido correctamente",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Solicitud inválida",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "ID de ticket inválido.",
+                    "detalles": "El parámetro idTicket debe ser un número válido."
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "No tiene permiso para ver este tiquete"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ticket no encontrado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "No se encontró el ticket solicitado."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Error interno del servidor. Intente nuevamente más tarde."
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Acceso denegado. Token inválido o expirado."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Reasignar un ticket a un agente",
+        "description": "Permite al administrador reasignar un ticket existente a un agente disponible.",
+        "operationId": "reasignarTicket",
+        "parameters": [
+          {
+            "name": "idTicket",
+            "in": "path",
+            "description": "ID del ticket a reasignar",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Datos con el ID del nuevo agente",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "string",
+                "example": {
+                  "agenteId": 123
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Ticket reasignado correctamente",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos inválidos",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Los datos enviados son inválidos"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "No tiene permiso para usar este endpoint"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ticket o agente no encontrado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "No se encontró el ticket o el agente solicitado"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Error interno del servidor. Intente nuevamente más tarde."
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Acceso denegado. Token inválido o expirado."
+          }
+        }
+      }
+    },
+    "/categorias": {
+      "get": {
+        "tags": [
+          "Categorias"
+        ],
+        "summary": "Listar categorías",
+        "description": "Obtiene la lista completa de categorías.",
+        "operationId": "list",
+        "responses": {
+          "200": {
+            "description": "Lista de categorías obtenida",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CategoriaDTO"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Error interno del servidor."
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Acceso denegado. Token inválido o expirado."
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Categorias"
+        ],
+        "summary": "Crear categoría",
+        "description": "Crea una nueva categoría. El nombre debe ser único.",
+        "operationId": "create",
+        "requestBody": {
+          "description": "Datos de la categoría a crear",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CategoriaDTO"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Categoría creada correctamente",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/CategoriaDTO"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Datos inválidos o categoría existente",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Nombre ya existe o datos inválidos"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Permisos insuficientes",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "No autorizado"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Error interno del servidor."
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Acceso denegado. Token inválido o expirado."
           }
         }
       }
@@ -466,11 +941,11 @@
         "tags": [
           "Authentication"
         ],
-        "summary": "Login user",
-        "description": "Authenticates a user using email and password and returns a JWT token",
+        "summary": "Login del usuario",
+        "description": "Autentica un usuario usando email y contraseña y retorna un token valido",
         "operationId": "login",
         "requestBody": {
-          "description": "Credentials for login",
+          "description": "Credenciales para login",
           "content": {
             "application/json": {
               "schema": {
@@ -482,7 +957,7 @@
         },
         "responses": {
           "200": {
-            "description": "Authentication successful, token returned",
+            "description": "Autenticación exitosa, token retornado",
             "content": {
               "application/json": {
                 "schema": {
@@ -495,167 +970,30 @@
             }
           },
           "401": {
-            "description": "Authentication failed, invalid credentials"
+            "description": "Autenticación fallida, credenciales inválidas"
           },
           "500": {
-            "description": "Internal server error"
+            "description": "Error interno del servidor"
           },
           "403": {
-            "description": "Forbidden – insufficient permissions"
+            "description": "Acceso denegado. Token inválido o expirado."
           }
         }
       }
     },
-    "/asignaciones": {
-      "get": {
-        "tags": [
-          "Asignaciones"
-        ],
-        "summary": "Get all Asignaciones",
-        "description": "Retrieves all Asignacion entities.",
-        "operationId": "getAll_6",
-        "responses": {
-          "200": {
-            "description": "List of Asignaciones",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/AsignacionDTO"
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden – insufficient permissions"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Asignaciones"
-        ],
-        "summary": "Create a new Asignacion",
-        "description": "Creates a new Asignacion entity with the given DTO.",
-        "operationId": "create_6",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AsignacionDTO"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Asignacion created successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AsignacionDTO"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden – insufficient permissions"
-          }
-        }
-      }
-    },
-    "/usuarios/{id}": {
-      "get": {
-        "tags": [
-          "Usuarios"
-        ],
-        "summary": "Get a Usuario by ID",
-        "description": "Retrieves the Usuario identified by the given ID.",
-        "operationId": "getById",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of the Usuario to retrieve",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Usuario retrieved successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsuarioDTO"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Usuario not found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsuarioDTO"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden – insufficient permissions"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Usuarios"
-        ],
-        "summary": "Delete a Usuario",
-        "description": "Deletes the Usuario identified by the given ID.",
-        "operationId": "delete",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of the Usuario to delete",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Usuario deleted successfully"
-          },
-          "404": {
-            "description": "Usuario not found"
-          },
-          "403": {
-            "description": "Forbidden – insufficient permissions"
-          }
-        }
-      },
+    "/usuarios/{idUsuario}": {
       "patch": {
         "tags": [
           "Usuarios"
         ],
-        "summary": "Update an existing Usuario",
-        "description": "Updates the Usuario identified by the given ID with the data from the DTO.",
-        "operationId": "update",
+        "summary": "Modificar datos personales de un usuario",
+        "description": "Permite a un usuario autenticado modificar parcialmente su perfil, incluyendo correo personal y contraseña. Si los datos enviados son inválidos, el usuario no existe, o ocurre un error interno, se devuelven los errores correspondientes.",
+        "operationId": "updateUsuario",
         "parameters": [
           {
-            "name": "id",
+            "name": "idUsuario",
             "in": "path",
-            "description": "ID of the Usuario to update",
+            "description": "ID del usuario",
             "required": true,
             "schema": {
               "type": "integer",
@@ -664,6 +1002,7 @@
           }
         ],
         "requestBody": {
+          "description": "Datos a actualizar (parcialmente)",
           "content": {
             "application/json": {
               "schema": {
@@ -675,17 +1014,7 @@
         },
         "responses": {
           "200": {
-            "description": "Usuario updated successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UsuarioDTO"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Usuario not found",
+            "description": "Usuario actualizado correctamente",
             "content": {
               "*/*": {
                 "schema": {
@@ -694,101 +1023,83 @@
               }
             }
           },
+          "400": {
+            "description": "Datos inválidos",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Datos inválidos.",
+                    "detalles": [
+                      "El correo electrónico no es válido",
+                      "La contraseña debe tener mínimo 8 caracteres"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Datos inválidos.",
+                    "detalles": [
+                      "No tiene permisos para actualizar el rol del usuario"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuario no encontrado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "mensaje": "Usuario no encontrado."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Error interno del servidor. Intente nuevamente más tarde."
+                  }
+                }
+              }
+            }
+          },
           "403": {
-            "description": "Forbidden – insufficient permissions"
+            "description": "Acceso denegado. Token inválido o expirado."
           }
         }
       }
     },
-    "/tickets/{id}": {
-      "get": {
-        "tags": [
-          "Tickets"
-        ],
-        "summary": "Get a Ticket by ID",
-        "description": "Retrieves the Ticket identified by the given ID.",
-        "operationId": "getById_1",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of the Ticket to retrieve",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Ticket retrieved successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TicketDTO"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Ticket not found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/TicketDTO"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden – insufficient permissions"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Tickets"
-        ],
-        "summary": "Delete a Ticket",
-        "description": "Deletes the Ticket identified by the given ID.",
-        "operationId": "delete_1",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of the Ticket to delete",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Ticket deleted successfully"
-          },
-          "404": {
-            "description": "Ticket not found"
-          },
-          "403": {
-            "description": "Forbidden – insufficient permissions"
-          }
-        }
-      },
+    "/tickets/{idTicket}/prioridad": {
       "patch": {
         "tags": [
           "Tickets"
         ],
-        "summary": "Update an existing Ticket",
-        "description": "Updates the Ticket identified by the given ID with the data from the DTO.",
-        "operationId": "update_1",
+        "summary": "Actualizar prioridad de un ticket",
+        "description": "Permite actualizar la prioridad de un ticket existente, siempre que el usuario tenga permiso para modificarlo.",
+        "operationId": "updatePrioridad",
         "parameters": [
           {
-            "name": "id",
+            "name": "idTicket",
             "in": "path",
-            "description": "ID of the Ticket to update",
             "required": true,
             "schema": {
               "type": "integer",
@@ -800,7 +1111,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TicketDTO"
+                "$ref": "#/components/schemas/PrioridadDTO"
               }
             }
           },
@@ -808,17 +1119,7 @@
         },
         "responses": {
           "200": {
-            "description": "Ticket updated successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TicketDTO"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Ticket not found",
+            "description": "Prioridad actualizada correctamente",
             "content": {
               "*/*": {
                 "schema": {
@@ -827,101 +1128,77 @@
               }
             }
           },
+          "400": {
+            "description": "Datos inválidos",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "El valor de la prioridad no es válido"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "No tiene permiso de enviar notificaciones"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ticket no encontrado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "El ticket no existe"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Error interno del servidor. Intente nuevamente más tarde."
+                  }
+                }
+              }
+            }
+          },
           "403": {
-            "description": "Forbidden – insufficient permissions"
+            "description": "Acceso denegado. Token inválido o expirado."
           }
         }
       }
     },
-    "/notificaciones/{id}": {
-      "get": {
-        "tags": [
-          "Notificaciones"
-        ],
-        "summary": "Get a Notificacion by ID",
-        "description": "Retrieves the Notificacion identified by the given ID.",
-        "operationId": "getById_2",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of the Notificacion to retrieve",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Notificacion retrieved successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/NotificacionDTO"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Notificacion not found",
-            "content": {
-              "*/*": {
-                "schema": {
-                  "$ref": "#/components/schemas/NotificacionDTO"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden – insufficient permissions"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Notificaciones"
-        ],
-        "summary": "Delete a Notificacion",
-        "description": "Deletes the Notificacion identified by the given ID.",
-        "operationId": "delete_2",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of the Notificacion to delete",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Notificacion deleted successfully"
-          },
-          "404": {
-            "description": "Notificacion not found"
-          },
-          "403": {
-            "description": "Forbidden – insufficient permissions"
-          }
-        }
-      },
+    "/tickets/{idTicket}/cerrar": {
       "patch": {
         "tags": [
-          "Notificaciones"
+          "Tickets"
         ],
-        "summary": "Update an existing Notificacion",
-        "description": "Updates the Notificacion identified by the given ID with the data from the DTO.",
-        "operationId": "update_2",
+        "summary": "Cerrar un ticket",
+        "description": "Permite cerrar un ticket existente cambiando su estado a 'cerrado'.",
+        "operationId": "cerrarTicket",
         "parameters": [
           {
-            "name": "id",
+            "name": "idTicket",
             "in": "path",
-            "description": "ID of the Notificacion to update",
+            "description": "ID del ticket a cerrar",
             "required": true,
             "schema": {
               "type": "integer",
@@ -929,56 +1206,88 @@
             }
           }
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NotificacionDTO"
+        "responses": {
+          "200": {
+            "description": "Ticket cerrado correctamente",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketDTO"
+                }
               }
             }
           },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Notificacion updated successfully",
+          "400": {
+            "description": "Solicitud inválida",
             "content": {
-              "application/json": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/NotificacionDTO"
+                  "type": "string",
+                  "example": {
+                    "error": "Solicitud inválida para cerrar el ticket"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "No tiene permiso de enviar notificaciones"
+                  }
                 }
               }
             }
           },
           "404": {
-            "description": "Notificacion not found",
+            "description": "Ticket no encontrado",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/NotificacionDTO"
+                  "type": "string",
+                  "example": {
+                    "error": "El ticket no fue encontrado"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Error interno del servidor. Intente nuevamente más tarde."
+                  }
                 }
               }
             }
           },
           "403": {
-            "description": "Forbidden – insufficient permissions"
+            "description": "Acceso denegado. Token inválido o expirado."
           }
         }
       }
     },
-    "/historialtickets/{id}": {
+    "/usuarios/{idUsuario}/notificaciones": {
       "get": {
         "tags": [
-          "HistorialTickets"
+          "Usuarios"
         ],
-        "summary": "Get a HistorialTicket by ID",
-        "description": "Retrieves the HistorialTicket identified by the given ID.",
-        "operationId": "getById_3",
+        "summary": "Consultar notificaciones de un usuario",
+        "description": "Permite a un usuario autenticado obtener la lista de notificaciones generadas por el sistema, relacionadas con tickets, asignaciones o actualizaciones. Si el usuario no existe o los parámetros son inválidos, se devuelven los errores correspondientes.",
+        "operationId": "getNotificacionesById",
         "parameters": [
           {
-            "name": "id",
+            "name": "idUsuario",
             "in": "path",
-            "description": "ID of the HistorialTicket to retrieve",
+            "description": "ID del usuario",
             "required": true,
             "schema": {
               "type": "integer",
@@ -988,130 +1297,77 @@
         ],
         "responses": {
           "200": {
-            "description": "HistorialTicket retrieved successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HistorialTicketDTO"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "HistorialTicket not found",
+            "description": "Notificaciones obtenidas correctamente",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/HistorialTicketDTO"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Notificacion"
+                  }
                 }
               }
             }
           },
-          "403": {
-            "description": "Forbidden – insufficient permissions"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "HistorialTickets"
-        ],
-        "summary": "Delete a HistorialTicket",
-        "description": "Deletes the HistorialTicket identified by the given ID.",
-        "operationId": "delete_3",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of the HistorialTicket to delete",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "HistorialTicket deleted successfully"
-          },
-          "404": {
-            "description": "HistorialTicket not found"
-          },
-          "403": {
-            "description": "Forbidden – insufficient permissions"
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "HistorialTickets"
-        ],
-        "summary": "Update an existing HistorialTicket",
-        "description": "Updates the HistorialTicket identified by the given ID with the data from the DTO.",
-        "operationId": "update_3",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of the HistorialTicket to update",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/HistorialTicketDTO"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "HistorialTicket updated successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HistorialTicketDTO"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "HistorialTicket not found",
+          "400": {
+            "description": "Solicitud inválida",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/HistorialTicketDTO"
+                  "type": "string",
+                  "example": {
+                    "error": "Solicitud inválida.",
+                    "detalles": "Los parámetros enviados son incorrectos."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Usuario no encontrado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "mensaje": "Usuario no encontrado."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Error interno del servidor. Intente nuevamente más tarde."
+                  }
                 }
               }
             }
           },
           "403": {
-            "description": "Forbidden – insufficient permissions"
+            "description": "Acceso denegado. Token inválido o expirado."
           }
         }
       }
     },
-    "/comentarios/{id}": {
+    "/tickets/{idTicket}/comentarios": {
       "get": {
         "tags": [
-          "Comentarios"
+          "Tickets"
         ],
-        "summary": "Get a Comentario by ID",
-        "description": "Retrieves the Comentario identified by the given ID.",
-        "operationId": "getById_4",
+        "summary": "Consultar comentarios de un ticket",
+        "description": "Devuelve la lista de comentarios asociados a un ticket específico, mostrando el historial del proceso desde su creación hasta la resolución.",
+        "operationId": "getComentariosByTicketId",
         "parameters": [
           {
-            "name": "id",
+            "name": "idTicket",
             "in": "path",
-            "description": "ID of the Comentario to retrieve",
+            "description": "ID del ticket a consultar",
             "required": true,
             "schema": {
               "type": "integer",
@@ -1121,379 +1377,358 @@
         ],
         "responses": {
           "200": {
-            "description": "Comentario retrieved successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ComentarioDTO"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Comentario not found",
+            "description": "Comentarios obtenidos correctamente",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ComentarioDTO"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ComentarioDTO"
+                  }
                 }
               }
             }
           },
-          "403": {
-            "description": "Forbidden – insufficient permissions"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Comentarios"
-        ],
-        "summary": "Delete a Comentario",
-        "description": "Deletes the Comentario identified by the given ID.",
-        "operationId": "delete_4",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of the Comentario to delete",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Comentario deleted successfully"
-          },
-          "404": {
-            "description": "Comentario not found"
-          },
-          "403": {
-            "description": "Forbidden – insufficient permissions"
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Comentarios"
-        ],
-        "summary": "Update an existing Comentario",
-        "description": "Updates the Comentario identified by the given ID with the data from the DTO.",
-        "operationId": "update_4",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of the Comentario to update",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ComentarioDTO"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Comentario updated successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ComentarioDTO"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Comentario not found",
+          "400": {
+            "description": "Solicitud inválida",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/ComentarioDTO"
+                  "type": "string",
+                  "example": {
+                    "error": "ID de ticket inválido.",
+                    "detalles": "El parámetro idTicket debe ser un número válido."
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ticket no encontrado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "No se encontro un ticket con este id"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Error interno del servidor. Intente nuevamente más tarde."
+                  }
                 }
               }
             }
           },
           "403": {
-            "description": "Forbidden – insufficient permissions"
+            "description": "Acceso denegado. Token inválido o expirado."
           }
         }
       }
     },
-    "/categorias/{id}": {
+    "/tickets/filtered": {
       "get": {
         "tags": [
-          "Categorias"
+          "Tickets"
         ],
-        "summary": "Get a Categoria by ID",
-        "description": "Retrieves the Categoria identified by the given ID.",
-        "operationId": "getById_5",
+        "summary": "Consultar tickets filtrados",
+        "description": "Permite obtener todos los tickets aplicando filtros por estado, prioridad, agente o fecha.",
+        "operationId": "getTicketsFiltrados",
         "parameters": [
           {
-            "name": "id",
-            "in": "path",
-            "description": "ID of the Categoria to retrieve",
-            "required": true,
+            "name": "estado",
+            "in": "query",
+            "description": "Estado del ticket (ej: pendiente, cerrado, en progreso)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "prioridad",
+            "in": "query",
+            "description": "Prioridad del ticket (ej: urgente, importante, programado)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "agenteId",
+            "in": "query",
+            "description": "ID del agente asignado al ticket",
+            "required": false,
             "schema": {
               "type": "integer",
               "format": "int64"
+            }
+          },
+          {
+            "name": "fecha",
+            "in": "query",
+            "description": "Fecha de creación del ticket (formato: yyyy-MM-dd)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Categoria retrieved successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CategoriaDTO"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Categoria not found",
+            "description": "Tickets obtenidos correctamente",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/CategoriaDTO"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TicketDTO"
+                  }
                 }
               }
             }
           },
-          "403": {
-            "description": "Forbidden – insufficient permissions"
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "Categorias"
-        ],
-        "summary": "Delete a Categoria",
-        "description": "Deletes the Categoria identified by the given ID.",
-        "operationId": "delete_5",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of the Categoria to delete",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Categoria deleted successfully"
-          },
-          "404": {
-            "description": "Categoria not found"
-          },
-          "403": {
-            "description": "Forbidden – insufficient permissions"
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Categorias"
-        ],
-        "summary": "Update an existing Categoria",
-        "description": "Updates the Categoria identified by the given ID with the data from the DTO.",
-        "operationId": "update_5",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of the Categoria to update",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CategoriaDTO"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Categoria updated successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CategoriaDTO"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Categoria not found",
+          "400": {
+            "description": "Filtros inválidos o valores no reconocidos",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/CategoriaDTO"
+                  "type": "string",
+                  "example": {
+                    "error": "Filtros inválidos o valores no reconocidos"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Error interno del servidor. Intente nuevamente más tarde."
+                  }
                 }
               }
             }
           },
           "403": {
-            "description": "Forbidden – insufficient permissions"
+            "description": "Acceso denegado. Token inválido o expirado."
           }
         }
       }
     },
-    "/asignaciones/{id}": {
+    "/agentes/{agenteId}/tickets": {
       "get": {
         "tags": [
-          "Asignaciones"
+          "agente-controller"
         ],
-        "summary": "Get an Asignacion by ID",
-        "description": "Retrieves the Asignacion identified by the given ID.",
-        "operationId": "getById_6",
+        "summary": "Consultar tickets filtrados para un agente",
+        "description": "Permite obtener todos los tickets aplicando filtros por estado, prioridad, agente o fecha.",
+        "operationId": "getTicketsFiltrados_1",
         "parameters": [
           {
-            "name": "id",
+            "name": "agenteId",
             "in": "path",
-            "description": "ID of the Asignacion to retrieve",
+            "description": "ID del agente asignado al ticket",
             "required": true,
             "schema": {
               "type": "integer",
               "format": "int64"
+            }
+          },
+          {
+            "name": "estado",
+            "in": "query",
+            "description": "Estado del ticket (ej: pendiente, cerrado, en progreso)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "prioridad",
+            "in": "query",
+            "description": "Prioridad del ticket (ej: urgente, importante, programado)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fecha",
+            "in": "query",
+            "description": "Fecha de creación del ticket (formato: yyyy-MM-dd)",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Asignacion retrieved successfully",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/AsignacionDTO"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Asignacion not found",
+            "description": "Tickets obtenidos correctamente",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/AsignacionDTO"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TicketDTO"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Filtros inválidos o valores no reconocidos",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Filtros inválidos o valores no reconocidos"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Error interno del servidor. Intente nuevamente más tarde."
+                  }
                 }
               }
             }
           },
           "403": {
-            "description": "Forbidden – insufficient permissions"
+            "description": "Acceso denegado. Token inválido o expirado."
           }
         }
-      },
-      "delete": {
+      }
+    },
+    "/admin/estadisticas": {
+      "get": {
         "tags": [
-          "Asignaciones"
+          "Admin"
         ],
-        "summary": "Delete an Asignacion",
-        "description": "Deletes the Asignacion identified by the given ID.",
-        "operationId": "delete_6",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of the Asignacion to delete",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Asignacion deleted successfully"
-          },
-          "404": {
-            "description": "Asignacion not found"
-          },
-          "403": {
-            "description": "Forbidden – insufficient permissions"
-          }
-        }
-      },
-      "patch": {
-        "tags": [
-          "Asignaciones"
-        ],
-        "summary": "Update an existing Asignacion",
-        "description": "Updates the Asignacion identified by the given ID with the data from the DTO.",
-        "operationId": "update_6",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID of the Asignacion to update",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int64"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AsignacionDTO"
-              }
-            }
-          },
-          "required": true
-        },
+        "summary": "Obtener métricas del sistema",
+        "description": "Permite al administrador visualizar las métricas generales del sistema, incluyendo tickets abiertos, cerrados, empleados y agentes activos.",
+        "operationId": "getEstadisticas",
         "responses": {
           "200": {
-            "description": "Asignacion updated successfully",
+            "description": "Métricas obtenidas correctamente",
             "content": {
-              "application/json": {
+              "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/AsignacionDTO"
+                  "type": "string",
+                  "example": {
+                    "ticketsAbiertos": 15,
+                    "ticketsCerrados": 40,
+                    "empleadosActivos": 25,
+                    "agentesActivos": 5
+                  }
                 }
               }
             }
           },
-          "404": {
-            "description": "Asignacion not found",
+          "401": {
+            "description": "Token inválido o usuario no autorizado",
             "content": {
               "*/*": {
                 "schema": {
-                  "$ref": "#/components/schemas/AsignacionDTO"
+                  "type": "string",
+                  "example": {
+                    "error": "Autorización inválida."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Error interno del servidor. Intente nuevamente más tarde."
+                  }
                 }
               }
             }
           },
           "403": {
-            "description": "Forbidden – insufficient permissions"
+            "description": "Acceso denegado. Token inválido o expirado."
+          }
+        }
+      }
+    },
+    "/admin/estadisticas/exportar/pdf": {
+      "get": {
+        "tags": [
+          "Admin"
+        ],
+        "summary": "Exportar informes del sistema en PDF",
+        "description": "Permite al administrador exportar los informes del sistema en formato PDF. El archivo generado contiene las métricas y estadísticas actuales del sistema, y se devuelve como archivo descargable.",
+        "operationId": "exportarInformePDF",
+        "responses": {
+          "200": {
+            "description": "Archivo PDF generado correctamente",
+            "content": {
+              "application/pdf": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Autorización inválida",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Autorización inválida.",
+                    "detalle": "Token no válido o expirado."
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Error interno del servidor. Intente nuevamente más tarde."
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Acceso denegado. Token inválido o expirado."
           }
         }
       }
@@ -1501,173 +1736,6 @@
   },
   "components": {
     "schemas": {
-      "UsuarioDTO": {
-        "type": "object",
-        "description": "DTO for Usuario. Only includes attributes the current user has permission to view. Field visibility depends on the user's roles and permissions.",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Unique identifier of the usuario."
-          },
-          "rolId": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Identifier of the role related to the usuario."
-          },
-          "nombre": {
-            "type": "string",
-            "description": "Name of the usuario."
-          },
-          "emailPersonal": {
-            "type": "string",
-            "description": "Attribute emailPersonal of the usuario."
-          },
-          "emailCorporativo": {
-            "type": "string",
-            "description": "Attribute emailCorporativo of the usuario."
-          },
-          "contrasena": {
-            "type": "string",
-            "description": "Password of the usuario."
-          },
-          "departamento": {
-            "type": "string",
-            "description": "Department of the usuario."
-          }
-        }
-      },
-      "TicketDTO": {
-        "type": "object",
-        "description": "DTO for Ticket. Only includes attributes the current user has permission to view. Field visibility depends on the user's roles and permissions.",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Unique identifier of the ticket."
-          },
-          "usuarioId": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Identifier of the user related to the ticket."
-          },
-          "categoriaId": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Identifier of the category related to the ticket."
-          },
-          "titulo": {
-            "type": "string",
-            "description": "Title of the ticket."
-          },
-          "descripcion": {
-            "type": "string",
-            "description": "Detailed description of the ticket."
-          },
-          "prioridad": {
-            "type": "string",
-            "description": "Priority of the ticket (ABIERTO, EN PROGRESO, RESUELTO, CERRADO)."
-          },
-          "estado": {
-            "type": "string",
-            "description": "Current status of the ticket."
-          },
-          "fechaCreacion": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Creation timestamp of the ticket."
-          },
-          "fechaCierre": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Closing timestamp of the ticket."
-          }
-        }
-      },
-      "NotificacionDTO": {
-        "type": "object",
-        "description": "DTO for Notificacion. Only includes attributes the current user has permission to view. Field visibility depends on the user's roles and permissions.",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Unique identifier of the notificacion."
-          },
-          "usuarioId": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Identifier of the user related to the notificacion."
-          },
-          "mensaje": {
-            "type": "string",
-            "description": "Notification message."
-          },
-          "fechaCreacion": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Creation timestamp of the notificacion."
-          }
-        }
-      },
-      "HistorialTicketDTO": {
-        "type": "object",
-        "description": "DTO for HistorialTicket. Only includes attributes the current user has permission to view. Field visibility depends on the user's roles and permissions.",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Unique identifier of the historialticket."
-          },
-          "ticketId": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Attribute ticketId of the historialticket."
-          },
-          "estadoAnterior": {
-            "type": "string",
-            "description": "Previous status of the ticket."
-          },
-          "estadoNuevo": {
-            "type": "string",
-            "description": "New status of the ticket."
-          },
-          "fechaCreacion": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Creation timestamp of the historialticket."
-          }
-        }
-      },
-      "ComentarioDTO": {
-        "type": "object",
-        "description": "DTO for Comentario. Only includes attributes the current user has permission to view. Field visibility depends on the user's roles and permissions.",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Unique identifier of the comentario."
-          },
-          "ticketId": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Attribute ticketId of the comentario."
-          },
-          "usuarioId": {
-            "type": "integer",
-            "format": "int64",
-            "description": "Identifier of the user related to the comentario."
-          },
-          "comentario": {
-            "type": "string",
-            "description": "Comment content."
-          },
-          "fechaCreacion": {
-            "type": "string",
-            "format": "date-time",
-            "description": "Creation timestamp of the comentario."
-          }
-        }
-      },
       "CategoriaDTO": {
         "type": "object",
         "description": "DTO for Categoria. Only includes attributes the current user has permission to view. Field visibility depends on the user's roles and permissions.",
@@ -1675,55 +1743,241 @@
           "id": {
             "type": "integer",
             "format": "int64",
-            "description": "Unique identifier of the categoria."
+            "description": "Identificador único del categoria.",
+            "example": 1
           },
           "nombre": {
             "type": "string",
-            "description": "Name of the categoria."
+            "description": "Nombre del categoria.",
+            "example": "Juan Armando",
+            "maxLength": 255,
+            "minLength": 0
           },
           "descripcion": {
             "type": "string",
-            "description": "Detailed description of the categoria."
+            "description": "Descripción del categoria.",
+            "example": "No hay conexión a internet",
+            "maxLength": 255,
+            "minLength": 0
           }
         }
       },
-      "LoginRequest": {
+      "UsuarioDTO": {
         "type": "object",
-        "description": "Login credentials including email and password",
-        "properties": {
-          "email": {
-            "type": "string",
-            "description": "Email address of the usuario."
-          },
-          "password": {
-            "type": "string",
-            "description": "Password of the usuario."
-          }
-        }
-      },
-      "AsignacionDTO": {
-        "type": "object",
-        "description": "DTO for Asignacion. Only includes attributes the current user has permission to view. Field visibility depends on the user's roles and permissions.",
+        "description": "DTO para usuario. Solo incluye los atributos que el usuario autenticado tiene permiso para usar. La visibilidad de los campos depende del rol y permisos del usuario.",
         "properties": {
           "id": {
             "type": "integer",
             "format": "int64",
-            "description": "Unique identifier of the asignacion."
+            "description": "Identificador único del usuario.",
+            "example": 1
           },
-          "ticketId": {
+          "rolId": {
             "type": "integer",
             "format": "int64",
-            "description": "Attribute ticketId of the asignacion."
+            "description": "ID del rol asignado al usuario.",
+            "example": 1
+          },
+          "nombre": {
+            "type": "string",
+            "description": "Nombre del usuario.",
+            "example": "Juan Armando",
+            "maxLength": 255,
+            "minLength": 0
+          },
+          "emailPersonal": {
+            "type": "string",
+            "format": "email",
+            "description": "Correo personal del usuario.",
+            "example": "juan@email.com",
+            "maxLength": 255,
+            "minLength": 0,
+            "pattern": "\\S+"
+          },
+          "emailCorporativo": {
+            "type": "string",
+            "format": "email",
+            "description": "Correo corporativo del usuario.",
+            "example": "juan@empresa.com",
+            "maxLength": 255,
+            "minLength": 0,
+            "pattern": "\\S+"
+          },
+          "contrasena": {
+            "type": "string",
+            "description": "Contraseña del usuario.",
+            "example": "juan1234",
+            "maxLength": 255,
+            "minLength": 0,
+            "pattern": "\\S+"
+          },
+          "departamento": {
+            "type": "string",
+            "description": "Departamento del usuario.",
+            "example": "Contaduría",
+            "maxLength": 255,
+            "minLength": 0
+          }
+        }
+      },
+      "TicketDTO": {
+        "type": "object",
+        "description": "DTO para Ticket. Solo incluye los atributos a los que el usuario tiene permiso de ver. La visibilidad de campos depende del rol del usuario.",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Identificador único del ticket.",
+            "example": 1
+          },
+          "usuarioId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "ID del usuario relacionado con el ticket.",
+            "example": 1
           },
           "agenteId": {
             "type": "integer",
             "format": "int64",
-            "description": "Identifier of the agent related to the asignacion."
+            "description": "ID del agente asignado al ticket.",
+            "example": 1
+          },
+          "categoriaId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "ID de la categoría relacionada con el ticket.",
+            "example": 1
+          },
+          "titulo": {
+            "type": "string",
+            "description": "Título del ticket.",
+            "example": "Problema de red",
+            "maxLength": 255,
+            "minLength": 0
+          },
+          "descripcion": {
+            "type": "string",
+            "description": "Descripción del ticket.",
+            "example": "No hay conexión a internet",
+            "maxLength": 1000,
+            "minLength": 0
+          },
+          "prioridad": {
+            "type": "string",
+            "description": "Prioridad del ticket (Urgente, Importante, Programado).",
+            "example": "Urgente"
+          },
+          "estado": {
+            "type": "string",
+            "description": "Estado del ticket (Pendiente, En progreso, Cerrado).",
+            "example": "Pendiente"
           },
           "fechaCreacion": {
             "type": "string",
             "format": "date-time",
-            "description": "Creation timestamp of the asignacion."
+            "description": "Fecha de creación del ticket.",
+            "example": "2025-10-14 09:30:00"
+          },
+          "fechaCierre": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Fecha de cierre del ticket.",
+            "example": "2025-10-16 16:45:00"
+          }
+        }
+      },
+      "ComentarioDTO": {
+        "type": "object",
+        "description": "DTO para Comentario. Solo incluye los atributos a los que el usuario tiene permiso de ver. La visibilidad de campos depende del rol del usuario.",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Identificador único del comentario.",
+            "example": 1
+          },
+          "ticketId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "ID del ticket relacionado con el comentario.",
+            "example": 1
+          },
+          "usuarioId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "ID del usuario relacionado con el comentario.",
+            "example": 1
+          },
+          "comentario": {
+            "type": "string",
+            "description": "Comentario asociado al comentario.",
+            "example": "Se encontró que la impresora estaba desconectada",
+            "maxLength": 1000,
+            "minLength": 0
+          },
+          "fechaCreacion": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Fecha de creación del comentario.",
+            "example": "2025-10-14 09:30:00"
+          }
+        },
+        "required": [
+          "usuarioId"
+        ]
+      },
+      "LoginRequest": {
+        "type": "object",
+        "description": "Credenciales se login, email y contraseña",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Correo electrónico del loginrequest (personal o corporativo).",
+            "example": "usuario@empresa.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "Contraseña del loginrequest.",
+            "example": "1234"
+          }
+        }
+      },
+      "PrioridadDTO": {
+        "type": "object",
+        "description": "DTO para la prioridad de un ticket.",
+        "properties": {
+          "prioridad": {
+            "type": "string",
+            "description": "Prioridad del prioridad (Urgente, Importante, Programado).",
+            "example": "Urgente"
+          }
+        }
+      },
+      "Notificacion": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Identificador único del notificacion.",
+            "example": 1
+          },
+          "usuarioId": {
+            "type": "integer",
+            "format": "int64",
+            "description": "ID del usuario relacionado con el notificacion.",
+            "example": 1
+          },
+          "mensaje": {
+            "type": "string",
+            "description": "Mensaje de la notificación del notificacion.",
+            "example": "Nueva notificación asignada"
+          },
+          "fechaCreacion": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Fecha de creación del notificacion.",
+            "example": "2025-10-14 09:30:00"
           }
         }
       }

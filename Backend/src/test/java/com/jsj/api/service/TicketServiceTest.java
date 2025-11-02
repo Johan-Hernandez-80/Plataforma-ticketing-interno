@@ -1,5 +1,6 @@
 package com.jsj.api.service;
 
+import com.jsj.api.constants.TicketConstants;
 import com.jsj.api.entity.Ticket;
 import com.jsj.api.entity.Usuario;
 import com.jsj.api.entity.dao.CategoriaDAO;
@@ -27,6 +28,11 @@ import org.junit.jupiter.api.AfterEach;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.mockito.MockedStatic;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -97,14 +103,14 @@ public class TicketServiceTest {
         String estadoValido = "PENDIENTE";
 
         // ---------- ACT ----------
-        Executable accion = () -> service.findTicketsFiltrados(estadoValido, prioridadInvalida, agenteValido, fechaActual);
+        Executable accion = () -> service.findTicketsFiltrados(estadoValido, prioridadInvalida, agenteValido,
+                fechaActual);
 
         // ---------- ASSERT ----------
         PrioridadInvalidaException ex = assertThrows(
                 PrioridadInvalidaException.class,
                 accion,
-                "Debe lanzar PrioridadInvalidaException si la prioridad es inválida"
-        );
+                "Debe lanzar PrioridadInvalidaException si la prioridad es inválida");
 
         verify(dao, never()).findTicketsFiltrados(any(String.class), any(String.class), any(), any());
     }
@@ -118,19 +124,16 @@ public class TicketServiceTest {
 
         // ---------- ACT ----------
         Executable accion = () -> service.findTicketsFiltrados(
-                estadoInvalido, prioridadValida, agenteValido, fechaActual
-        );
+                estadoInvalido, prioridadValida, agenteValido, fechaActual);
 
         // ---------- ASSERT ----------
         EstadoInvalidoException ex = assertThrows(
                 EstadoInvalidoException.class,
                 accion,
-                "Debe lanzar EstadoInvalidoException si el estado no es válido"
-        );
+                "Debe lanzar EstadoInvalidoException si el estado no es válido");
 
         verify(dao, never()).findTicketsFiltrados(
-                any(String.class), any(String.class), any(Long.class), any(LocalDate.class)
-        );
+                any(String.class), any(String.class), any(Long.class), any(LocalDate.class));
     }
 
     // CASO 3: Agente inexistente
@@ -145,19 +148,16 @@ public class TicketServiceTest {
 
         // ---------- ACT ----------
         Executable accion = () -> service.findTicketsFiltrados(
-                estadoValido, prioridadValida, agenteInvalido, fechaActual
-        );
+                estadoValido, prioridadValida, agenteInvalido, fechaActual);
 
         // ---------- ASSERT ----------
         AgenteInexistenteException ex = assertThrows(
                 AgenteInexistenteException.class,
                 accion,
-                "Debe lanzar AgenteInexistenteException si el agente no existe"
-        );
+                "Debe lanzar AgenteInexistenteException si el agente no existe");
 
         verify(dao, never()).findTicketsFiltrados(
-                any(String.class), any(String.class), any(Long.class), any(LocalDate.class)
-        );
+                any(String.class), any(String.class), any(Long.class), any(LocalDate.class));
     }
 
     // CASO 4: Caso exitoso
@@ -173,13 +173,12 @@ public class TicketServiceTest {
 
         when(usuarioDao.isAgente(agenteValido)).thenReturn(1);
         when(dao.findTicketsFiltrados(
-                any(String.class), any(String.class), eq(agenteValido), eq(fechaActual)
-        )).thenReturn(listaTicketsValida);
+                any(String.class), any(String.class), eq(agenteValido), eq(fechaActual)))
+                .thenReturn(listaTicketsValida);
 
         // ---------- ACT ----------
         List<TicketDTO> resultado = service.findTicketsFiltrados(
-                estadoValido, prioridadValida, agenteValido, fechaActual
-        );
+                estadoValido, prioridadValida, agenteValido, fechaActual);
 
         // ---------- ASSERT ----------
         assertNotNull(resultado, "La lista de tickets no debe ser nula");
@@ -187,8 +186,7 @@ public class TicketServiceTest {
         assertEquals("Ticket de prueba", resultado.get(0).getTitulo());
 
         verify(dao, times(1)).findTicketsFiltrados(
-                any(String.class), any(String.class), eq(agenteValido), eq(fechaActual)
-        );
+                any(String.class), any(String.class), eq(agenteValido), eq(fechaActual));
     }
 
     // ============================================================
@@ -207,8 +205,7 @@ public class TicketServiceTest {
         TicketInexistenteException ex = assertThrows(
                 TicketInexistenteException.class,
                 accion,
-                "Debe lanzar TicketInexistenteException si el ticket no existe"
-        );
+                "Debe lanzar TicketInexistenteException si el ticket no existe");
         verify(dao, times(1)).existsById(idTicketValido);
         verifyNoInteractions(comentarioDao);
         verifyNoInteractions(notificacionService);
@@ -229,8 +226,7 @@ public class TicketServiceTest {
         UsuarioInexistenteException ex = assertThrows(
                 UsuarioInexistenteException.class,
                 accion,
-                "Debe lanzar UsuarioInexistenteException si el usuario no existe"
-        );
+                "Debe lanzar UsuarioInexistenteException si el usuario no existe");
 
         verify(usuarioDao, times(1)).existsById(idUsuarioValido);
         verifyNoInteractions(comentarioDao);
@@ -253,8 +249,7 @@ public class TicketServiceTest {
         CampoInvalidoException ex = assertThrows(
                 CampoInvalidoException.class,
                 accion,
-                "Debe lanzar CampoInvalidoException si el comentario es nulo"
-        );
+                "Debe lanzar CampoInvalidoException si el comentario es nulo");
 
         verify(comentarioDao, never()).save(any(ComentarioDTO.class));
         verifyNoInteractions(notificacionService);
@@ -276,8 +271,7 @@ public class TicketServiceTest {
         CampoInvalidoException ex = assertThrows(
                 CampoInvalidoException.class,
                 accion,
-                "Debe lanzar CampoInvalidoException si el comentario supera el tamaño máximo permitido"
-        );
+                "Debe lanzar CampoInvalidoException si el comentario supera el tamaño máximo permitido");
 
         verify(comentarioDao, never()).save(any(ComentarioDTO.class));
         verifyNoInteractions(notificacionService);
@@ -303,8 +297,7 @@ public class TicketServiceTest {
         InsufficientSavingPermissionsException ex = assertThrows(
                 InsufficientSavingPermissionsException.class,
                 accion,
-                "Debe lanzar InsufficientSavingPermissionsException si el DAO indica falta de permisos"
-        );
+                "Debe lanzar InsufficientSavingPermissionsException si el DAO indica falta de permisos");
 
         verify(dao, times(1)).findById(idTicketValido);
         verify(comentarioDao, times(1)).save(any(ComentarioDTO.class));
@@ -355,8 +348,7 @@ public class TicketServiceTest {
         PrioridadInvalidaException ex = assertThrows(
                 PrioridadInvalidaException.class,
                 accion,
-                "Debe lanzar PrioridadInvalidaException si la prioridad no es válida"
-        );
+                "Debe lanzar PrioridadInvalidaException si la prioridad no es válida");
 
         verify(dao, never()).updatePrioridad(anyLong(), anyString());
         verifyNoInteractions(notificacionService);
@@ -375,8 +367,7 @@ public class TicketServiceTest {
         TicketInexistenteException ex = assertThrows(
                 TicketInexistenteException.class,
                 accion,
-                "Debe lanzar TicketInexistenteException si el ticket no existe"
-        );
+                "Debe lanzar TicketInexistenteException si el ticket no existe");
 
         verify(dao, times(1)).existsById(idTicketValido);
         verify(dao, never()).updatePrioridad(anyLong(), anyString());
@@ -403,7 +394,8 @@ public class TicketServiceTest {
 
         verify(dao, times(1)).findById(idTicketValido);
         verify(dao, times(1)).updatePrioridad(idTicketValido, "Importante");
-        verify(notificacionService, times(1)).notifyPrioridad(idTicketValido, idUsuarioValido, "Ticket de prueba", "Importante");
+        verify(notificacionService, times(1)).notifyPrioridad(idTicketValido, idUsuarioValido, "Ticket de prueba",
+                "Importante");
     }
 
     // ============================================================
@@ -422,8 +414,7 @@ public class TicketServiceTest {
         TicketInexistenteException ex = assertThrows(
                 TicketInexistenteException.class,
                 accion,
-                "Debe lanzar TicketInexistenteException si el ticket no existe"
-        );
+                "Debe lanzar TicketInexistenteException si el ticket no existe");
 
         verify(dao, times(1)).existsById(idTicketValido);
         verify(dao, never()).cerrarTicket(anyLong());
@@ -472,8 +463,7 @@ public class TicketServiceTest {
         UsuarioInexistenteException ex = assertThrows(
                 UsuarioInexistenteException.class,
                 accion,
-                "Debe lanzar UsuarioInexistenteException si el usuario no existe"
-        );
+                "Debe lanzar UsuarioInexistenteException si el usuario no existe");
 
         verify(usuarioDao, times(1)).existsById(idUsuarioValido);
         verifyNoInteractions(dao, comentarioDao, notificacionService, categoriaDao);
@@ -496,8 +486,7 @@ public class TicketServiceTest {
         AgenteInexistenteException ex = assertThrows(
                 AgenteInexistenteException.class,
                 accion,
-                "Debe lanzar AgenteInexistenteException si el agente no existe"
-        );
+                "Debe lanzar AgenteInexistenteException si el agente no existe");
 
         verify(usuarioDao, times(1)).existsById(idUsuarioValido);
         verify(usuarioDao, times(1)).existsById(agenteValido);
@@ -523,8 +512,7 @@ public class TicketServiceTest {
         CategoriaInexistenteException ex = assertThrows(
                 CategoriaInexistenteException.class,
                 accion,
-                "Debe lanzar CategoriaInexistenteException si la categoría no existe"
-        );
+                "Debe lanzar CategoriaInexistenteException si la categoría no existe");
 
         verify(categoriaDao, times(1)).existsById(1L);
         verifyNoInteractions(dao, comentarioDao, notificacionService);
@@ -550,8 +538,7 @@ public class TicketServiceTest {
         PrioridadInvalidaException ex = assertThrows(
                 PrioridadInvalidaException.class,
                 accion,
-                "Debe lanzar PrioridadInvalidaException si la prioridad es inválida"
-        );
+                "Debe lanzar PrioridadInvalidaException si la prioridad es inválida");
 
         verify(dao, never()).save(any(TicketDTO.class));
         verifyNoInteractions(comentarioDao, notificacionService);
@@ -578,8 +565,7 @@ public class TicketServiceTest {
         EstadoInvalidoException ex = assertThrows(
                 EstadoInvalidoException.class,
                 accion,
-                "Debe lanzar EstadoInvalidoException si el estado es inválido"
-        );
+                "Debe lanzar EstadoInvalidoException si el estado es inválido");
 
         verify(dao, never()).save(any(TicketDTO.class));
         verifyNoInteractions(comentarioDao, notificacionService);
@@ -607,8 +593,7 @@ public class TicketServiceTest {
         TituloInvalidoException ex = assertThrows(
                 TituloInvalidoException.class,
                 accion,
-                "Debe lanzar TituloInvalidoException si el título es nulo"
-        );
+                "Debe lanzar TituloInvalidoException si el título es nulo");
 
         verify(dao, never()).save(any(TicketDTO.class));
         verifyNoInteractions(comentarioDao, notificacionService);
@@ -637,8 +622,7 @@ public class TicketServiceTest {
         DescripcionInvalidaException ex = assertThrows(
                 DescripcionInvalidaException.class,
                 accion,
-                "Debe lanzar DescripcionInvalidaException si la descripción es nula"
-        );
+                "Debe lanzar DescripcionInvalidaException si la descripción es nula");
 
         verify(dao, never()).save(any(TicketDTO.class));
         verifyNoInteractions(comentarioDao, notificacionService);
@@ -714,8 +698,7 @@ public class TicketServiceTest {
         UsuarioInexistenteException ex = assertThrows(
                 UsuarioInexistenteException.class,
                 accion,
-                "Debe lanzar UsuarioInexistenteException si el usuario no existe"
-        );
+                "Debe lanzar UsuarioInexistenteException si el usuario no existe");
 
         verify(usuarioDao, times(1)).existsById(usuarioId);
         verifyNoInteractions(dao, comentarioDao, notificacionService, categoriaDao);
@@ -739,8 +722,7 @@ public class TicketServiceTest {
         PrioridadInvalidaException ex = assertThrows(
                 PrioridadInvalidaException.class,
                 accion,
-                "Debe lanzar PrioridadInvalidaException si la prioridad es inválida"
-        );
+                "Debe lanzar PrioridadInvalidaException si la prioridad es inválida");
 
         verify(dao, never()).findTickets(anyString(), anyString(), anyLong());
         verifyNoInteractions(comentarioDao, notificacionService, categoriaDao);
@@ -764,8 +746,7 @@ public class TicketServiceTest {
         EstadoInvalidoException ex = assertThrows(
                 EstadoInvalidoException.class,
                 accion,
-                "Debe lanzar EstadoInvalidoException si el estado es inválido"
-        );
+                "Debe lanzar EstadoInvalidoException si el estado es inválido");
 
         verify(dao, never()).findTickets(anyString(), anyString(), anyLong());
         verifyNoInteractions(comentarioDao, notificacionService, categoriaDao);
@@ -816,8 +797,7 @@ public class TicketServiceTest {
         NotAuthorizedException ex = assertThrows(
                 NotAuthorizedException.class,
                 accion,
-                "Debe lanzar NotAuthorizedException si el usuario no está autorizado"
-        );
+                "Debe lanzar NotAuthorizedException si el usuario no está autorizado");
 
         verify(dao, never()).findTicketById(idTicketValido);
         verifyNoInteractions(comentarioDao, notificacionService, categoriaDao);
@@ -909,8 +889,7 @@ public class TicketServiceTest {
         TicketInexistenteException ex = assertThrows(
                 TicketInexistenteException.class,
                 accion,
-                "Debe lanzar TicketInexistenteException si el ticket no existe"
-        );
+                "Debe lanzar TicketInexistenteException si el ticket no existe");
 
         verify(dao, times(1)).existsById(idTicketValido);
         verifyNoInteractions(comentarioDao, notificacionService, categoriaDao);
@@ -930,8 +909,7 @@ public class TicketServiceTest {
         AgenteInexistenteException ex = assertThrows(
                 AgenteInexistenteException.class,
                 accion,
-                "Debe lanzar AgenteInexistenteException si el agente no existe"
-        );
+                "Debe lanzar AgenteInexistenteException si el agente no existe");
 
         verify(dao, times(1)).existsById(idTicketValido);
         verify(usuarioDao, times(1)).isAgente(agenteValido);
@@ -964,7 +942,108 @@ public class TicketServiceTest {
         verify(dao, times(1)).findById(idTicketValido);
         verify(usuarioDao, times(1)).findById(agenteValido);
         verify(dao, times(1)).reasignar(agenteValido, idTicketValido);
-        verify(notificacionService, times(1)).notifyReasignacion(idTicketValido, idUsuarioValido, "Ticket de prueba", "Agente Juan", "juan@empresa.com");
+        verify(notificacionService, times(1)).notifyReasignacion(idTicketValido, idUsuarioValido, "Ticket de prueba",
+                "Agente Juan", "juan@empresa.com");
         verifyNoInteractions(comentarioDao, categoriaDao);
+    }
+
+    // ============================================================
+    // SECCIÓN X: tests adicionales (CP-44, CP-46, CP-48, CP-50)
+    // ============================================================
+    // CP-44: Solicitud inválida al cerrar el ticket (ej. ya cerrado)
+    @Test
+    void cerrarTicket_DeberiaTratarTicketYaCerrado_CuandoTicketYaEstaCerrado() throws Exception {
+        // ARRANGE
+        ticket.setEstado("CERRADO");
+        ticketCerrado.setId(idTicketValido);
+        ticketCerrado.setEstado("CERRADO");
+
+        when(dao.existsById(idTicketValido)).thenReturn(true);
+        when(dao.findById(idTicketValido)).thenReturn(Optional.of(ticket));
+        // el DAO.cerrarTicket devuelve el DTO con estado actualizado (mockeado)
+        when(dao.cerrarTicket(idTicketValido)).thenReturn(ticketCerrado);
+
+        // ACT
+        TicketDTO resultado = service.cerrarTicket(idTicketValido);
+
+        // ASSERT
+        assertNotNull(resultado, "El resultado no debe ser nulo");
+        assertEquals(idTicketValido, resultado.getId(), "El ID del ticket debe coincidir");
+        assertEquals("CERRADO", resultado.getEstado(), "El estado del ticket debe ser CERRADO (resultado del DAO)");
+
+        verify(dao, times(1)).findById(idTicketValido);
+        verify(dao, times(1)).cerrarTicket(idTicketValido);
+        verify(notificacionService, times(1)).notifyCierre(idTicketValido, idUsuarioValido, "Ticket de prueba");
+    }
+
+    // CP-46: Error del servidor al cerrar el ticket (DAO falla)
+    @Test
+    void cerrarTicket_DeberiaPropagarRuntimeException_CuandoDaoFallaEnCerrar()
+            throws InsufficientSavingPermissionsException {
+        // ARRANGE
+        ticket.setEstado("Pendiente");
+        when(dao.existsById(idTicketValido)).thenReturn(true);
+        when(dao.findById(idTicketValido)).thenReturn(Optional.of(ticket));
+        // cerrarTicket devuelve TicketDTO en el DAO, por eso usamos
+        // when(...).thenThrow(...)
+        when(dao.cerrarTicket(idTicketValido)).thenThrow(new RuntimeException("DB error"));
+
+        // ACT & ASSERT
+        RuntimeException ex = assertThrows(RuntimeException.class, () -> service.cerrarTicket(idTicketValido));
+        assertEquals("DB error", ex.getMessage());
+
+        verify(dao, times(1)).cerrarTicket(idTicketValido);
+        verify(notificacionService, times(1)).notifyCierre(eq(idTicketValido), eq(ticket.getUsuarioId()),
+                eq(ticket.getTitulo()));
+    }
+
+    // CP-48: Datos inválidos al reasignar ticket (agenteId nulo)
+    @Test
+    void reasignarTicket_DeberiaLanzarAgenteInexistenteException_CuandoAgenteIdEsNulo() {
+        // ARRANGE
+        when(dao.existsById(idTicketValido)).thenReturn(true);
+        // según la implementación validarAgenteIdExistance llama a usuarioDao.isAgente(agenteId)
+        when(usuarioDao.isAgente(null)).thenReturn(0);
+
+        // ACT
+        Executable accion = () -> service.reasignarTicket(idTicketValido, null);
+
+        // ASSERT
+        AgenteInexistenteException ex = assertThrows(
+                AgenteInexistenteException.class,
+                accion,
+                "Debe lanzar AgenteInexistenteException si el agenteId es nulo o no corresponde a un agente");
+
+        verify(dao, times(1)).existsById(idTicketValido);
+        verify(usuarioDao, times(1)).isAgente(null);
+        verify(dao, never()).reasignar(anyLong(), anyLong());
+        verifyNoInteractions(notificacionService);
+    }
+
+    // CP-50: Error del servidor al reasignar ticket (DAO falla)
+    @Test
+    void reasignarTicket_DeberiaPropagarRuntimeException_CuandoDaoFallaEnReasignar()
+            throws InsufficientSavingPermissionsException {
+        // ARRANGE
+        when(dao.existsById(idTicketValido)).thenReturn(true);
+        when(usuarioDao.isAgente(agenteValido)).thenReturn(1); // indica que el id corresponde a un agente
+        when(dao.findById(idTicketValido)).thenReturn(Optional.of(ticket));
+        Usuario usuario = new Usuario();
+        usuario.setId(agenteValido);
+        usuario.setNombre("Agente Test");
+        usuario.setEmailCorporativo("agente@test.com");
+        when(usuarioDao.findById(agenteValido)).thenReturn(Optional.of(usuario));
+        // reasignar devuelve TicketDTO en el DAO, por eso usamos
+        // when(...).thenThrow(...)
+        when(dao.reasignar(agenteValido, idTicketValido)).thenThrow(new RuntimeException("DB failure"));
+
+        // ACT & ASSERT
+        RuntimeException ex = assertThrows(RuntimeException.class,
+                () -> service.reasignarTicket(idTicketValido, agenteValido));
+        assertEquals("DB failure", ex.getMessage());
+
+        verify(dao, times(1)).reasignar(agenteValido, idTicketValido);
+        verify(notificacionService, times(1)).notifyReasignacion(eq(idTicketValido), eq(ticket.getUsuarioId()),
+                eq(ticket.getTitulo()), eq(usuario.getNombre()), eq(usuario.getEmailCorporativo()));
     }
 }
