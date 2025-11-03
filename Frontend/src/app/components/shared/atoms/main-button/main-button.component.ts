@@ -1,14 +1,16 @@
 import { Component, Input } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { RouterModule } from "@angular/router";
 
 @Component({
   selector: "app-main-button",
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: "./main-button.component.html",
   styleUrl: "./main-button.component.css",
 })
 export class MainButtonComponent {
+  @Input() routerLink = "";
   @Input() placeHolder = "";
   @Input() iconUrl = "";
   @Input() alt = "";
