@@ -1,0 +1,20 @@
+p {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+app-main-button {
+  width: 200px;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+}
+
+app-card > div {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}

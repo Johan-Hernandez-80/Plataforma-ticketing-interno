@@ -15,9 +15,20 @@ img {
 }
 
 .primary {
+  background-color: yellow;
   background-color: #504be0;
+}
+
+.primary-outline {
+  background-color: #eff2fe;
+  color: #595feb;
+  border: 1px solid #595feb;
 }
 
 .secondary {
   background-color: #50aee3;
+}
+
+a {
+  text-decoration: none;
 }

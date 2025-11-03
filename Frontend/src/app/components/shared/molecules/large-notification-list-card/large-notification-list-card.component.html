@@ -1,0 +1,16 @@
+<app-card>
+  <div class="container">
+    <img src="../../../../../assets/goBackArrow.svg" alt="" />
+    <p>Notificaciones</p>
+    <div class="notification-container">
+      @for (notification of notifications; track notification.id) {
+        <app-notification-list-item
+          [width]="'100%'"
+          [message]="notification.message"
+          [date]="notification.date"
+          [time]="notification.time"
+        ></app-notification-list-item>
+      }
+    </div>
+  </div>
+</app-card>

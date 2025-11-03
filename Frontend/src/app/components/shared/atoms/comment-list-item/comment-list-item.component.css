@@ -1,0 +1,19 @@
+.container {
+  width: 1000px;
+  height: 100px;
+  display: flex;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
+}
+
+.author,
+.date,
+.time {
+  font-size: 20px;
+  color: #1e1c4a;
+  font-weight: 700;
+}
+
+.message {
+  width: 100px;
+}

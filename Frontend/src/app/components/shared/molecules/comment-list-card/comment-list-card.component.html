@@ -1,0 +1,30 @@
+<app-card [width]="'1300px'" [height]="'800px'">
+  <div class="container">
+    <img src="../../../../../assets/goBackArrow.svg" alt="" />
+    <p>Comentarios</p>
+    <div class="comment-box">
+      @for (comment of comments; track comment.id) {
+        <app-comment-list-item
+          [author]="comment.author"
+          [message]="comment.message"
+          [date]="comment.date"
+          [time]="comment.time"
+        ></app-comment-list-item>
+      }
+    </div>
+
+    <div class="button-container">
+      <app-main-button
+        [width]="'150px'"
+        [height]="'50px'"
+        [placeHolder]="'Cerrar'"
+        [variant]="'primary-outline'"
+      ></app-main-button>
+      <app-main-button
+        [width]="'150px'"
+        [height]="'50px'"
+        [placeHolder]="'Comentar'"
+      ></app-main-button>
+    </div>
+  </div>
+</app-card>
