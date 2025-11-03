@@ -28,3 +28,7 @@ img {
 .secondary {
   background-color: #50aee3;
 }
+
+a {
+  text-decoration: none;
+}

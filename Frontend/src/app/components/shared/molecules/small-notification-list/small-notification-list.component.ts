@@ -1,5 +1,6 @@
-import { Component } from "@angular/core";
+import { Component, output } from "@angular/core";
 import { NotificationListItemComponent } from "../../atoms/notification-list-item/notification-list-item.component";
+import EventEmitter from "events";
 
 @Component({
   selector: "app-small-notification-list",
@@ -8,4 +9,11 @@ import { NotificationListItemComponent } from "../../atoms/notification-list-ite
   templateUrl: "./small-notification-list.component.html",
   styleUrl: "./small-notification-list.component.css",
 })
-export class SmallNotificationListComponent {}
+export class SmallNotificationListComponent {
+  closeEvent = output<void>();
+
+  onClose() {
+    this.closeEvent.emit();
+    alert("cerrado");
+  }
+}

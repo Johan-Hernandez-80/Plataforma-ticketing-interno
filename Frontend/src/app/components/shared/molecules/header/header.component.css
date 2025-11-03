@@ -38,3 +38,7 @@ app-main-button:nth-child(3) {
 app-main-button:nth-child(4) {
   grid-column: 20/-1;
 }
+
+app-small-notification-list {
+  margin-left: 110px;
+}

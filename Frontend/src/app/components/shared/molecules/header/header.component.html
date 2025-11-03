@@ -8,11 +8,13 @@
   ></app-main-button>
   <p>Lorenzo Castañeda Rivas</p>
   <app-main-button
+    [routerLink]="'/home'"
     [width]="'72px'"
     [height]="'52px'"
     [iconUrl]="'../../../../assets/tableIcon.svg'"
   ></app-main-button>
   <app-main-button
+    (click)="setNotificationButtonActive(true)"
     [width]="'56px'"
     [height]="'52px'"
     [iconUrl]="'../../../../assets/alarmIcon.svg'"
@@ -22,5 +24,10 @@
       (mouseenter)="setIsPerfilHover(true)"
       (mouseleave)="setIsPerfilHover(false)"
     ></app-log-out-button>
+  }
+  @if (isNotificationButtonActive) {
+    <app-small-notification-list
+      (closeEvent)="setNotificationButtonActive(false)"
+    ></app-small-notification-list>
   }
 </div>

@@ -3,6 +3,14 @@
   height: auto;
   background-color: #fff;
   border-radius: 0 0 20px 20px;
+  font-size: 12px;
+}
+
+button {
+  all: unset;
+  width: auto;
+  height: auto;
+  cursor: pointer;
 }
 
 .header-box {

@@ -10,7 +10,7 @@ import { RouterModule } from "@angular/router";
   styleUrl: "./main-button.component.css",
 })
 export class MainButtonComponent {
-  @Input() routerLink = "";
+  @Input() routerLink: string | null = null;
   @Input() placeHolder = "";
   @Input() iconUrl = "";
   @Input() alt = "";
