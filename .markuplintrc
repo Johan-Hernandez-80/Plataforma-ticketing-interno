@@ -1,0 +1,9 @@
+{
+  "parser": {
+    ".html": "html"
+  },
+  "rules": {
+    "invalid-attr": true,
+    "no-default-value": true
+  }
+}
