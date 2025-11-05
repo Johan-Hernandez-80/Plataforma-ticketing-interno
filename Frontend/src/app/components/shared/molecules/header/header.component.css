@@ -40,5 +40,8 @@ app-main-button:nth-child(4) {
 }
 
 app-small-notification-list {
+  position: absolute;
+  top: 80px;
+  right: 0;
   margin-left: 110px;
 }

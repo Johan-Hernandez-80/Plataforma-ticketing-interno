@@ -14,6 +14,5 @@ export class SmallNotificationListComponent {
 
   onClose() {
     this.closeEvent.emit();
-    alert("cerrado");
   }
 }
