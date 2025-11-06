@@ -1,11 +1,12 @@
 import { Component } from "@angular/core";
 import { CardComponent } from "../../atoms/card/card.component";
 import { NotificationListItemComponent } from "../../atoms/notification-list-item/notification-list-item.component";
+import { RouterModule } from "@angular/router";
 
 @Component({
   selector: "app-large-notification-list-card",
   standalone: true,
-  imports: [CardComponent, NotificationListItemComponent],
+  imports: [CardComponent, NotificationListItemComponent, RouterModule],
   templateUrl: "./large-notification-list-card.component.html",
   styleUrl: "./large-notification-list-card.component.css",
 })
