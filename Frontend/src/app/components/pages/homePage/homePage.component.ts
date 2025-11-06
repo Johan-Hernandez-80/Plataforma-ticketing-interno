@@ -50,6 +50,6 @@ export class HomePageComponent {
   ];
 
   onClickTable() {
-    this.router.navigate(["/"]);
+    this.router.navigate(["/ticket/management"]);
   }
 }

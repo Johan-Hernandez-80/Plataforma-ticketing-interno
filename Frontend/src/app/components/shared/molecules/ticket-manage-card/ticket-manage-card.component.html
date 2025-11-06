@@ -1,8 +1,16 @@
 <app-card width="1500px" height="800px">
   <div class="container">
-    <img src="../../../../../assets/goBackArrow.svg" alt="icono de regresar" />
+    <a [routerLink]="'/home'">
+      <img
+        src="../../../../../assets/goBackArrow.svg"
+        alt="icono de regresar"
+      />
+    </a>
     <h2>Problema de acceso a la cuenta</h2>
-    <app-combo-box [options]="prioridadOptions"></app-combo-box>
+    <app-combo-box
+      (change)="setIsPriorityValidation(true)"
+      [options]="prioridadOptions"
+    ></app-combo-box>
     <app-main-button
       width="150px"
       height="50px"
@@ -12,3 +20,9 @@
     <app-text-box width="1300px" height="300px"></app-text-box>
   </div>
 </app-card>
+@if(isPriorityValidation){
+<app-validation-card
+  (close)="setIsPriorityValidation(false, $event)"
+  [message]="'¿Estas seguro de que deseas cambiar la prioridad de esta solicitud de soporte?'"
+></app-validation-card>
+}

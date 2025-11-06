@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, output } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 
@@ -17,6 +17,7 @@ export class MainButtonComponent {
   @Input() width: string = "";
   @Input() height: string = "";
   @Input() variant: "primary" | "secondary" | "primary-outline" = "primary";
+  click = output<void>();
 
   customStyles: any = {};
 
@@ -25,5 +26,9 @@ export class MainButtonComponent {
       width: this.width ? this.width : "",
       height: this.height ? this.height : "",
     };
+  }
+
+  onClick() {
+    this.click.emit();
   }
 }

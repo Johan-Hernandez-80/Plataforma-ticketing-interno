@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, output } from "@angular/core";
 
 @Component({
   selector: "app-combo-box",
@@ -9,4 +9,10 @@ import { Component, Input } from "@angular/core";
 })
 export class ComboBoxComponent {
   @Input() options = ["ex1", "ex2", "ex3"];
+  change = output<string>();
+
+  onChange(event: Event) {
+    let select = event.target as HTMLSelectElement;
+    this.change.emit(select.value);
+  }
 }
