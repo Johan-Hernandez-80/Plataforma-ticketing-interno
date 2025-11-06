@@ -44,4 +44,5 @@ app-small-notification-list {
   top: 80px;
   right: 0;
   margin-left: 110px;
+  z-index: 1;
 }

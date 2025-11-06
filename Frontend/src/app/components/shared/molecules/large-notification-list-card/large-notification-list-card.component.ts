@@ -29,5 +29,23 @@ export class LargeNotificationListCardComponent {
       date: "HOy",
       time: "10AM",
     },
+    {
+      id: 4,
+      message: "Yo",
+      date: "HOy",
+      time: "10AM",
+    },
+    {
+      id: 5,
+      message: "Ella",
+      date: "Mañana",
+      time: "10AM",
+    },
+    {
+      id: 6,
+      message: "El",
+      date: "HOy",
+      time: "10AM",
+    },
   ];
 }

@@ -1,0 +1,49 @@
+.tag {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  text-transform: capitalize;
+  line-height: 1;
+  border: 1px solid transparent;
+}
+
+/* ---------- Estado Tags ---------- */
+.tag--estado-pendiente {
+  background: #F4E9C1;
+  color: #957804;
+  border-color: #957804;
+}
+
+.tag--estado-en-progreso {
+  background: #CCE5FF;
+  color: #004085;
+  border-color: #004085;
+}
+
+.tag--estado-cerrado {
+  background: #D4EDDA;
+  color: #155724;
+  border-color: #155724;
+}
+
+/* ---------- Prioridad Tags ---------- */
+.tag--prioridad-urgente {
+  background: #F8D7DA;
+  color: #721C24;
+  border-color: #721C24;
+}
+
+.tag--prioridad-programado {
+  background: #DDF4FF;
+  color: #2563EB;
+  border-color: #2563EB;
+}
+
+.tag--prioridad-importante {
+  background: #EFF2FF;
+  color: #4F46E5;
+  border-color: #4F46E5;
+}
