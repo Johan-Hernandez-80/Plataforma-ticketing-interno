@@ -3,6 +3,7 @@ import { HomePageComponent } from "./components/pages/homePage/homePage.componen
 import { LoginPageComponent } from "./components/pages/loginPage/loginPage.component";
 import { NotificationListPageComponent } from "./components/pages/notification-list-page/notification-list-page.component";
 import { TicketManagementPageComponent } from "./components/pages/ticket-management-page/ticket-management-page.component";
+import { CommentManagementPageComponent } from "./components/pages/comment-management-page/comment-management-page.component";
 
 export const routes: Routes = [
   {
@@ -20,5 +21,9 @@ export const routes: Routes = [
   {
     path: "ticket/management",
     component: TicketManagementPageComponent,
+  },
+  {
+    path: "ticket/management/comments",
+    component: CommentManagementPageComponent,
   },
 ];
