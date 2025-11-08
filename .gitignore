@@ -41,4 +41,34 @@ out/
 /evil/nbproject/private/
 /JavaApplication20/nbproject/private/
 /JavaApplication21/nbproject/private/
+
+### Angular ###
 Frontend/.angular/cache/
+/dist/
+/out-tsc/
+/tmp/
+/build/
+
+# Dependencias de Node
+/node_modules/
+
+# Archivos de entorno (no se deben versionar)
+/environment.ts
+/environment.prod.ts
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Archivos temporales de editores
+*.log
+*.tmp
+*.swp
+
+# Configuración del IDE
+.vscode/
+.idea/
+
+# Cache de Angular y otras herramientas
+.angular/
+.nx/
