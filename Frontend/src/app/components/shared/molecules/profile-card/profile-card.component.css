@@ -1,0 +1,42 @@
+.profile-card__content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 48px 32px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.back {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  top: 16px;
+  left: 16px;
+}
+
+h2 {
+  margin: 16px 0 24px 0;
+  color: #1e1c4a;
+  font-size: 24px;
+}
+
+.field { margin-bottom: 16px; }
+.field h3 {
+  margin: 0;
+  color: #1e1c4a;
+  font-size: 18px;
+}
+.field p {
+  margin: 4px 0 0 0;
+  color: #333;
+  font-size: 16px;
+}
+
+.actions {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+}

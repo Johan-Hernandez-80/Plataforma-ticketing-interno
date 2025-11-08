@@ -1,4 +1,4 @@
-.container {
+ .container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,7 +7,7 @@
   background-color: #e1e9fe;
 }
 
-.dark-overlay {
+ .dark-overlay {
   display: flex;
   width: 100vw;
   height: 100vh;
@@ -18,3 +18,4 @@
   top: 0;
   left: 0;
 }
+

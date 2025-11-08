@@ -1,0 +1,5 @@
+.page-wrapper {
+	margin-left: 90px;
+	display: flex;
+	align-items: flex-start;
+}
