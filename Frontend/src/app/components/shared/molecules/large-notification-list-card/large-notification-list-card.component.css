@@ -9,8 +9,14 @@
   grid-template-columns: 1fr 1fr 1fr;
   align-content: center;
   height: 80px;
-  border-bottom: 1px solid #c2c2c2;
   justify-items: center;
+}
+
+.notification-container {
+  height: 550px;
+  overflow: scroll;
+  border: 2px solid #1e1c4a;
+  border-radius: 10px;
 }
 
 a {

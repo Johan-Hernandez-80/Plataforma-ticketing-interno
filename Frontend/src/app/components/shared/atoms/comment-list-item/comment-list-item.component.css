@@ -9,6 +9,11 @@
   padding: 0 10px;
 }
 
+.container:hover {
+  border-top: 2px solid #50aee3;
+  border-bottom: 2px solid #50aee3;
+}
+
 .author,
 .date,
 .time {

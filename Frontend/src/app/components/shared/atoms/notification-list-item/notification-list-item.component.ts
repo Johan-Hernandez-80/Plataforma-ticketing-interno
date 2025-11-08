@@ -9,14 +9,14 @@ import { CommonModule } from "@angular/common";
   styleUrl: "./notification-list-item.component.css",
 })
 export class NotificationListItemComponent {
-  @Input() message: string =
+  @Input() message =
     "Se te ha asignado un nuevo ticket con ID: 1234, Prioridad: Importante";
-  @Input() date: string = "Hoy";
-  @Input() time: string = "27/10/2025";
+  @Input() date = "Hoy";
+  @Input() time = "27/10/2025";
   @Input() width = "";
   @Input() height = "";
 
-  customStyles: any = {};
+  customStyles: object= {};
 
   ngOnChanges(): void {
     this.customStyles = {
