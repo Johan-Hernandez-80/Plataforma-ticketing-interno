@@ -1,4 +1,0 @@
-std = "lua51+luajit"
-
-[lints]
-unused_variable = "allow"
