@@ -1,7 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+
+@font-face {
+  font-family: "Inter";
+  src: url("assets/fonts/inter/Inter-VariableFont_opsz,wght.ttf")
+    format("truetype");
+  font-weight: 100 900; /* rango de pesos disponibles */
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
   width: 100%;
   height: 100vh;
+  font-family: "Inter", sans-serif;
 }
 
 * {

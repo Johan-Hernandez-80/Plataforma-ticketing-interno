@@ -9,8 +9,8 @@ import { RouterModule } from "@angular/router";
   styleUrl: "./comment-list-item.component.css",
 })
 export class CommentListItemComponent {
-  @Input() author = "Yo";
-  @Input() message = "Mensaje";
-  @Input() date = "Hoy";
-  @Input() time = "9AM";
+  @Input() author = "María López";
+  @Input() message = "¡Hola! ¿Cómo estás? ¿Listo para la reunión de hoy?";
+  @Input() date = "08/11/2025";
+  @Input() time = "09:00 AM";
 }

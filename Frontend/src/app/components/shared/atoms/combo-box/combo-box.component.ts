@@ -9,10 +9,11 @@ import { Component, Input, output } from "@angular/core";
 })
 export class ComboBoxComponent {
   @Input() options = ["ex1", "ex2", "ex3"];
+  @Input() selected = "";
   change = output<string>();
 
   onChange(event: Event) {
-    let select = event.target as HTMLSelectElement;
+    const select = event.target as HTMLSelectElement;
     this.change.emit(select.value);
   }
 }

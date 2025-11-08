@@ -1,17 +1,19 @@
 <app-card [width]="'1300px'" [height]="'800px'">
   <div class="container">
-    <a href="/ticket/management">
-      <img src="../../../../../assets/goBackArrow.svg" alt="" />
-    </a>
-    <p>Comentarios</p>
+    <div class="card-header">
+      <a href="/ticket/management">
+        <img src="../../../../../assets/goBackArrow.svg" alt="" />
+      </a>
+      <h2>Comentarios</h2>
+    </div>
     <div class="comment-box">
       @for (comment of comments; track comment.id) {
-      <app-comment-list-item
-        [author]="comment.author"
-        [message]="comment.message"
-        [date]="comment.date"
-        [time]="comment.time"
-      ></app-comment-list-item>
+        <app-comment-list-item
+          [author]="comment.author"
+          [message]="comment.message"
+          [date]="comment.date"
+          [time]="comment.time"
+        ></app-comment-list-item>
       }
     </div>
 
@@ -32,11 +34,11 @@
     </div>
   </div>
 </app-card>
-@if(isCloseTicketValidation){
-<app-validation-card
-  [message]="'¿Estas seguro de que deseas cerrar esta solicitud de soporte?'"
-  (close)="setIsCloseTicketValidation(false, $event)"
-></app-validation-card>
-} @else if(isTextArea) {
-<app-text-area (close)="setIsTextArea(false,$event)"></app-text-area>
+@if (isCloseTicketValidation) {
+  <app-validation-card
+    [message]="'¿Estas seguro de que deseas cerrar esta solicitud de soporte?'"
+    (close)="setIsCloseTicketValidation(false, $event)"
+  ></app-validation-card>
+} @else if (isTextArea) {
+  <app-text-area (close)="setIsTextArea(false, $event)"></app-text-area>
 }
