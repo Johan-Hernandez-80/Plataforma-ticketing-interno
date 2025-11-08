@@ -27,3 +27,10 @@ div:hover p {
 a {
   text-decoration: none;
 }
+
+img {
+  transition: filter 0.2s ease;
+}
+img:hover img {
+  filter: brightness(0) invert(1); /* simula versión blanca sin cambiar src */
+}

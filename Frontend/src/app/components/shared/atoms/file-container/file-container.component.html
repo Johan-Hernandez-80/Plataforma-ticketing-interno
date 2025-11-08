@@ -1,0 +1,11 @@
+<div class="container">
+  <img
+    [src]="
+      fileExtension === 'pdf'
+        ? '../../../../../assets/pdfIcon.svg'
+        : '../../../../../assets/imgIcon.svg'
+    "
+    alt="icono de archivo"
+  />
+  <p>{{ fileName }}</p>
+</div>

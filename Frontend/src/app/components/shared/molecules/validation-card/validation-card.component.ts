@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, output } from "@angular/core";
 import { CardComponent } from "../../atoms/card/card.component";
 import { MainButtonComponent } from "../../atoms/main-button/main-button.component";
 import { BackgroundComponent } from "../../atoms/background/background.component";
@@ -11,6 +11,11 @@ import { BackgroundComponent } from "../../atoms/background/background.component
   styleUrl: "./validation-card.component.css",
 })
 export class ValidationCardComponent {
-  @Input() message: string =
-    "¿Estas seguro de que deseas cambiar la prioridad de esta solicitud de soporte?";
+  @Input() message: string = "¿?";
+
+  close = output<boolean>();
+
+  onClose(state: boolean) {
+    this.close.emit(state);
+  }
 }
