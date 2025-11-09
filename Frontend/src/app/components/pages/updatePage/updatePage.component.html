@@ -1,0 +1,7 @@
+<app-background [variant]="'pattern'">
+  <app-update-card (requestConfirm)="onRequestConfirm($event)"></app-update-card>
+
+  @if (showModal) {
+    <app-confirm-update-modal [type]="modalType" [pendingValue]="modalValue" (cancel)="closeModal()" (confirm)="confirmChange()" />
+  }
+</app-background>

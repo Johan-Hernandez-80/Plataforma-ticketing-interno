@@ -12,6 +12,8 @@ import { SimpleChanges } from "@angular/core";
 export class CardComponent {
   @Input() width: string = "";
   @Input() height: string = "";
+  /** When true, centers slotted content. When false, let children control layout. */
+  @Input() center: boolean = true;
 
   customStyles: any = {};
 

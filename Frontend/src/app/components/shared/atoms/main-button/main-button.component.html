@@ -7,7 +7,7 @@
   </button>
 </a>-->
 
-<a [routerLink]="routerLink">
+<a [routerLink]="routerLink" (click)="onButtonClick($event)">
   <button type="submit" [ngClass]="variant" [ngStyle]="customStyles">
     @if (iconUrl) {
       <img [src]="iconUrl" [alt]="alt" />

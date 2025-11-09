@@ -7,6 +7,6 @@ import { ProfileCardComponent } from "../../shared/molecules/profile-card/profil
   standalone: true,
   imports: [BackgroundComponent, ProfileCardComponent],
   templateUrl: "./profilePage.component.html",
-  styleUrl: "./profilePage.component.css",
+  styleUrls: ["./profilePage.component.css"],
 })
 export class ProfilePageComponent {}
