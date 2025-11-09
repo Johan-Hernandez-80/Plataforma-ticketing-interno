@@ -14,10 +14,16 @@ div {
   justify-items: center;
 }
 
-app-log-out-button {
+.profile-menu {
   position: absolute;
   top: 79px;
   left: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 300px;
 }
 
 app-main-button:nth-child(1) {

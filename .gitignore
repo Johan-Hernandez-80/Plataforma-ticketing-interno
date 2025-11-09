@@ -44,6 +44,7 @@ out/
 
 ### Angular ###
 Frontend/.angular/cache/
+Frontend/node_modules/
 /dist/
 /out-tsc/
 /tmp/

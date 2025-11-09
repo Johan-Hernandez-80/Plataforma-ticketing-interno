@@ -4,6 +4,11 @@ div {
   background-color: #fff;
   border-radius: 20px;
   box-shadow: 0px 10px 1.8rem rgba(0, 0, 45, 0.15);
+  /* Default: do not force centering; let consumers choose */
+  display: block;
+}
+
+.center {
   display: flex;
   align-items: center;
   justify-content: center;

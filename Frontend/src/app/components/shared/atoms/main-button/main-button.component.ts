@@ -1,4 +1,4 @@
-import { Component, Input, output } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 
@@ -17,7 +17,7 @@ export class MainButtonComponent {
   @Input() width: string = "";
   @Input() height: string = "";
   @Input() variant: "primary" | "secondary" | "primary-outline" = "primary";
-  click = output<void>();
+  @Output() clicked = new EventEmitter<void>();
 
   customStyles: any = {};
 
@@ -28,7 +28,11 @@ export class MainButtonComponent {
     };
   }
 
-  onClick() {
-    this.click.emit();
+  onButtonClick(event: MouseEvent) {
+    // If there's no navigation target, prevent default anchor behavior
+    if (!this.routerLink) {
+      event.preventDefault();
+    }
+    this.clicked.emit();
   }
 }

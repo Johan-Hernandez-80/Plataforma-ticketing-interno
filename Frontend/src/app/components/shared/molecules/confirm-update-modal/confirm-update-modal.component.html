@@ -1,0 +1,21 @@
+<div class="overlay">
+  <app-card [width]="'520px'" [height]="'260px'" [center]="false">
+    <div class="modal">
+      <h2>
+        @if (type === 'password') {
+      ¿Estas seguro de que deseas actualizar
+        tu contraseña?
+      } @else {
+      ¿Estas seguro de que deseas actualizar
+        tu correo?
+      }
+      </h2>
+      <div class="buttons">
+        <app-main-button [variant]="'primary-outline'" [placeHolder]="'Cancelar'" [width]="'200px'" [height]="'40px'"
+          (clicked)="cancel.emit()"></app-main-button>
+        <app-main-button [placeHolder]="'Confirmar'" [width]="'200px'" [height]="'40px'"
+          (clicked)="confirm.emit()"></app-main-button>
+      </div>
+    </div>
+  </app-card>
+</div>

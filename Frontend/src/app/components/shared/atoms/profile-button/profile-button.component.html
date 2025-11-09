@@ -1,0 +1,10 @@
+<a [routerLink]="link">
+  <div (mouseenter)="changeIsFocus()" (mouseleave)="changeIsFocus()">
+    @if (isFocus) {
+      <img src="../../../../../assets/userIcon.svg" alt="icono de perfil" />
+    } @else {
+      <img src="../../../../../assets/userIcon.svg" alt="icono de perfil" />
+    }
+    <p>Perfil</p>
+  </div>
+</a>
