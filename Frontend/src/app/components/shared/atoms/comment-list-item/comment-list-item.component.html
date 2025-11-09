@@ -1,10 +1,8 @@
-<div class="container">
-  <div>
+<a [routerLink]="'/ticket/comments/view'">
+  <div class="container">
     <p class="author">{{ author }}</p>
-    <p class="message">{{ message }}</p>
-  </div>
-  <div>
     <p class="date">{{ date }}</p>
+    <p class="message">{{ message }}</p>
     <p class="time">{{ time }}</p>
   </div>
-</div>
+</a>

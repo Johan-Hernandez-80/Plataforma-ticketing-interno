@@ -1,16 +1,11 @@
 <a [routerLink]="'/'">
   <div (mouseenter)="changeIsFocus()" (mouseleave)="changeIsFocus()">
-    @if (isFocus) {
-      <img
-        src="../../../../../assets/logOutIconWhite.svg"
-        alt="icono de salir"
-      />
-    } @else {
-      <img
-        src="../../../../../assets/logOutIconBlue.svg"
-        alt="icono de salir"
-      />
-    }
+    <img
+      [src]="
+        isFocus ? 'assets/logOutIconWhite.svg' : 'assets/logOutIconBlue.svg'
+      "
+      alt="icono de salir"
+    />
     <p>Cerrar sesión</p>
   </div>
 </a>

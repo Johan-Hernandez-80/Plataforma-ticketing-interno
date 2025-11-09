@@ -1,5 +1,7 @@
-<select>
+<select (change)="onChange($event)">
   @for (option of options; track option) {
-    <option [value]="option">{{ option }}</option>
+    <option [value]="option" [selected]="option === selected">
+      {{ option }}
+    </option>
   }
 </select>

@@ -1,13 +1,15 @@
 <app-card width="1200px" height="800px">
-  <img src="../../../../../assets/goBackArrow.svg" alt="" />
-  <p>Yo</p>
-  <app-text-box
-    width="1000px"
-    height="500px"
-    [message]="message"
-  ></app-text-box>
-  <div>
-    <p>Hoy</p>
-    <p>3:44 PM</p>
+  <div class="container">
+    <a [routerLink]="'/ticket/management/comments'">
+      <img src="../../../../../assets/goBackArrow.svg" alt="" />
+    </a>
+    <p class="author">Yo</p>
+    <app-text-box
+      width="1000px"
+      height="500px"
+      [message]="message"
+    ></app-text-box>
+    <p class="date">Hoy</p>
+    <p class="time">3:44 PM</p>
   </div>
 </app-card>

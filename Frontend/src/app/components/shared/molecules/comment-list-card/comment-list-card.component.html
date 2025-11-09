@@ -1,7 +1,11 @@
 <app-card [width]="'1300px'" [height]="'800px'">
   <div class="container">
-    <img src="../../../../../assets/goBackArrow.svg" alt="" />
-    <p>Comentarios</p>
+    <div class="card-header">
+      <a href="/ticket/management">
+        <img src="../../../../../assets/goBackArrow.svg" alt="" />
+      </a>
+      <h2>Comentarios</h2>
+    </div>
     <div class="comment-box">
       @for (comment of comments; track comment.id) {
         <app-comment-list-item
@@ -19,12 +23,22 @@
         [height]="'50px'"
         [placeHolder]="'Cerrar'"
         [variant]="'primary-outline'"
+        (click)="setIsCloseTicketValidation(true)"
       ></app-main-button>
       <app-main-button
         [width]="'150px'"
         [height]="'50px'"
         [placeHolder]="'Comentar'"
+        (click)="setIsTextArea(true)"
       ></app-main-button>
     </div>
   </div>
 </app-card>
+@if (isCloseTicketValidation) {
+  <app-validation-card
+    [message]="'¿Estas seguro de que deseas cerrar esta solicitud de soporte?'"
+    (close)="setIsCloseTicketValidation(false, $event)"
+  ></app-validation-card>
+} @else if (isTextArea) {
+  <app-text-area (close)="setIsTextArea(false, $event)"></app-text-area>
+}

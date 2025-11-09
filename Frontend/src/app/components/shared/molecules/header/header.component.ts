@@ -25,7 +25,6 @@ export class HeaderComponent {
   }
 
   setNotificationButtonActive(state: boolean) {
-    alert("hhhh");
     this.isNotificationButtonActive = state;
   }
 }

@@ -14,7 +14,7 @@
     [iconUrl]="'../../../../assets/tableIcon.svg'"
   ></app-main-button>
   <app-main-button
-    (click)="setNotificationButtonActive(true)"
+    (click)="setNotificationButtonActive(!isNotificationButtonActive)"
     [width]="'56px'"
     [height]="'52px'"
     [iconUrl]="'../../../../assets/alarmIcon.svg'"

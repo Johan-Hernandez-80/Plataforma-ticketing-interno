@@ -3,6 +3,10 @@ import { HomePageComponent } from "./components/pages/homePage/homePage.componen
 import { LoginPageComponent } from "./components/pages/loginPage/loginPage.component";
 import { ProfilePageComponent } from "./components/pages/profilePage/profilePage.component";
 import { UpdatePageComponent } from "./components/pages/updatePage/updatePage.component";
+import { NotificationListPageComponent } from "./components/pages/notification-list-page/notification-list-page.component";
+import { TicketManagementPageComponent } from "./components/pages/ticket-management-page/ticket-management-page.component";
+import { CommentManagementPageComponent } from "./components/pages/comment-management-page/comment-management-page.component";
+import { CommentViewPageComponent } from "./components/pages/comment-view-page/comment-view-page.component";
 
 export const routes: Routes = [
   {
@@ -20,5 +24,19 @@ export const routes: Routes = [
   {
     path: "profile/update",
     component: UpdatePageComponent,
+    path: "notifications",
+    component: NotificationListPageComponent,
+  },
+  {
+    path: "ticket/management",
+    component: TicketManagementPageComponent,
+  },
+  {
+    path: "ticket/management/comments",
+    component: CommentManagementPageComponent,
+  },
+  {
+    path: "ticket/comments/view",
+    component: CommentViewPageComponent,
   },
 ];

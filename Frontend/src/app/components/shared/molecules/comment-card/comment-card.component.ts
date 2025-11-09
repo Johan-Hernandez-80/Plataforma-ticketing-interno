@@ -1,11 +1,12 @@
 import { Component } from "@angular/core";
 import { TextBoxComponent } from "../../atoms/text-box/text-box.component";
 import { CardComponent } from "../../atoms/card/card.component";
+import { RouterModule } from "@angular/router";
 
 @Component({
   selector: "app-comment-card",
   standalone: true,
-  imports: [TextBoxComponent, CardComponent],
+  imports: [TextBoxComponent, CardComponent, RouterModule],
   templateUrl: "./comment-card.component.html",
   styleUrl: "./comment-card.component.css",
 })

@@ -1,14 +1,80 @@
 <app-card width="1500px" height="800px">
   <div class="container">
-    <img src="../../../../../assets/goBackArrow.svg" alt="icono de regresar" />
-    <h2>Problema de acceso a la cuenta</h2>
-    <app-combo-box [options]="prioridadOptions"></app-combo-box>
-    <app-main-button
-      width="150px"
-      height="50px"
-      placeHolder="Proceso"
-    ></app-main-button>
-    <p>Descripción</p>
-    <app-text-box width="1300px" height="300px"></app-text-box>
+    <div class="card-header">
+      <a [routerLink]="'/home'">
+        <img
+          src="../../../../../assets/goBackArrow.svg"
+          alt="icono de regresar"
+        />
+      </a>
+      <h2>Problema de acceso a la cuenta</h2>
+    </div>
+    <div class="grid-container">
+      <div class="grid-container-box">
+        <p class="grid-container-box-label">ID</p>
+        <p class="grid-container-box-content">{{ data.id }}</p>
+      </div>
+
+      <div class="grid-container-box">
+        <p class="grid-container-box-label">Categoría</p>
+        <p class="grid-container-box-content">{{ data.categoria }}</p>
+      </div>
+
+      <div class="grid-container-box">
+        <p class="grid-container-box-label">Fecha creación</p>
+        <p class="grid-container-box-content">{{ data.fechaCreacion }}</p>
+      </div>
+
+      <div class="grid-container-box">
+        <p class="grid-container-box-label">Usuario ID</p>
+        <p class="grid-container-box-content">{{ data.usuarioId }}</p>
+      </div>
+
+      <div class="grid-container-box">
+        <p class="grid-container-box-label">Estado</p>
+        <p class="grid-container-box-content">{{ data.estado }}</p>
+      </div>
+
+      <div class="grid-container-box">
+        <p class="grid-container-box-label">Fecha cierre</p>
+        <p class="grid-container-box-content">{{ data.fechaCierre }}</p>
+      </div>
+
+      <div class="grid-container-box">
+        <p class="grid-container-box-label">Evidencia</p>
+        <app-file-container></app-file-container>
+      </div>
+
+      <div class="grid-container-box">
+        <p class="grid-container-box-label">Prioridad</p>
+        <app-combo-box
+          [selected]="data.prioridad"
+          (change)="setIsPriorityValidation(true)"
+          [options]="prioridadOptions"
+        ></app-combo-box>
+      </div>
+
+      <app-main-button
+        width="150px"
+        height="50px"
+        placeHolder="Proceso"
+        [routerLink]="'/ticket/management/comments'"
+      ></app-main-button>
+      <p class="description-p">Descripción</p>
+      <app-text-box
+        [message]="data.description"
+        width="1320px"
+        height="250px"
+      ></app-text-box>
+    </div>
   </div>
 </app-card>
+
+@if (isPriorityValidation) {
+  <app-validation-card
+    (close)="setIsPriorityValidation(false, $event)"
+    [message]="
+      '¿Estas seguro de que deseas cambiar la prioridad de esta solicitud de soporte?'
+    "
+  ></app-validation-card>
+}

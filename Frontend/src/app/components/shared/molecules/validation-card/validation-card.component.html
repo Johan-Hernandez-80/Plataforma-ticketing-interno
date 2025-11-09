@@ -8,11 +8,13 @@
           [placeHolder]="'Cancelar'"
           [width]="'200px'"
           [height]="'40px'"
+          (click)="onClose(false)"
         ></app-main-button>
         <app-main-button
           [placeHolder]="'Confirmar'"
           [width]="'200px'"
           [height]="'40px'"
+          (click)="onClose(true)"
         ></app-main-button>
       </div>
     </div>
