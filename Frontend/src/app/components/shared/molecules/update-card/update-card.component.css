@@ -1,0 +1,86 @@
+ .update-card {
+ 	display: flex;
+ 	height: 100%;
+ 	width: 100%;
+ 	min-height: 100%;
+ 	/* Ensure it stretches inside app-card which centers content by default */
+ 	align-self: stretch;
+ 	font-family: Inter, Arial, sans-serif;
+ }
+
+ .side {
+ 	width: 220px;
+ 	background: #5658db;
+ 	border-radius: 12px 0 0 12px;
+ 	display: flex;
+ 	flex-direction: column;
+ 	padding: 28px 16px;
+ 	gap: 12px;
+ 	color: #fff;
+ }
+
+ .back img {
+ 	width: 20px;
+ 	height: 20px;
+ }
+
+ .tab {
+ 	background: transparent;
+ 	border: none;
+ 	color: #dbe1ff;
+ 	padding: 8px 10px;
+ 	border-radius: 6px;
+ 	cursor: pointer;
+ 	text-align: left;
+ 	font-size: 14px;
+ }
+
+ .tab.active {
+ 	background: #ffffff22;
+ 	color: #fff;
+ 	box-shadow: inset 0 0 0 1px #ffffff40;
+ }
+
+ .content {
+ 	flex: 1;
+ 	background: #fff;
+ 	border-radius: 0 12px 12px 0;
+ 	padding: 48px 60px 40px 60px;
+ 	display: flex;
+ 	flex-direction: column;
+ 	height: 100%;
+ }
+
+ .content h2 {
+ 	margin-top: 0;
+ 	font-size: 24px;
+ 	font-weight: 600;
+ 	margin-bottom: 36px;
+ }
+
+ .form {
+ 	display: flex;
+ 	flex-direction: column;
+ 	gap: 28px;
+ 	width: 100%;
+ 	max-width: 480px;
+ }
+
+ app-text-input input {
+ 	width: 100%;
+ 	padding: 12px 16px;
+ 	border-radius: 12px;
+ 	border: none;
+ 	background: #e1e9fe;
+ 	font-size: 14px;
+ }
+
+ .actions {
+ 	margin-top: auto;
+ 	display: flex;
+ 	justify-content: flex-end;
+ }
+
+ .actions app-main-button {
+ 	width: 140px;
+ }

@@ -1,0 +1,42 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000
+}
+
+.modal {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 100%;
+    padding: 20px 24px;
+    box-sizing: border-box
+}
+
+.modal h2 {
+    margin: 0;
+    color: #333333;
+    font-family: 'Arial', sans-serif;
+    font-weight: 500;
+    line-height: 1.4;
+    text-align: center;
+    text-align-last: center;
+    white-space: pre-line;
+    padding-top: 50px;
+    padding-left: 80px;
+    padding-right: 80px;
+}
+
+
+
+.buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: flex-end;
+    margin-top: auto;
+    padding-right: 30px;
+}

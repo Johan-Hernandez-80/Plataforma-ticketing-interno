@@ -20,10 +20,14 @@
     [iconUrl]="'../../../../assets/alarmIcon.svg'"
   ></app-main-button>
   @if (isPerfilHover) {
-    <app-log-out-button
-      (mouseenter)="setIsPerfilHover(true)"
-      (mouseleave)="setIsPerfilHover(false)"
-    ></app-log-out-button>
+      <div
+        class="profile-menu"
+        (mouseenter)="setIsPerfilHover(true)"
+        (mouseleave)="setIsPerfilHover(false)"
+      >
+        <app-profile-button></app-profile-button>
+        <app-log-out-button></app-log-out-button>
+      </div>
   }
   @if (isNotificationButtonActive) {
     <app-small-notification-list

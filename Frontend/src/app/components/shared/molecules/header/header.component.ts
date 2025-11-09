@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { MainButtonComponent } from "../../atoms/main-button/main-button.component";
 import { LogOutButtonComponent } from "../../atoms/log-out-button/log-out-button.component";
+import { ProfileButtonComponent } from "../../atoms/profile-button/profile-button.component";
 import { SmallNotificationListComponent } from "../small-notification-list/small-notification-list.component";
 
 @Component({
@@ -9,6 +10,7 @@ import { SmallNotificationListComponent } from "../small-notification-list/small
   imports: [
     MainButtonComponent,
     LogOutButtonComponent,
+    ProfileButtonComponent,
     SmallNotificationListComponent,
   ],
   templateUrl: "./header.component.html",
