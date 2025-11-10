@@ -1,0 +1,18 @@
+﻿<div style="padding: 20px; font-family: sans-serif;">
+  <h2>Test Login Endpoint</h2>
+  <div>
+    <label>Email: <input [(ngModel)]="loginRequest.email" /></label><br><br>
+    <label>Password: <input type="password" [(ngModel)]="loginRequest.password" /></label><br><br>
+    <button (click)="testLogin()">Send Login Request</button>
+  </div>
+
+  <div *ngIf="response">
+    <h3>Success:</h3>
+    <pre>{{ response | json }}</pre>
+  </div>
+
+  <div *ngIf="error">
+    <h3>Error:</h3>
+    <pre>{{ error | json }}</pre>
+  </div>
+</div>
