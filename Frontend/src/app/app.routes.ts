@@ -7,6 +7,7 @@ import { NotificationListPageComponent } from "./components/pages/notification-l
 import { TicketManagementPageComponent } from "./components/pages/ticket-management-page/ticket-management-page.component";
 import { CommentManagementPageComponent } from "./components/pages/comment-management-page/comment-management-page.component";
 import { CommentViewPageComponent } from "./components/pages/comment-view-page/comment-view-page.component";
+import { TestEndpointsComponent } from "./test-endpoints/test-endpoints.component";
 
 export const routes: Routes = [
   {
@@ -40,5 +41,9 @@ export const routes: Routes = [
   {
     path: "ticket/comments/view",
     component: CommentViewPageComponent,
+  },
+  {
+    path: 'test',
+    component: TestEndpointsComponent,
   },
 ];
