@@ -1,6 +1,9 @@
-<div>
+<div
+  (mouseenter)="setLogOutButtonClass('hover')"
+  (mouseleave)="setLogOutButtonClass('')"
+>
   <app-main-button
-    (click)="setIsPerfilHover(!isPerfilHover)"
+    (click)="navigate('/profile')"
     [width]="'72px'"
     [height]="'52px'"
     [iconUrl]="'../../../../assets/userIcon.svg'"
@@ -19,19 +22,10 @@
     [height]="'52px'"
     [iconUrl]="'../../../../assets/alarmIcon.svg'"
   ></app-main-button>
-  @if (isPerfilHover) {
-      <div
-        class="profile-menu"
-        (mouseenter)="setIsPerfilHover(true)"
-        (mouseleave)="setIsPerfilHover(false)"
-      >
-        <app-profile-button></app-profile-button>
-        <app-log-out-button></app-log-out-button>
-      </div>
-  }
   @if (isNotificationButtonActive) {
     <app-small-notification-list
       (closeEvent)="setNotificationButtonActive(false)"
     ></app-small-notification-list>
   }
 </div>
+<app-log-out-button [class]="logOutButtonClass"></app-log-out-button>

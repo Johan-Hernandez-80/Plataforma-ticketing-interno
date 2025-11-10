@@ -1,8 +1,8 @@
 <a [routerLink]="'/'">
-  <div (mouseenter)="changeIsFocus()" (mouseleave)="changeIsFocus()">
+  <div (mouseenter)="changeIsHover()" (mouseleave)="changeIsHover()">
     <img
       [src]="
-        isFocus ? 'assets/logOutIconWhite.svg' : 'assets/logOutIconBlue.svg'
+        isHover ? 'assets/logOutIconWhite.svg' : 'assets/logOutIconBlue.svg'
       "
       alt="icono de salir"
     />

@@ -24,6 +24,8 @@ export const routes: Routes = [
   {
     path: "profile/update",
     component: UpdatePageComponent,
+  },
+  {
     path: "notifications",
     component: NotificationListPageComponent,
   },

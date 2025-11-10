@@ -1,8 +1,9 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { MainButtonComponent } from "../../atoms/main-button/main-button.component";
 import { LogOutButtonComponent } from "../../atoms/log-out-button/log-out-button.component";
 import { ProfileButtonComponent } from "../../atoms/profile-button/profile-button.component";
 import { SmallNotificationListComponent } from "../small-notification-list/small-notification-list.component";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-header",
@@ -17,8 +18,20 @@ import { SmallNotificationListComponent } from "../small-notification-list/small
   styleUrl: "./header.component.css",
 })
 export class HeaderComponent {
+  private router = inject(Router);
   isPerfilHover = false;
   isNotificationButtonActive = false;
+  logOutButtonClass = "";
+
+  setLogOutButtonClass(newClass: string) {
+    if (!newClass) {
+      setTimeout(() => {
+        this.logOutButtonClass = newClass;
+      }, 2000);
+    } else {
+      this.logOutButtonClass = newClass;
+    }
+  }
 
   setIsPerfilHover(state: boolean) {
     this.isPerfilHover = state;
@@ -26,5 +39,9 @@ export class HeaderComponent {
 
   setNotificationButtonActive(state: boolean) {
     this.isNotificationButtonActive = state;
+  }
+
+  navigate(path: string) {
+    this.router.navigate([path]);
   }
 }
