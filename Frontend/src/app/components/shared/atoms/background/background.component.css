@@ -1,4 +1,4 @@
- .container {
+.container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -6,10 +6,10 @@
   height: 100vh;
   background-color: #e1e9fe;
   position: relative; /* allow absolutely positioned decorative layers */
-  overflow: hidden;   /* keep background pattern within viewport */
+  overflow: hidden; /* keep background pattern within viewport */
 }
 
- .dark-overlay {
+.dark-overlay {
   display: flex;
   width: 100vw;
   height: 100vh;
@@ -30,6 +30,7 @@
   object-fit: cover;
   z-index: 0;
   pointer-events: none;
+  user-select: none;
 }
 
 /* Ensure slotted content sits above the decorative image */
@@ -37,4 +38,3 @@
   position: relative;
   z-index: 1;
 }
-

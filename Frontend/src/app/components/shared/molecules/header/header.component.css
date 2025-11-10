@@ -14,6 +14,11 @@ div {
   justify-items: center;
 }
 
+.hover {
+  opacity: 1;
+  left: 0;
+}
+
 .profile-menu {
   position: absolute;
   top: 79px;
@@ -51,4 +56,15 @@ app-small-notification-list {
   right: 0;
   margin-left: 110px;
   z-index: 1;
+}
+
+app-log-out-button {
+  position: absolute;
+  top: 79px;
+  left: -300px;
+  opacity: 0;
+  transition:
+    left 0.5s ease,
+    opacity 0.5s ease,
+    background-color 0.5s ease;
 }

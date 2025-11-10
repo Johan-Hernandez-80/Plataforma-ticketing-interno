@@ -9,9 +9,9 @@ import { RouterModule } from "@angular/router";
   styleUrl: "./log-out-button.component.css",
 })
 export class LogOutButtonComponent {
-  isFocus = false;
+  isHover = false;
 
-  changeIsFocus() {
-    this.isFocus = !this.isFocus;
+  changeIsHover() {
+    this.isHover = !this.isHover;
   }
 }
