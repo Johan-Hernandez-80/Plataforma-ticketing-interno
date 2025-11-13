@@ -1,4 +1,4 @@
-create database ticketing_test;
+create database ticketing;
 use ticketing;
 
 create table roles (
