@@ -1,9 +1,18 @@
 <app-card [width]="'40rem'" [height]="'40rem'">
   <h1>Login</h1>
-  <app-text-input [placeHolder]="'Correo'"></app-text-input>
-  <app-text-input [placeHolder]="'Clave'" [type]="'password'"></app-text-input>
+  <app-text-input
+    [(ngModel)]="credentials.email"
+    [placeHolder]="'Correo'"
+    name="email"
+  ></app-text-input>
+  <app-text-input
+    [(ngModel)]="credentials.password"
+    [placeHolder]="'Clave'"
+    [type]="'password'"
+    name="password"
+  ></app-text-input>
   <app-main-button
-    [routerLink]="'/home'"
+    (clicked)="onLogin()"
     [placeHolder]="'Ingresar'"
     [width]="'500px'"
     [height]="'60px'"

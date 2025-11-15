@@ -1,7 +1,8 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { CardComponent } from "../../atoms/card/card.component";
 import { MainButtonComponent } from "../../atoms/main-button/main-button.component";
 import { RouterLink } from "@angular/router";
+import { UsuarioService } from "../../../../services/usuario.service";
 
 @Component({
   selector: "app-profile-card",
@@ -11,11 +12,24 @@ import { RouterLink } from "@angular/router";
   styleUrl: "./profile-card.component.css",
 })
 export class ProfileCardComponent {
-  user = {
-    nombre: "Alejandro Montenegro Lozano",
-    emailCorporativo: "amontenegro@acmecorp.com",
-    emailPersonal: "alejandro.m.lozano@gmail.com",
-    rol: "Usuario",
-    departamento: "Finanzas",
-  };
+  private usuarioService = inject(UsuarioService);
+  usuario = this.usuarioService.getUser();
+
+  getRol(): string{
+    switch (this.usuario?.rolId){
+      case 1: return 'Administrador'
+      case 2: return 'Agente'
+      case 3: return 'Empleado'
+      default: return '';
+    }
+  }
+
+  navBack(): string{
+    switch(this.usuario?.rolId){
+      case 1: return '/admin/home';
+      case 2: return '/agent/home';
+      case 3: return '/home';
+      default: return '';
+    }
+  }
 }

@@ -22,7 +22,7 @@ export class TextInputComponent implements ControlValueAccessor {
   @Input() placeholder = "";
   @Input() type = "text";
 
-  value: string = "";
+  value = "";
   disabled = false;
 
   private onChange: (v: string) => void = () => {};

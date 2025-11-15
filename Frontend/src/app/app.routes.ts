@@ -1,6 +1,8 @@
 import { Routes } from "@angular/router";
-import { HomePageComponent } from "./components/pages/homePage/homePage.component";
-import { LoginPageComponent } from "./components/pages/loginPage/loginPage.component";
+import { AgentHomePageComponent } from "./components/pages/agent-home-page/agent-home-page.component";
+import { AdminHomePageComponent } from "./components/pages/admin-home-page/admin-home-page.component";
+import { EmployeeHomePageComponent } from "./components/pages/employee-home-page/employee-home-page.component";
+import { LoginPageComponent } from "./components/pages/login-page/login-page.component";
 import { ProfilePageComponent } from "./components/pages/profilePage/profilePage.component";
 import { UpdatePageComponent } from "./components/pages/updatePage/updatePage.component";
 import { NotificationListPageComponent } from "./components/pages/notification-list-page/notification-list-page.component";
@@ -15,8 +17,16 @@ export const routes: Routes = [
     component: LoginPageComponent,
   },
   {
+    path: "agent/home",
+    component: AgentHomePageComponent,
+  },
+  {
+    path: "admin/home",
+    component: AdminHomePageComponent,
+  },
+  {
     path: "home",
-    component: HomePageComponent,
+    component: EmployeeHomePageComponent,
   },
   {
     path: "profile",
@@ -43,7 +53,7 @@ export const routes: Routes = [
     component: CommentViewPageComponent,
   },
   {
-    path: 'test',
+    path: "test",
     component: TestEndpointsComponent,
   },
 ];

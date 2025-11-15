@@ -9,7 +9,7 @@
     [iconUrl]="'../../../../assets/userIcon.svg'"
     [variant]="'secondary'"
   ></app-main-button>
-  <p>Lorenzo Castañeda Rivas</p>
+  <p>{{ usuario?.nombre }}</p>
   <app-main-button
     [routerLink]="'/home'"
     [width]="'72px'"
@@ -28,4 +28,7 @@
     ></app-small-notification-list>
   }
 </div>
-<app-log-out-button [class]="logOutButtonClass"></app-log-out-button>
+<app-log-out-button
+  (click)="logOut()"
+  [class]="logOutButtonClass"
+></app-log-out-button>

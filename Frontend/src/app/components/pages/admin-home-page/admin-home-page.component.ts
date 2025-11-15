@@ -14,13 +14,13 @@ interface Ticket {
 }
 
 @Component({
-  selector: "app-home-page",
+  selector: "app-admin-home-page",
   standalone: true,
   imports: [BackgroundComponent, HeaderComponent, TableComponent],
-  templateUrl: "./homePage.component.html",
-  styleUrl: "./homePage.component.css",
+  templateUrl: "./admin-home-page.component.html",
+  styleUrl: "./admin-home-page.component.css",
 })
-export class HomePageComponent {
+export class AdminHomePageComponent {
   router = inject(Router);
   tickets: Ticket[] = [
     {

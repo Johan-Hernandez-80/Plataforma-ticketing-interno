@@ -28,77 +28,80 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UsuarioDAO extends BaseDAO<Usuario, Long, UsuarioDTO, UsuarioMapper, UsuarioFilter, UsuarioRepository> {
 
-    public UsuarioDAO(UsuarioMapper mapper, UsuarioFilter filter, UsuarioRepository repo) {
-        super(mapper, filter, repo);
-    }
+  public UsuarioDAO(UsuarioMapper mapper, UsuarioFilter filter, UsuarioRepository repo) {
+    super(mapper, filter, repo);
+  }
 
-    public Set<String> getPermissionsById(Long userId) {
-        return repo.getPermissionsById(userId);
-    }
+  public Set<String> getPermissionsById(Long userId) {
+    return repo.getPermissionsById(userId);
+  }
 
-    public Usuario findByEmailPersonal(String email) {
-        return repo.findByEmailPersonal(email);
-    }
+  public UsuarioDTO findByEmailPersonal(String email) {
+    Usuario usuario = repo.findByEmailPersonal(email);
+    return mapper.toDTO(usuario);
+  }
 
-    public Usuario findByEmailCorporativo(String email) {
-        return repo.findByEmailCorporativo(email);
-    }
+  public UsuarioDTO findByEmailCorporativo(String email) {
+    Usuario usuario = repo.findByEmailCorporativo(email);
+    return mapper.toDTO(usuario);
+  }
 
-    public boolean existsById(Long idUsuario) {
-        return repo.existsById(idUsuario);
-    }
+  public boolean existsById(Long idUsuario) {
+    return repo.existsById(idUsuario);
+  }
 
-    public UsuarioDTO updateUsuario(Long idUsuario, UsuarioDTO dto) throws UsuarioInexistenteException, InsufficientSavingPermissionsException, ImmutableFieldException {
-        Optional<Usuario> opt = repo.findById(idUsuario);
-        if (opt.isEmpty()) {
-            throw new UsuarioInexistenteException("El usuario no existe");
-        }
-        Usuario entity = opt.get();
-        
-        filter.filterEntityToUpdate(entity, dto);
-        mapper.updateEntityFromDTO(dto, entity);
-        
-        return filter.filterDTO(mapper.toDTO(repo.save(entity)));
+  public UsuarioDTO updateUsuario(Long idUsuario, UsuarioDTO dto)
+      throws UsuarioInexistenteException, InsufficientSavingPermissionsException, ImmutableFieldException {
+    Optional<Usuario> opt = repo.findById(idUsuario);
+    if (opt.isEmpty()) {
+      throw new UsuarioInexistenteException("El usuario no existe");
     }
-    
-    public UsuarioDTO save(UsuarioDTO dto) throws InsufficientSavingPermissionsException {
-        Usuario entity = mapper.toEntity(dto);
-        
-        filter.filterEntityToSave(entity);
-        
-        return mapper.toDTO(repo.save(entity));
-    }
+    Usuario entity = opt.get();
 
-    public int isAdmin(Long currentUserId) {
-        return repo.isAdmin(currentUserId);
-    }
+    filter.filterEntityToUpdate(entity, dto);
+    mapper.updateEntityFromDTO(dto, entity);
 
-    public int isAgente(Long id) {
-        return repo.isAgente(id);
-    }
+    return filter.filterDTO(mapper.toDTO(repo.save(entity)));
+  }
 
-    public boolean isAgenteAssignedToTicket(Long idUsuario, Long idTicket) {
-        return repo.isAgenteAssignedToTicket(idUsuario, idTicket);
-    }
+  public UsuarioDTO save(UsuarioDTO dto) throws InsufficientSavingPermissionsException {
+    Usuario entity = mapper.toEntity(dto);
 
-    public boolean isTicketBelongsToUsuario(Long idUsuario, Long idTicket) {
-        return repo.isTicketBelongsToUsuario(idUsuario, idTicket);
-    }
+    filter.filterEntityToSave(entity);
 
-    public boolean existsByEmailPersonal(String email) {
-        return repo.existsByEmailPersonal(email);
-    }
+    return mapper.toDTO(repo.save(entity));
+  }
 
-    public boolean existsByEmailCorporativo(String emailCorporativo) {
-        return repo.existsByEmailCorporativo(emailCorporativo);
-    }
+  public int isAdmin(Long currentUserId) {
+    return repo.isAdmin(currentUserId);
+  }
 
-    public long countEmpleadosActivos() {
-        return repo.countEmpleadosActivos();
-    }
+  public int isAgente(Long id) {
+    return repo.isAgente(id);
+  }
 
-    public long countAgentesActivos() {
-        return repo.countAgentesActivos();
-    }
+  public boolean isAgenteAssignedToTicket(Long idUsuario, Long idTicket) {
+    return repo.isAgenteAssignedToTicket(idUsuario, idTicket);
+  }
+
+  public boolean isTicketBelongsToUsuario(Long idUsuario, Long idTicket) {
+    return repo.isTicketBelongsToUsuario(idUsuario, idTicket);
+  }
+
+  public boolean existsByEmailPersonal(String email) {
+    return repo.existsByEmailPersonal(email);
+  }
+
+  public boolean existsByEmailCorporativo(String emailCorporativo) {
+    return repo.existsByEmailCorporativo(emailCorporativo);
+  }
+
+  public long countEmpleadosActivos() {
+    return repo.countEmpleadosActivos();
+  }
+
+  public long countAgentesActivos() {
+    return repo.countAgentesActivos();
+  }
 
 }

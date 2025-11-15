@@ -32,68 +32,54 @@ import org.springframework.web.bind.annotation.*;
 @Tag(name = "Authentication", description = "Endpoints for user authentication and JWT token retrieval")
 public class AuthController {
 
-    private final UsuarioService usuarioService;
-    private final UsuarioMapper mapper;
-    private final UsuarioFilter filter;
-    private final RolService rolService;
-    private final PasswordEncoder passwordEncoder;
-    private final JwtUtils jwtUtils;
+  private final UsuarioService usuarioService;
+  private final UsuarioMapper mapper;
+  private final UsuarioFilter filter;
+  private final RolService rolService;
+  private final PasswordEncoder passwordEncoder;
+  private final JwtUtils jwtUtils;
 
-    public AuthController(UsuarioService usuarioService, UsuarioMapper mapper, UsuarioFilter filter, RolService rolService, PasswordEncoder passwordEncoder, JwtUtils jwtUtils) {
-        this.usuarioService = usuarioService;
-        this.mapper = mapper;
-        this.filter = filter;
-        this.rolService = rolService;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtUtils = jwtUtils;
+  public AuthController(UsuarioService usuarioService, UsuarioMapper mapper, UsuarioFilter filter,
+      RolService rolService, PasswordEncoder passwordEncoder, JwtUtils jwtUtils) {
+    this.usuarioService = usuarioService;
+    this.mapper = mapper;
+    this.filter = filter;
+    this.rolService = rolService;
+    this.passwordEncoder = passwordEncoder;
+    this.jwtUtils = jwtUtils;
+  }
+
+  @Operation(summary = "Login del usuario", description = "Autentica un usuario usando email y contraseña y retorna un token valido", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Credenciales para login", required = true, content = @Content(schema = @Schema(implementation = LoginRequest.class))), responses = {
+      @ApiResponse(responseCode = "200", description = "Autenticación exitosa, token retornado", content = @Content(mediaType = "application/json", schema = @Schema(example = "{\"token\": \"<jwt-token>\"}"))),
+      @ApiResponse(responseCode = "401", description = "Autenticación fallida, credenciales inválidas", content = @Content),
+      @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content)
+  })
+  @PostMapping("/login")
+  public ResponseEntity<Map<String, Object>> login(
+      @Parameter(description = "Credenciales se login, email y contraseña", required = true) @RequestBody LoginRequest request) {
+    UsuarioDTO user = usuarioService.validateCredentials(request.getEmail(), request.getPassword());
+    if (user == null) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+          .body(Map.of("error", "Credenciales inválidas. Verifique su email y contraseña."));
     }
 
-    @Operation(
-            summary = "Login del usuario",
-            description = "Autentica un usuario usando email y contraseña y retorna un token valido",
-            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                    description = "Credenciales para login",
-                    required = true,
-                    content = @Content(
-                            schema = @Schema(implementation = LoginRequest.class)
-                    )
-            ),
-            responses = {
-                @ApiResponse(
-                        responseCode = "200",
-                        description = "Autenticación exitosa, token retornado",
-                        content = @Content(
-                                mediaType = "application/json",
-                                schema = @Schema(
-                                        example = "{\"token\": \"<jwt-token>\"}"
-                                )
-                        )
-                ),
-                @ApiResponse(
-                        responseCode = "401",
-                        description = "Autenticación fallida, credenciales inválidas",
-                        content = @Content
-                ),
-                @ApiResponse(
-                        responseCode = "500",
-                        description = "Error interno del servidor",
-                        content = @Content
-                )
-            }
-    )
-    @PostMapping("/login")
-    public ResponseEntity<Map<String, String>> login(
-            @Parameter(description = "Credenciales se login, email y contraseña", required = true)
-            @RequestBody LoginRequest request
-    ) {
-        Usuario user = usuarioService.validateCredentials(request.getEmail(), request.getPassword());
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.of("error", "Credenciales inválidas. Verifique su email y contraseña."));
-        }
+    String token = jwtUtils.generateToken(user);
 
-        String token = jwtUtils.generateToken(user);
-        Map<String, String> body = Map.of("token", token);
-        return ResponseEntity.ok(body);
-    }
+    Map<String, Object> body = new HashMap<>();
+    body.put("token", token);
+
+    Map<String, Object> userBody = new HashMap<>();
+    userBody.put("id", user.getId());
+    userBody.put("nombre", user.getNombre());
+    userBody.put("rolId", user.getRolId());
+    userBody.put("emailPersonal", user.getEmailPersonal());
+    userBody.put("emailCorporativo", user.getEmailCorporativo());
+    userBody.put("departamento", user.getDepartamento());
+
+
+    body.put("usuario", userBody);
+
+    return ResponseEntity.ok(body);
+  }
 
 }
