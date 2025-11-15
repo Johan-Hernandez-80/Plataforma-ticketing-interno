@@ -5,6 +5,13 @@ import { environment } from '../../environments/environment';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
+
+
+export interface DisplayTicket {
+  id?: number; categoria: string;
+  titulo: string; prioridad: string; estado: string;
+  fechaCreacion?: string;
+}
 export interface LoginRequest { email: string; password: string; }
 export interface UsuarioDTO {
   id?: number; rolId: number; nombre: string; emailPersonal: string;

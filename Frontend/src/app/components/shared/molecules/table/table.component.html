@@ -1,4 +1,4 @@
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z1">
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z1" [style.width]="tableWidth">
 
   <ng-container matColumnDef="ID">
     <th mat-header-cell *matHeaderCellDef>ID</th>
@@ -31,14 +31,14 @@
 
   <ng-container matColumnDef="Fecha">
     <th mat-header-cell *matHeaderCellDef>Fecha creación</th>
-    <td mat-cell *matCellDef="let e">{{ e.fecha }}</td>
+    <td mat-cell *matCellDef="let e">{{ e.fechaCreacion }}</td>
   </ng-container>
 
   <ng-container matColumnDef="icono">
     <th mat-header-cell *matHeaderCellDef></th>
     <td mat-cell *matCellDef="let e">
-      <button mat-icon-button>
-        <img src="../../../../assets/bad-arrow.svg" alt="view">
+      <button mat-icon-button (click)="goToManagement(e)">
+        <img src="../../../../assets/arrow.svg" alt="view">
       </button>
     </td>
   </ng-container>

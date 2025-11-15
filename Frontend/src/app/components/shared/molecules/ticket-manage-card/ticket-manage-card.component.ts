@@ -6,6 +6,7 @@ import { TextBoxComponent } from "../../atoms/text-box/text-box.component";
 import { RouterModule } from "@angular/router";
 import { ValidationCardComponent } from "../validation-card/validation-card.component";
 import { FileContainerComponent } from "../../atoms/file-container/file-container.component";
+import { DisplayTicket } from "../../../../services/api.service";
 
 @Component({
   selector: "app-ticket-manage-card",
@@ -23,6 +24,7 @@ import { FileContainerComponent } from "../../atoms/file-container/file-containe
   styleUrl: "./ticket-manage-card.component.css",
 })
 export class TicketManageCardComponent {
+  @Input() ticket!: DisplayTicket;
   @Input() data: {
     id: string;
     categoria: string;
@@ -34,16 +36,16 @@ export class TicketManageCardComponent {
     prioridad: string;
     description: string;
   } = {
-    id: "aa",
-    categoria: "bb",
-    fechaCreacion: "cc",
-    usuarioId: "dd",
-    estado: "ee",
-    fechaCierre: "ff",
-    evidencia: "gg",
-    prioridad: "Programado",
-    description: "sssssssssss",
-  };
+      id: "aa",
+      categoria: "bb",
+      fechaCreacion: "cc",
+      usuarioId: "dd",
+      estado: "ee",
+      fechaCierre: "ff",
+      evidencia: "gg",
+      prioridad: "Programado",
+      description: "sssssssssss",
+    };
   prioridadOptions = ["Urgente", "Importante", "Programado"];
   isPriorityValidation = false;
 
@@ -54,5 +56,10 @@ export class TicketManageCardComponent {
     }
 
     alert("resultado: " + result);
+  }
+
+  ngOnInit() {
+    console.log('Ticket received:', this.ticket);
+    console.log('Título:', this.ticket?.titulo);
   }
 }
