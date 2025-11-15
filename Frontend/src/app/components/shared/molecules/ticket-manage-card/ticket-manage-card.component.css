@@ -87,3 +87,8 @@ app-text-box {
 .boton-solicitar-cancelacion {
   position: absolute;
 }
+
+app-main-button {
+  margin-bottom: 10px;
+}
+

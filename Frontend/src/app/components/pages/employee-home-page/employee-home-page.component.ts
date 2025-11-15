@@ -3,15 +3,7 @@ import { BackgroundComponent } from "../../shared/atoms/background/background.co
 import { HeaderComponent } from "../../shared/molecules/header/header.component";
 import { TableComponent } from "../../shared/molecules/table/table.component";
 import { Router } from "@angular/router";
-
-interface Ticket {
-  id: number;
-  titulo: string;
-  categoria: string;
-  estado: string;
-  prioridad: string;
-  fecha: string;
-}
+import { DisplayTicket } from "../../../services/api.service";
 
 @Component({
   selector: "app-employee-home-page",
@@ -22,14 +14,17 @@ interface Ticket {
 })
 export class EmployeeHomePageComponent {
   router = inject(Router);
-  tickets: Ticket[] = [
+  tickets: DisplayTicket[] = [
     {
       id: 4,
       titulo: "dd",
       categoria: "fdfd",
       estado: "pendiente",
       prioridad: "programado",
-      fecha: "dfd",
+      fechaCreacion: "dfd",
+      fechaCierre: "dfd",
+      descripcion: "",
+      usuarioId: 6,
     },
     {
       id: 4,
@@ -37,7 +32,10 @@ export class EmployeeHomePageComponent {
       categoria: "fdfd",
       estado: "en progreso",
       prioridad: "urgente",
-      fecha: "dfd",
+      fechaCreacion: "dfd",
+      fechaCierre: "dfd",
+      descripcion: "",
+      usuarioId: 7,
     },
     {
       id: 4,
@@ -45,7 +43,10 @@ export class EmployeeHomePageComponent {
       categoria: "fdfd",
       estado: "cerrado",
       prioridad: "importante",
-      fecha: "dfd",
+      fechaCreacion: "dfd",
+      fechaCierre: "dfd",
+      descripcion: "",
+      usuarioId: 5,
     },
   ];
 

@@ -1,43 +1,46 @@
 <app-card width="1500px" height="800px">
   <div class="container">
     <div class="card-header">
-      <a [routerLink]="backLink">
+      <a [routerLink]="navBack()">
         <img
           src="../../../../../assets/goBackArrow.svg"
           alt="icono de regresar"
         />
       </a>
-      <h2>Problema de acceso a la cuenta</h2>
+      <h2>{{ data?.titulo }}</h2>
     </div>
+
     <div class="grid-container">
       <div class="grid-container-box">
         <p class="grid-container-box-label">ID</p>
-        <p class="grid-container-box-content">{{ data.id }}</p>
+        <p class="grid-container-box-content">{{ data?.id }}</p>
       </div>
 
       <div class="grid-container-box">
         <p class="grid-container-box-label">Categoría</p>
-        <p class="grid-container-box-content">{{ data.categoria }}</p>
+        <p class="grid-container-box-content">{{ data?.categoria }}</p>
       </div>
 
       <div class="grid-container-box">
         <p class="grid-container-box-label">Fecha creación</p>
-        <p class="grid-container-box-content">{{ data.fechaCreacion }}</p>
+        <p class="grid-container-box-content">{{ data?.fechaCreacion }}</p>
       </div>
 
       <div class="grid-container-box">
-        <p class="grid-container-box-label">Usuario ID</p>
-        <p class="grid-container-box-content">{{ data.usuarioId }}</p>
+        <p class="grid-container-box-label">ID usuario</p>
+        <p class="grid-container-box-content">{{ data?.usuarioId }}</p>
       </div>
 
       <div class="grid-container-box">
         <p class="grid-container-box-label">Estado</p>
-        <p class="grid-container-box-content">{{ data.estado }}</p>
+        <p class="grid-container-box-content">{{ data?.estado }}</p>
       </div>
 
       <div class="grid-container-box">
         <p class="grid-container-box-label">Fecha cierre</p>
-        <p class="grid-container-box-content">{{ data.fechaCierre }}</p>
+        <p class="grid-container-box-content">
+          {{ data?.fechaCierre ?? "--/--/--" }}
+        </p>
       </div>
 
       <div class="grid-container-box">
@@ -49,12 +52,12 @@
         <p class="grid-container-box-label">Prioridad</p>
         @if (priorityEditable) {
           <app-combo-box
-            [selected]="data.prioridad"
+            [selected]="data?.prioridad ?? ''"
             (change)="setIsPriorityValidation(true)"
             [options]="prioridadOptions"
           ></app-combo-box>
         } @else {
-          <p class="grid-container-box-content">{{ data.prioridad }}</p>
+          <p class="grid-container-box-content">{{ data?.prioridad }}</p>
         }
       </div>
 
@@ -69,15 +72,17 @@
           ></app-main-button>
         }
         <app-main-button
-          width="180px"
+          width="250px"
           height="50px"
           placeHolder="Ver comentarios"
-          [routerLink]="'/ticket/management/comments'"
+          [routerLink]="['/ticket/management', data?.id, 'comments']"
         ></app-main-button>
       </div>
+
       <p class="description-p">Descripción</p>
+
       <app-text-box
-        [message]="data.description"
+        [message]="data?.descripcion ?? ''"
         width="1320px"
         height="250px"
       ></app-text-box>

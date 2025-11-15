@@ -2,16 +2,24 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { environment } from "../../environments/environment";
-import { catchError } from "rxjs/operators";
-import { throwError } from "rxjs";
 
 export interface DisplayTicket {
   id?: number;
+  usuarioId: number;
   categoria: string;
   titulo: string;
+  descripcion: string;
   prioridad: string;
   estado: string;
   fechaCreacion?: string;
+  fechaCierre?: string;
+}
+export interface DisplayComentario {
+  id?: number;
+  autor: string;
+  mensaje: string;
+  date: string;
+  time: string;
 }
 export interface LoginRequest {
   email: string;
@@ -67,7 +75,7 @@ export class ApiService {
     headers: new HttpHeaders({ "Content-Type": "application/json" }),
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   // AuthController
   login(

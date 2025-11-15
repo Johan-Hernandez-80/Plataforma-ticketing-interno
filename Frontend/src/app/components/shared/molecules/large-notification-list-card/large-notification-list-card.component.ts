@@ -34,10 +34,6 @@ export class LargeNotificationListCardComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.getNotifications();
-  }
-
-  getNotifications() {
     this.apiService.getNotificacionesById(this.usuario?.id ?? -1).subscribe({
       next: (data) => {
         this.notifications = data;

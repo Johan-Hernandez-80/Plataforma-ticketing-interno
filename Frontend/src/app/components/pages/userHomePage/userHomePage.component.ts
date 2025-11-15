@@ -4,49 +4,55 @@ import { HeaderComponent } from "../../shared/molecules/header/header.component"
 import { TableComponent } from "../../shared/molecules/table/table.component";
 import { MainButtonComponent } from "../../shared/atoms/main-button/main-button.component";
 import { Router } from "@angular/router";
-
-interface Ticket {
-  id: number;
-  titulo: string;
-  categoria: string;
-  estado: string;
-  prioridad: string;
-  fecha: string;
-}
+import { DisplayTicket } from "../../../services/api.service";
 
 @Component({
   selector: "app-user-home-page",
   standalone: true,
-  imports: [BackgroundComponent, HeaderComponent, TableComponent, MainButtonComponent],
+  imports: [
+    BackgroundComponent,
+    HeaderComponent,
+    TableComponent,
+    MainButtonComponent,
+  ],
   templateUrl: "./userHomePage.component.html",
   styleUrl: "./userHomePage.component.css",
 })
 export class UserHomePageComponent {
   router = inject(Router);
-  tickets: Ticket[] = [
+  tickets: DisplayTicket[] = [
     {
       id: 4,
       titulo: "dd",
       categoria: "fdfd",
       estado: "pendiente",
       prioridad: "programado",
-      fecha: "dfd",
+      fechaCreacion: "dfd",
+      fechaCierre: "dfd",
+      descripcion: "ddd",
+      usuarioId: 5,
     },
     {
       id: 4,
       titulo: "dd",
       categoria: "fdfd",
-      estado: "en progreso",
-      prioridad: "urgente",
-      fecha: "dfd",
+      estado: "pendiente",
+      prioridad: "programado",
+      fechaCreacion: "dfd",
+      fechaCierre: "dfd",
+      descripcion: "ddd",
+      usuarioId: 5,
     },
     {
       id: 4,
       titulo: "dd",
       categoria: "fdfd",
-      estado: "cerrado",
-      prioridad: "importante",
-      fecha: "dfd",
+      estado: "pendiente",
+      prioridad: "programado",
+      fechaCreacion: "dfd",
+      fechaCierre: "dfd",
+      descripcion: "ddd",
+      usuarioId: 5,
     },
   ];
 

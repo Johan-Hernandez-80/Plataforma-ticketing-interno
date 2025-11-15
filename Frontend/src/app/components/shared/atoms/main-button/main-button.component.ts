@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnChanges,
+} from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
 
@@ -9,18 +15,18 @@ import { RouterModule } from "@angular/router";
   templateUrl: "./main-button.component.html",
   styleUrl: "./main-button.component.css",
 })
-export class MainButtonComponent {
-  @Input() routerLink: string | null = null;
+export class MainButtonComponent implements OnChanges {
+  @Input() routerLink: any = null;
   @Input() placeHolder = "";
   @Input() iconUrl = "";
   @Input() alt = "";
-  @Input() width: string = "";
-  @Input() height: string = "";
+  @Input() width = "";
+  @Input() height = "";
   // Horizontal spacing controls
-  @Input() paddingLeft: string = "";
-  @Input() paddingRight: string = "";
-  @Input() marginLeft: string = "";
-  @Input() marginRight: string = "";
+  @Input() paddingLeft = "";
+  @Input() paddingRight = "";
+  @Input() marginLeft = "";
+  @Input() marginRight = "";
   @Input() variant: "primary" | "secondary" | "primary-outline" = "primary";
   @Output() clicked = new EventEmitter<void>();
 
