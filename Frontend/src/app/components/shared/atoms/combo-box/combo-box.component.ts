@@ -10,6 +10,8 @@ import { Component, Input, output } from "@angular/core";
 export class ComboBoxComponent {
   @Input() options = ["ex1", "ex2", "ex3"];
   @Input() selected = "";
+  // Allows consumers to set width like '180px', '14rem', '100%'.
+  @Input() width: string = "";
   change = output<string>();
 
   onChange(event: Event) {

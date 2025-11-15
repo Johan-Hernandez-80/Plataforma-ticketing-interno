@@ -16,6 +16,11 @@ export class MainButtonComponent {
   @Input() alt = "";
   @Input() width: string = "";
   @Input() height: string = "";
+  // Horizontal spacing controls
+  @Input() paddingLeft: string = "";
+  @Input() paddingRight: string = "";
+  @Input() marginLeft: string = "";
+  @Input() marginRight: string = "";
   @Input() variant: "primary" | "secondary" | "primary-outline" = "primary";
   @Output() clicked = new EventEmitter<void>();
 
@@ -25,6 +30,10 @@ export class MainButtonComponent {
     this.customStyles = {
       width: this.width ? this.width : "",
       height: this.height ? this.height : "",
+      paddingLeft: this.paddingLeft ? this.paddingLeft : "",
+      paddingRight: this.paddingRight ? this.paddingRight : "",
+      marginLeft: this.marginLeft ? this.marginLeft : "",
+      marginRight: this.marginRight ? this.marginRight : "",
     };
   }
 

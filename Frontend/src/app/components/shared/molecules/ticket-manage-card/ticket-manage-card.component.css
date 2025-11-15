@@ -58,11 +58,14 @@ app-combo-box {
   margin-top: 10px;
 }
 
-app-main-button {
+.buttons-area {
   grid-row: 4/5;
   grid-column: 3/4;
-  align-self: center;
+  align-self: end;
   justify-self: end;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .description-p {
@@ -79,4 +82,8 @@ app-text-box {
   grid-row: 5/6;
   grid-column: 1/4;
   margin-bottom: 20px;
+}
+
+.boton-solicitar-cancelacion {
+  position: absolute;
 }

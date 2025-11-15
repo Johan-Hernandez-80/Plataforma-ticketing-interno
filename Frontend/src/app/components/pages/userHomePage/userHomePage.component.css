@@ -6,5 +6,6 @@ app-table {
 
 .action-add {
   position: absolute;
-  padding-left: 200px;
+  top: 140px;
+  right: 165px;
 }
