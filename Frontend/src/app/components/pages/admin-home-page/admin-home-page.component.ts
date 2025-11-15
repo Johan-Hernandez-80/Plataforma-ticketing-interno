@@ -3,7 +3,7 @@ import { BackgroundComponent } from "../../shared/atoms/background/background.co
 import { HeaderComponent } from "../../shared/molecules/header/header.component";
 import { TableComponent } from "../../shared/molecules/table/table.component";
 import { Router } from "@angular/router";
-import { ApiService, DisplayTicket } from "../../../services/api.service";
+import { ApiService, DisplayTicket, TicketDTO } from "../../../services/api.service";
 
 @Component({
   selector: "app-admin-home-page",
@@ -17,136 +17,11 @@ export class AdminHomePageComponent {
 
   constructor(private api: ApiService) { }
 
-  tickets: DisplayTicket[] = [
-    {
-      id: 4,
-      titulo: "dhkjdksafslfjasñldkf",
-      categoria: "fdfd",
-      estado: "pendiente",
-      prioridad: "programado",
-      fechaCreacion: "dfd",
-    },
-    {
-      id: 4,
-      titulo: "dd",
-      categoria: "fdfd",
-      estado: "en progreso",
-      prioridad: "urgente",
-      fechaCreacion: "dfd",
-    },
-    {
-      id: 4,
-      titulo: "dd",
-      categoria: "fdfd",
-      estado: "cerrado",
-      prioridad: "importante",
-      fechaCreacion: "dfd",
-    },
+  tickets: TicketDTO[] = [];
 
-    {
-      id: 4,
-      titulo: "dd",
-      categoria: "fdfd",
-      estado: "cerrado",
-      prioridad: "importante",
-      fechaCreacion: "dfd",
-    },
-    {
-      id: 4,
-      titulo: "dd",
-      categoria: "fdfd",
-      estado: "cerrado",
-      prioridad: "importante",
-      fechaCreacion: "dfd",
-    },
-    {
-      id: 4,
-      titulo: "dd",
-      categoria: "fdfd",
-      estado: "cerrado",
-      prioridad: "importante",
-      fechaCreacion: "dfd",
-    },
-    {
-      id: 4,
-      titulo: "dd",
-      categoria: "fdfd",
-      estado: "cerrado",
-      prioridad: "importante",
-      fechaCreacion: "dfd",
-    },
-    {
-      id: 4,
-      titulo: "dd",
-      categoria: "fdfd",
-      estado: "cerrado",
-      prioridad: "importante",
-      fechaCreacion: "dfd",
-    },
-    {
-      id: 4,
-      titulo: "dd",
-      categoria: "fdfd",
-      estado: "cerrado",
-      prioridad: "importante",
-      fechaCreacion: "dfd",
-    },
-    {
-      id: 4,
-      titulo: "dd",
-      categoria: "fdfd",
-      estado: "cerrado",
-      prioridad: "importante",
-      fechaCreacion: "dfd",
-    },
-    {
-      id: 4,
-      titulo: "dd",
-      categoria: "fdfd",
-      estado: "cerrado",
-      prioridad: "importante",
-      fechaCreacion: "dfd",
-    },
-    {
-      id: 4,
-      titulo: "dd",
-      categoria: "fdfd",
-      estado: "cerrado",
-      prioridad: "importante",
-      fechaCreacion: "dfd",
-    },
-    {
-      id: 4,
-      titulo: "dd",
-      categoria: "fdfd",
-      estado: "cerrado",
-      prioridad: "importante",
-      fechaCreacion: "dfd",
-    },
-    {
-      id: 4,
-      titulo: "dd",
-      categoria: "fdfd",
-      estado: "cerrado",
-      prioridad: "importante",
-      fechaCreacion: "dfd",
-    },
-    {
-      id: 4,
-      titulo: "dd",
-      categoria: "fdfd",
-      estado: "cerrado",
-      prioridad: "importante",
-      fechaCreacion: "dfd",
-    },
-    {
-      id: 4,
-      titulo: "dd",
-      categoria: "fdfd",
-      estado: "cerrado",
-      prioridad: "importante",
-      fechaCreacion: "dfd",
-    },
-  ];
-
+  ngOnInit() {
+    this.api.getTickets().subscribe(data => {
+      this.tickets = data;
+    });
+  }
 }

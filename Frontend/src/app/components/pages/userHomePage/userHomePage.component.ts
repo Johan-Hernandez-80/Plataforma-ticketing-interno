@@ -4,6 +4,8 @@ import { HeaderComponent } from "../../shared/molecules/header/header.component"
 import { TableComponent } from "../../shared/molecules/table/table.component";
 import { MainButtonComponent } from "../../shared/atoms/main-button/main-button.component";
 import { Router } from "@angular/router";
+import { TicketDTO } from "../../../services/api.service";
+import { SAMPLE_TICKETS_DTO } from "../../../data/sample-tickets";
 
 interface Ticket {
   id: number;
@@ -23,34 +25,5 @@ interface Ticket {
 })
 export class UserHomePageComponent {
   router = inject(Router);
-  tickets: Ticket[] = [
-    {
-      id: 4,
-      titulo: "dd",
-      categoria: "fdfd",
-      estado: "pendiente",
-      prioridad: "programado",
-      fecha: "dfd",
-    },
-    {
-      id: 4,
-      titulo: "dd",
-      categoria: "fdfd",
-      estado: "en progreso",
-      prioridad: "urgente",
-      fecha: "dfd",
-    },
-    {
-      id: 4,
-      titulo: "dd",
-      categoria: "fdfd",
-      estado: "cerrado",
-      prioridad: "importante",
-      fecha: "dfd",
-    },
-  ];
-
-  onClickTable() {
-    this.router.navigate(["/ticket/management/user"]);
-  }
+  tickets: TicketDTO[] = SAMPLE_TICKETS_DTO;
 }

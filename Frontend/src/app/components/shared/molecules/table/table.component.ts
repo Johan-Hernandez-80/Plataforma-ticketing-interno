@@ -5,9 +5,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router'; // Fixed import
 import { TagComponent } from '../../atoms/tag/tag.component';
-import { TicketDTO } from '../../../../services/api.service';
+import { ApiService, TicketDTO } from '../../../../services/api.service';
 import { Router } from '@angular/router';
 import { DisplayTicket } from '../../../../services/api.service';
+import { CategoriaDTO } from '../../../../services/api.service';
+import { forkJoin } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-table',
@@ -24,18 +27,41 @@ import { DisplayTicket } from '../../../../services/api.service';
   styleUrl: './table.component.css',
 })
 export class TableComponent implements OnChanges {
-  @Input() data: DisplayTicket[] = [];
+  @Input() data: TicketDTO[] = [];
   @Input() maxHeight: string = '600px';
   @Input() tableWidth: string = '1020px';
   displayedColumns = ['ID', 'Titulo', 'Categoria', 'Estado', 'Prioridad', 'Fecha', 'icono'];
   dataSource = new MatTableDataSource<DisplayTicket>([]);
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private api: ApiService) { }
 
   ngOnChanges() {
-    this.dataSource.data = this.data;
+    if (!this.data || this.data.length === 0) {
+      this.dataSource.data = [];
+      return;
+    }
+
+    const observables = this.data.map((t: TicketDTO) =>
+      this.api.getCategoriaById(t.categoriaId).pipe(
+        map((categoria: CategoriaDTO): DisplayTicket => ({
+          id: t.id,
+          categoria: categoria.nombre,
+          titulo: t.titulo,
+          prioridad: t.prioridad,
+          estado: t.estado,
+          fechaCreacion: t.fechaCreacion,
+        }))
+      )
+    );
+
+    forkJoin(observables).subscribe((displayTickets: DisplayTicket[]) => {
+      this.dataSource.data = displayTickets;
+    });
+
   }
+
   goToManagement(ticket: DisplayTicket) {
     this.router.navigate(['/ticket/management', ticket.id], { state: { ticket } });
   }
+
 }
