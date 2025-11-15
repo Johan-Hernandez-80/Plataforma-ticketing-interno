@@ -1,4 +1,4 @@
-<select (change)="onChange($event)">
+<select (change)="onChange($event)" [style.width]="width || null">
   @for (option of options; track option) {
     <option [value]="option" [selected]="option === selected">
       {{ option }}

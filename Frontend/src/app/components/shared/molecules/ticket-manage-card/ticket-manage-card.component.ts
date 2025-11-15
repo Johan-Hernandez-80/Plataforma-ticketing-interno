@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, output } from "@angular/core";
 import { CardComponent } from "../../atoms/card/card.component";
 import { MainButtonComponent } from "../../atoms/main-button/main-button.component";
 import { ComboBoxComponent } from "../../atoms/combo-box/combo-box.component";
@@ -23,6 +23,10 @@ import { FileContainerComponent } from "../../atoms/file-container/file-containe
   styleUrl: "./ticket-manage-card.component.css",
 })
 export class TicketManageCardComponent {
+  @Input() showCancelButton = false;
+  @Input() priorityEditable: boolean = true;
+  @Input() backLink: string = '/home';
+  requestCancel = output<void>();
   @Input() data: {
     id: string;
     categoria: string;
