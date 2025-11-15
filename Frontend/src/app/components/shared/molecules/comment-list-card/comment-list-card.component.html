@@ -1,18 +1,18 @@
 <app-card [width]="'1300px'" [height]="'800px'">
   <div class="container">
     <div class="card-header">
-      <a href="/ticket/management">
+      <a [routerLink]="['/ticket/management', idTicket]">
         <img src="../../../../../assets/goBackArrow.svg" alt="" />
       </a>
       <h2>Comentarios</h2>
     </div>
     <div class="comment-box">
-      @for (comment of comments; track comment.id) {
+      @for (comentario of comentarios; track comentario.id) {
         <app-comment-list-item
-          [author]="comment.author"
-          [message]="comment.message"
-          [date]="comment.date"
-          [time]="comment.time"
+          [author]="comentario.autor"
+          [message]="comentario.mensaje"
+          [date]="comentario.date"
+          [time]="comentario.time"
         ></app-comment-list-item>
       }
     </div>

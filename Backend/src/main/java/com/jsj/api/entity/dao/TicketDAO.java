@@ -21,6 +21,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.stereotype.Repository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 /**
  *
@@ -85,18 +89,18 @@ public class TicketDAO extends BaseDAO<Ticket, Long, TicketDTO, TicketMapper, Ti
         .toList();
   }
 
-    public TicketDTO reasignar(Long agenteId, Long idTicket) {
-        Ticket ticket = repo.findById(idTicket).get();
-        ticket.setAgenteId(agenteId);
-        return filter.filterDTO(mapper.toDTO(repo.save(ticket)));
-    }
+  public TicketDTO reasignar(Long agenteId, Long idTicket) {
+    Ticket ticket = repo.findById(idTicket).get();
+    ticket.setAgenteId(agenteId);
+    return filter.filterDTO(mapper.toDTO(repo.save(ticket)));
+  }
 
-    public long countTicketsAbiertos() {
-        return repo.countTicketsAbiertos();
-    }
+  public long countTicketsAbiertos() {
+    return repo.countTicketsAbiertos();
+  }
 
-    public long countTicketsCerrados() {
-        return repo.countTicketsCerrados();
-    }
+  public long countTicketsCerrados() {
+    return repo.countTicketsCerrados();
+  }
 
 }
