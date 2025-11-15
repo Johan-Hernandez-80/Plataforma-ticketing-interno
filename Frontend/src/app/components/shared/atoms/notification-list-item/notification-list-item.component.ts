@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnChanges } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
 @Component({
@@ -8,15 +8,14 @@ import { CommonModule } from "@angular/common";
   templateUrl: "./notification-list-item.component.html",
   styleUrl: "./notification-list-item.component.css",
 })
-export class NotificationListItemComponent {
-  @Input() message =
-    "Se te ha asignado un nuevo ticket con ID: 1234, Prioridad: Importante";
-  @Input() date = "Hoy";
-  @Input() time = "27/10/2025";
+export class NotificationListItemComponent implements OnChanges {
+  @Input() message = "test";
+  @Input() date = "";
+  @Input() time = "";
   @Input() width = "";
   @Input() height = "";
 
-  customStyles: object= {};
+  customStyles: object = {};
 
   ngOnChanges(): void {
     this.customStyles = {

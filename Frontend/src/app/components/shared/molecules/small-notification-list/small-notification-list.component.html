@@ -9,26 +9,13 @@
     </button>
   </div>
   <div class="notification-container">
-    <app-notification-list-item></app-notification-list-item>
-    <app-notification-list-item></app-notification-list-item>
-    <app-notification-list-item></app-notification-list-item>
-    <app-notification-list-item></app-notification-list-item>
-    <app-notification-list-item></app-notification-list-item>
-    <app-notification-list-item></app-notification-list-item>
-    <app-notification-list-item></app-notification-list-item>
-    <app-notification-list-item></app-notification-list-item>
-    <app-notification-list-item></app-notification-list-item>
-    <app-notification-list-item></app-notification-list-item>
-    <app-notification-list-item></app-notification-list-item>
-    <app-notification-list-item></app-notification-list-item>
-    <app-notification-list-item></app-notification-list-item>
-    <app-notification-list-item></app-notification-list-item>
-    <app-notification-list-item></app-notification-list-item>
-    <app-notification-list-item></app-notification-list-item>
-    <app-notification-list-item></app-notification-list-item>
-    <app-notification-list-item></app-notification-list-item>
-    <app-notification-list-item></app-notification-list-item>
-    <app-notification-list-item></app-notification-list-item>
+    @for (notification of notifications; track notification.id) {
+      <app-notification-list-item
+        [message]="notification.mensaje"
+        [date]="getDate(notification.fechaCreacion ?? '')"
+        [time]="getTime(notification.fechaCreacion ?? '')"
+      />
+    }
   </div>
   <div class="card-footer">
     <a (click)="onClose()" class="p-ver-mas" [routerLink]="'/notifications'">

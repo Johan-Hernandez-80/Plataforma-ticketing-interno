@@ -1,7 +1,11 @@
-import { Component } from "@angular/core";
+import { Component, inject, OnInit} from "@angular/core";
 import { CardComponent } from "../../atoms/card/card.component";
 import { NotificationListItemComponent } from "../../atoms/notification-list-item/notification-list-item.component";
 import { RouterModule } from "@angular/router";
+import { ApiService } from "../../../../services/api.service";
+import { UsuarioService } from "../../../../services/usuario.service";
+import { DatePipe } from "@angular/common";
+import { NotificacionDTO } from "../../../../services/api.service";
 
 @Component({
   selector: "app-large-notification-list-card",
@@ -9,84 +13,47 @@ import { RouterModule } from "@angular/router";
   imports: [CardComponent, NotificationListItemComponent, RouterModule],
   templateUrl: "./large-notification-list-card.component.html",
   styleUrl: "./large-notification-list-card.component.css",
+  providers: [
+    DatePipe
+  ]
 })
-export class LargeNotificationListCardComponent {
-  notifications = [
-    {
-      id: 1,
-      message: "Tienes una nueva reunión con el equipo de marketing.",
-      date: "2025-11-08",
-      time: "10:00 AM",
-    },
-    {
-      id: 2,
-      message: "Laura comentó en tu publicación.",
-      date: "2025-11-08",
-      time: "10:45 AM",
-    },
-    {
-      id: 3,
-      message: "Tu pedido #4721 ha sido enviado.",
-      date: "2025-11-07",
-      time: "3:30 PM",
-    },
-    {
-      id: 4,
-      message:
-        "Recordatorio: paga la factura de Internet antes del 10 de noviembre.",
-      date: "2025-11-08",
-      time: "8:00 AM",
-    },
-    {
-      id: 5,
-      message:
-        "Nuevo inicio de sesión detectado desde un dispositivo desconocido.",
-      date: "2025-11-08",
-      time: "9:15 AM",
-    },
-    {
-      id: 6,
-      message: "Carlos te envió un mensaje: “Nos vemos a las 7?”",
-      date: "2025-11-08",
-      time: "9:50 AM",
-    },
-    {
-      id: 1,
-      message: "Tienes una nueva reunión con el equipo de marketing.",
-      date: "2025-11-08",
-      time: "10:00 AM",
-    },
-    {
-      id: 2,
-      message: "Laura comentó en tu publicación.",
-      date: "2025-11-08",
-      time: "10:45 AM",
-    },
-    {
-      id: 3,
-      message: "Tu pedido #4721 ha sido enviado.",
-      date: "2025-11-07",
-      time: "3:30 PM",
-    },
-    {
-      id: 4,
-      message:
-        "Recordatorio: paga la factura de Internet antes del 10 de noviembre.",
-      date: "2025-11-08",
-      time: "8:00 AM",
-    },
-    {
-      id: 5,
-      message:
-        "Nuevo inicio de sesión detectado desde un dispositivo desconocido.",
-      date: "2025-11-08",
-      time: "9:15 AM",
-    },
-    {
-      id: 6,
-      message: "Carlos te envió un mensaje: “Nos vemos a las 7?”",
-      date: "2025-11-08",
-      time: "9:50 AM",
-    },
-  ];
+export class LargeNotificationListCardComponent implements OnInit{
+  private apiService = inject(ApiService);
+  private usuarioService = inject(UsuarioService);
+  private datePipe = inject(DatePipe);
+  usuario = this.usuarioService.getUser();
+  notifications: NotificacionDTO[] = [];
+
+  navBack(): string{
+    switch(this.usuario?.rolId){
+      case 1: return '/admin/home';
+      case 2: return '/agent/home';
+      case 3: return '/home';
+      default: return '';
+    }
+  }
+
+  ngOnInit(): void {
+    this.getNotifications();
+  }
+
+  getNotifications() {
+    this.apiService.getNotificacionesById(this.usuario?.id ?? -1).subscribe({
+      next: (data) => {
+        this.notifications = data;
+      },
+      error: (err) => {
+        alert("eror apa " + err);
+      },
+    });
+  }
+
+  getDate(dateTime: string): string {
+    return this.datePipe.transform(dateTime.replace(" ", "T"), "dd/MM/yyyy")!;
+  }
+
+  getTime(dateTime: string): string {
+    const hora = this.datePipe.transform(dateTime.replace(" ", "T"), "hh:mm a");
+    return hora ? hora.toLowerCase() : "";
+  }
 }

@@ -51,7 +51,7 @@ Frontend/node_modules/
 /build/
 
 # Dependencias de Node
-/node_modules/
+**/node_modules/
 
 # Archivos de entorno (no se deben versionar)
 /environment.ts

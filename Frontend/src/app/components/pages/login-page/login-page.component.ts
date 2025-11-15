@@ -15,7 +15,7 @@ import { HeaderComponent } from "../../shared/molecules/header/header.component"
     BackgroundComponent,
     HeaderComponent,
   ],
-  templateUrl: "./loginPage.component.html",
-  styleUrl: "./loginPage.component.css",
+  templateUrl: "./login-page.component.html",
+  styleUrl: "./login-page.component.css",
 })
 export class LoginPageComponent {}

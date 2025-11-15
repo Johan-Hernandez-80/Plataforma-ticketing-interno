@@ -3,6 +3,8 @@ import { MainButtonComponent } from "../../atoms/main-button/main-button.compone
 import { LogOutButtonComponent } from "../../atoms/log-out-button/log-out-button.component";
 import { ProfileButtonComponent } from "../../atoms/profile-button/profile-button.component";
 import { SmallNotificationListComponent } from "../small-notification-list/small-notification-list.component";
+import { AuthService } from "../../../../services/auth.service";
+import { UsuarioService } from "../../../../services/usuario.service";
 import { Router } from "@angular/router";
 
 @Component({
@@ -19,6 +21,10 @@ import { Router } from "@angular/router";
 })
 export class HeaderComponent {
   private router = inject(Router);
+  private authService = inject(AuthService);
+  private usuarioService = inject(UsuarioService);
+  usuario = this.usuarioService.getUser();
+
   isPerfilHover = false;
   isNotificationButtonActive = false;
   logOutButtonClass = "";
@@ -43,5 +49,9 @@ export class HeaderComponent {
 
   navigate(path: string) {
     this.router.navigate([path]);
+  }
+
+  logOut() {
+    this.authService.logout();
   }
 }
