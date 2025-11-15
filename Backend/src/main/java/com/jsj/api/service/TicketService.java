@@ -90,6 +90,8 @@ public class TicketService extends BaseService<Ticket, Long, TicketDTO, TicketDA
             if (currentUserId != usuarioId) {
                 return null;
             }
+        } else if (estado == null && prioridad == null && usuarioId == null) {
+            return dao.findAllTickets();
         }
 
         validarUsuarioIdSave(usuarioId);
