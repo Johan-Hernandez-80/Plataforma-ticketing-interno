@@ -1,0 +1,10 @@
+<div class="upload-card" [style.width]="width" [style.height]="height" (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+    <input #fileInput type="file" [accept]="accept" (change)="onFileChange($event)" hidden />
+    <div class="content" (click)="onBrowse(fileInput)">
+        <p class="placeholder" *ngIf="!fileName">{{ placeholder }}</p>
+        <p class="filename" *ngIf="fileName" title="{{fileName}}">{{ fileName }}</p>
+        <img src="../../../../../assets/imgIcon.svg" alt="Subir archivo" class="icon" />
+    </div>
+    <div class="overlay" *ngIf="dragging">Suelta el archivo aquí</div>
+</div>
