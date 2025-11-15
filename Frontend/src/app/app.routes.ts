@@ -48,8 +48,8 @@ export const routes: Routes = [
     component: NotificationListPageComponent,
   },
   {
-    path: "ticket/management",
-    component: TicketManagementPageComponent,
+    path: 'ticket/management/:id',
+    component: TicketManagementPageComponent
   },
   {
     path: "ticket/management/user",

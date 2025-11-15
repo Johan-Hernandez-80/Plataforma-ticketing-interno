@@ -3,15 +3,7 @@ import { BackgroundComponent } from "../../shared/atoms/background/background.co
 import { HeaderComponent } from "../../shared/molecules/header/header.component";
 import { TableComponent } from "../../shared/molecules/table/table.component";
 import { Router } from "@angular/router";
-
-interface Ticket {
-  id: number;
-  titulo: string;
-  categoria: string;
-  estado: string;
-  prioridad: string;
-  fecha: string;
-}
+import { ApiService, DisplayTicket } from "../../../services/api.service";
 
 @Component({
   selector: "app-admin-home-page",
@@ -22,14 +14,17 @@ interface Ticket {
 })
 export class AdminHomePageComponent {
   router = inject(Router);
-  tickets: Ticket[] = [
+
+  constructor(private api: ApiService) { }
+
+  tickets: DisplayTicket[] = [
     {
       id: 4,
-      titulo: "dd",
+      titulo: "dhkjdksafslfjasñldkf",
       categoria: "fdfd",
       estado: "pendiente",
       prioridad: "programado",
-      fecha: "dfd",
+      fechaCreacion: "dfd",
     },
     {
       id: 4,
@@ -37,7 +32,7 @@ export class AdminHomePageComponent {
       categoria: "fdfd",
       estado: "en progreso",
       prioridad: "urgente",
-      fecha: "dfd",
+      fechaCreacion: "dfd",
     },
     {
       id: 4,
@@ -45,11 +40,113 @@ export class AdminHomePageComponent {
       categoria: "fdfd",
       estado: "cerrado",
       prioridad: "importante",
-      fecha: "dfd",
+      fechaCreacion: "dfd",
+    },
+
+    {
+      id: 4,
+      titulo: "dd",
+      categoria: "fdfd",
+      estado: "cerrado",
+      prioridad: "importante",
+      fechaCreacion: "dfd",
+    },
+    {
+      id: 4,
+      titulo: "dd",
+      categoria: "fdfd",
+      estado: "cerrado",
+      prioridad: "importante",
+      fechaCreacion: "dfd",
+    },
+    {
+      id: 4,
+      titulo: "dd",
+      categoria: "fdfd",
+      estado: "cerrado",
+      prioridad: "importante",
+      fechaCreacion: "dfd",
+    },
+    {
+      id: 4,
+      titulo: "dd",
+      categoria: "fdfd",
+      estado: "cerrado",
+      prioridad: "importante",
+      fechaCreacion: "dfd",
+    },
+    {
+      id: 4,
+      titulo: "dd",
+      categoria: "fdfd",
+      estado: "cerrado",
+      prioridad: "importante",
+      fechaCreacion: "dfd",
+    },
+    {
+      id: 4,
+      titulo: "dd",
+      categoria: "fdfd",
+      estado: "cerrado",
+      prioridad: "importante",
+      fechaCreacion: "dfd",
+    },
+    {
+      id: 4,
+      titulo: "dd",
+      categoria: "fdfd",
+      estado: "cerrado",
+      prioridad: "importante",
+      fechaCreacion: "dfd",
+    },
+    {
+      id: 4,
+      titulo: "dd",
+      categoria: "fdfd",
+      estado: "cerrado",
+      prioridad: "importante",
+      fechaCreacion: "dfd",
+    },
+    {
+      id: 4,
+      titulo: "dd",
+      categoria: "fdfd",
+      estado: "cerrado",
+      prioridad: "importante",
+      fechaCreacion: "dfd",
+    },
+    {
+      id: 4,
+      titulo: "dd",
+      categoria: "fdfd",
+      estado: "cerrado",
+      prioridad: "importante",
+      fechaCreacion: "dfd",
+    },
+    {
+      id: 4,
+      titulo: "dd",
+      categoria: "fdfd",
+      estado: "cerrado",
+      prioridad: "importante",
+      fechaCreacion: "dfd",
+    },
+    {
+      id: 4,
+      titulo: "dd",
+      categoria: "fdfd",
+      estado: "cerrado",
+      prioridad: "importante",
+      fechaCreacion: "dfd",
+    },
+    {
+      id: 4,
+      titulo: "dd",
+      categoria: "fdfd",
+      estado: "cerrado",
+      prioridad: "importante",
+      fechaCreacion: "dfd",
     },
   ];
 
-  onClickTable() {
-    this.router.navigate(["/ticket/management"]);
-  }
 }
