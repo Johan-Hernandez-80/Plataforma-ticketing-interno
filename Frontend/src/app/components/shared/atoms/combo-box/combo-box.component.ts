@@ -1,5 +1,11 @@
 import { Component, Input, output } from "@angular/core";
 
+interface ChangePayload {
+  confirmation?: boolean;
+  value?: string;
+  event?: Event;
+}
+
 @Component({
   selector: "app-combo-box",
   standalone: true,
@@ -10,12 +16,15 @@ import { Component, Input, output } from "@angular/core";
 export class ComboBoxComponent {
   @Input() options = ["ex1", "ex2", "ex3"];
   @Input() selected = "";
-  // Allows consumers to set width like '180px', '14rem', '100%'.
-  @Input() width: string = "";
-  change = output<string>();
+  @Input() width = "";
+  change = output<ChangePayload>();
 
   onChange(event: Event) {
     const select = event.target as HTMLSelectElement;
-    this.change.emit(select.value);
+    this.change.emit({
+      confirmation: undefined,
+      value: select.value,
+      event: event,
+    });
   }
 }

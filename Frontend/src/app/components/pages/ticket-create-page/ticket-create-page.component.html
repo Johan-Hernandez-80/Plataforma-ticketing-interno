@@ -41,7 +41,7 @@
               [selected]="categoria"
               [options]="categorias"
               [width]="'200px'"
-              (change)="onCategoriaChange($event)"
+              (change)="onCategoriaChange($event.value ?? '')"
             ></app-combo-box>
           </div>
 
@@ -51,7 +51,7 @@
               [selected]="prioridad"
               [options]="prioridades"
               [width]="'140px'"
-              (change)="onPrioridadChange($event)"
+              (change)="onPrioridadChange($event.value ?? '')"
             ></app-combo-box>
           </div>
 

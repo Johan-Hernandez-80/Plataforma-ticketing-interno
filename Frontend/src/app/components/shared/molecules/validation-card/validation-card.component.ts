@@ -11,7 +11,7 @@ import { BackgroundComponent } from "../../atoms/background/background.component
   styleUrl: "./validation-card.component.css",
 })
 export class ValidationCardComponent {
-  @Input() message: string = "¿?";
+  @Input() message = "¿?";
 
   close = output<boolean>();
 
