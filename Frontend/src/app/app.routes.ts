@@ -64,7 +64,7 @@ export const routes: Routes = [
     component: CommentManagementPageComponent,
   },
   {
-    path: "ticket/comments/view",
+    path: "ticket/management/:id/comments/:comentarioId",
     component: CommentViewPageComponent,
   },
   {

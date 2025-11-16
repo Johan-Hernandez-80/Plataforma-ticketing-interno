@@ -1,5 +1,6 @@
-import { Component, Input } from "@angular/core";
-import { RouterModule } from "@angular/router";
+import { Component, Input, inject } from "@angular/core";
+import { Router, RouterModule } from "@angular/router";
+import { DisplayComentario } from "../../../../services/api.service";
 
 @Component({
   selector: "app-comment-list-item",
@@ -9,8 +10,7 @@ import { RouterModule } from "@angular/router";
   styleUrl: "./comment-list-item.component.css",
 })
 export class CommentListItemComponent {
-  @Input() author = "María López";
-  @Input() message = "¡Hola! ¿Cómo estás? ¿Listo para la reunión de hoy?";
-  @Input() date = "08/11/2025";
-  @Input() time = "09:00 AM";
+  router = inject(Router);
+  @Input() data: DisplayComentario | null = null;
+  @Input() idTicket = -1;
 }
