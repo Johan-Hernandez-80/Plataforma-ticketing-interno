@@ -6,15 +6,6 @@ import { Router } from "@angular/router";
 import { SAMPLE_TICKETS_DTO } from "../../../data/sample-tickets";
 import { TicketDTO } from "../../../services/api.service";
 
-interface Ticket {
-  id: number;
-  titulo: string;
-  categoria: string;
-  estado: string;
-  prioridad: string;
-  fecha: string;
-}
-
 @Component({
   selector: "app-employee-home-page",
   standalone: true,
@@ -25,4 +16,8 @@ interface Ticket {
 export class EmployeeHomePageComponent {
   router = inject(Router);
   tickets: TicketDTO[] = SAMPLE_TICKETS_DTO;
+
+  onClickTable() {
+    this.router.navigate(["/ticket/management"]);
+  }
 }
