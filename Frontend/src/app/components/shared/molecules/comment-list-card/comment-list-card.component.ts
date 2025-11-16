@@ -8,8 +8,21 @@ import { ActivatedRoute, RouterModule } from "@angular/router";
 import {
   ApiService,
   DisplayComentario,
+  ComentarioDTO,
 } from "../../../../services/api.service";
 import { MapperService } from "../../../../services/mapper.service";
+import { UsuarioService } from "../../../../services/usuario.service";
+
+interface ClosePayload {
+  result: boolean;
+  text: string;
+}
+
+interface ChangePayload {
+  confirmation?: boolean;
+  value?: string;
+  event?: Event;
+}
 
 @Component({
   selector: "app-comment-list-card",
@@ -27,27 +40,44 @@ import { MapperService } from "../../../../services/mapper.service";
 })
 export class CommentListCardComponent implements OnInit {
   private route = inject(ActivatedRoute);
+  private usuarioService = inject(UsuarioService);
   private apiService = inject(ApiService);
   private mapper = inject(MapperService);
+  usuario = this.usuarioService.getUser();
   idTicket = Number(this.route.snapshot.paramMap.get("id"));
   isCloseTicketValidation = false;
   isTextArea = false;
 
-  setIsCloseTicketValidation(state: boolean, result?: boolean) {
+  setIsCloseTicketValidation(state: boolean, changePayload?: ChangePayload) {
     this.isCloseTicketValidation = state;
-    if (result == undefined) {
+    if (changePayload?.confirmation == undefined) {
       return;
     }
   }
 
-  setIsTextArea(state: boolean, result?: boolean) {
+  setIsTextArea(state: boolean, closePayload?: ClosePayload) {
     this.isTextArea = state;
-    if (result == undefined) {
+    if (!(closePayload?.result && closePayload?.text)) {
       return;
     }
+    //logica para crear comentario
+    const data: ComentarioDTO = {
+      ticketId: this.idTicket,
+      usuarioId: this.usuario?.id ?? -1,
+      comentario: closePayload.text,
+    };
+    this.apiService.createComentario(this.idTicket, data).subscribe({
+      next: () => {
+        this.loadComentarios();
+        alert("Se creo comentario con éxito");
+      },
+      error: (err) => {
+        alert("algo salio mal " + err);
+      },
+    });
   }
 
-  ngOnInit() {
+  loadComentarios() {
     this.apiService.getComentariosByTicketId(this.idTicket).subscribe({
       next: (response) => {
         this.comentarios = this.mapper.mapComentariosDtoToDisplay(
@@ -58,6 +88,10 @@ export class CommentListCardComponent implements OnInit {
         alert("error inesperado");
       },
     });
+  }
+
+  ngOnInit() {
+    this.loadComentarios();
   }
 
   comentarios: DisplayComentario[] = [];

@@ -52,8 +52,8 @@
         <p class="grid-container-box-label">Prioridad</p>
         @if (priorityEditable) {
           <app-combo-box
-            [selected]="data?.prioridad ?? ''"
-            (change)="setIsPriorityValidation(true)"
+            [selected]="selectedPriority"
+            (change)="setIsPriorityValidation(true, $event)"
             [options]="prioridadOptions"
           ></app-combo-box>
         } @else {

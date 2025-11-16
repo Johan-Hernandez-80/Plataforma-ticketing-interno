@@ -3,12 +3,18 @@ import { CardComponent } from "../../atoms/card/card.component";
 import { MainButtonComponent } from "../../atoms/main-button/main-button.component";
 import { ComboBoxComponent } from "../../atoms/combo-box/combo-box.component";
 import { TextBoxComponent } from "../../atoms/text-box/text-box.component";
-import { ActivatedRoute, Router, RouterModule } from "@angular/router";
+import { ActivatedRoute, RouterModule } from "@angular/router";
 import { ValidationCardComponent } from "../validation-card/validation-card.component";
 import { FileContainerComponent } from "../../atoms/file-container/file-container.component";
 import { ApiService, DisplayTicket } from "../../../../services/api.service";
 import { UsuarioService } from "../../../../services/usuario.service";
 import { MapperService } from "../../../../services/mapper.service";
+
+interface ChangePayload {
+  confirmation?: boolean;
+  value?: string;
+  event?: Event;
+}
 
 @Component({
   selector: "app-ticket-manage-card",
@@ -27,14 +33,13 @@ import { MapperService } from "../../../../services/mapper.service";
 })
 export class TicketManageCardComponent implements OnInit {
   private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private navigation = this.router.getCurrentNavigation();
   private usuarioService = inject(UsuarioService);
   private apiService = inject(ApiService);
   private mapper = inject(MapperService);
   usuario = this.usuarioService.getUser();
   idTicket = Number(this.route.snapshot.paramMap.get("id"));
   data: DisplayTicket | null = null;
+  selectedPriority = "";
 
   @Input() showCancelButton = false;
   @Input() priorityEditable = true;
@@ -42,19 +47,21 @@ export class TicketManageCardComponent implements OnInit {
   prioridadOptions = ["Urgente", "Importante", "Programado"];
   isPriorityValidation = false;
 
-  setIsPriorityValidation(state: boolean, result?: boolean) {
+  setIsPriorityValidation(state: boolean, changePayload: ChangePayload) {
     this.isPriorityValidation = state;
-    if (result == undefined) {
+    if (changePayload.confirmation == undefined) {
       return;
     }
-
-    alert("resultado: " + result);
+    if (!changePayload.confirmation) {
+      this.selectedPriority = "importante";
+    }
   }
 
   ngOnInit() {
     this.apiService.getTicketById(this.idTicket!).subscribe({
       next: (response) => {
         this.data = this.mapper.mapTicketDtoToDisplay(response);
+        this.selectedPriority = this.data?.prioridad ?? "";
       },
       error: () => {
         alert("error inesperado");

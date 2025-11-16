@@ -44,7 +44,6 @@ export class MainButtonComponent implements OnChanges {
   }
 
   onButtonClick(event: MouseEvent) {
-    // If there's no navigation target, prevent default anchor behavior
     if (!this.routerLink) {
       event.preventDefault();
     }
