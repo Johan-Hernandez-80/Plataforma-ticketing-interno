@@ -7,7 +7,6 @@ import { TextAreaComponent } from "../text-area/text-area.component";
 import { ActivatedRoute, RouterModule } from "@angular/router";
 import {
   ApiService,
-  ComentarioDTO,
   DisplayComentario,
 } from "../../../../services/api.service";
 import { MapperService } from "../../../../services/mapper.service";
@@ -61,22 +60,5 @@ export class CommentListCardComponent implements OnInit {
     });
   }
 
-  comentarios: DisplayComentario[] = [
-    {
-      id: 1,
-      mensaje:
-        "¡Hola! Estuve revisando el código del componente durante la mañana y noté que podríamos optimizar la parte del renderizado para hacerlo más eficiente. Si reorganizamos algunos de los métodos y reducimos las llamadas innecesarias al backend, podríamos mejorar el rendimiento general de la aplicación. ¿Quieres que te muestre una posible implementación para hacerlo?",
-      autor: "María López",
-      date: "08/11/2025",
-      time: "09:05 AM",
-    },
-    {
-      id: 2,
-      mensaje:
-        "Hey, acabo de leer tu comentario y me parece una excelente idea. Además de optimizar esa parte, podríamos aprovechar para limpiar un poco la lógica del servicio, ya que tiene algunas funciones repetidas que podríamos reutilizar con un helper. También pensé que sería buena idea agregar algunos tests unitarios para asegurar que los cambios no rompan nada.",
-      autor: "Carlos Pérez",
-      date: "08/11/2025",
-      time: "09:12 AM",
-    },
-  ];
+  comentarios: DisplayComentario[] = [];
 }

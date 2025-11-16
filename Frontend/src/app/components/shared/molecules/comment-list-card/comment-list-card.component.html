@@ -9,10 +9,8 @@
     <div class="comment-box">
       @for (comentario of comentarios; track comentario.id) {
         <app-comment-list-item
-          [author]="comentario.autor"
-          [message]="comentario.mensaje"
-          [date]="comentario.date"
-          [time]="comentario.time"
+          [data]="comentario"
+          [idTicket]="idTicket"
         ></app-comment-list-item>
       }
     </div>
