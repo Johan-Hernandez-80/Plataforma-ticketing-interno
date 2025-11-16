@@ -30,7 +30,15 @@ export class TableComponent implements OnChanges {
   @Input() data: TicketDTO[] = [];
   @Input() maxHeight: string = '600px';
   @Input() tableWidth: string = '1020px';
-  displayedColumns = ['ID', 'Titulo', 'Categoria', 'Estado', 'Prioridad', 'Fecha', 'icono'];
+  displayedColumns = [
+    "ID",
+    "Titulo",
+    "Categoria",
+    "Estado",
+    "Prioridad",
+    "Fecha",
+    "icono",
+  ];
   dataSource = new MatTableDataSource<DisplayTicket>([]);
 
   constructor(private router: Router, private api: ApiService) { }
@@ -61,7 +69,8 @@ export class TableComponent implements OnChanges {
   }
 
   goToManagement(ticket: DisplayTicket) {
-    this.router.navigate(['/ticket/management', ticket.id], { state: { ticket } });
+    this.router.navigate(["/ticket/management", ticket.id], {
+      state: { ticket },
+    });
   }
-
 }
