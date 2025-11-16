@@ -32,7 +32,6 @@ export class LoginCardComponent {
     this.authService.login(this.credentials).subscribe({
       next: (response) => {
         if (response.token && response.usuario) {
-          alert(JSON.stringify(response.usuario));
           this.usuarioService.setUser(response.usuario);
           if (response.usuario.rolId === 1) {
             this.router.navigate(["/admin/home"]);
