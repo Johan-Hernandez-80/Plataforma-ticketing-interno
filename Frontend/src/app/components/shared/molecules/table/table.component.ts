@@ -1,16 +1,19 @@
-import { Component, Input, OnChanges, inject } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { MatTableModule, MatTableDataSource } from "@angular/material/table";
-import { MatIconModule } from "@angular/material/icon";
-import { MatButtonModule } from "@angular/material/button";
-import { RouterModule } from "@angular/router"; // Fixed import
-import { TagComponent } from "../../atoms/tag/tag.component";
-import { TicketDTO } from "../../../../services/api.service";
-import { Router } from "@angular/router";
-import { DisplayTicket } from "../../../../services/api.service";
+import { Component, Input, OnChanges } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { MatTableModule, MatTableDataSource } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { RouterModule } from '@angular/router'; // Fixed import
+import { TagComponent } from '../../atoms/tag/tag.component';
+import { ApiService, TicketDTO } from '../../../../services/api.service';
+import { Router } from '@angular/router';
+import { DisplayTicket } from '../../../../services/api.service';
+import { CategoriaDTO } from '../../../../services/api.service';
+import { forkJoin } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
-  selector: "app-table",
+  selector: 'app-table',
   standalone: true,
   imports: [
     CommonModule,
@@ -20,14 +23,13 @@ import { DisplayTicket } from "../../../../services/api.service";
     RouterModule,
     TagComponent,
   ],
-  templateUrl: "./table.component.html",
-  styleUrl: "./table.component.css",
+  templateUrl: './table.component.html',
+  styleUrl: './table.component.css',
 })
 export class TableComponent implements OnChanges {
-  private router = inject(Router);
-  @Input() data: DisplayTicket[] = [];
-  @Input() maxHeight = "600px";
-  @Input() tableWidth = "1020px";
+  @Input() data: TicketDTO[] = [];
+  @Input() maxHeight: string = '600px';
+  @Input() tableWidth: string = '1020px';
   displayedColumns = [
     "ID",
     "Titulo",
@@ -39,9 +41,36 @@ export class TableComponent implements OnChanges {
   ];
   dataSource = new MatTableDataSource<DisplayTicket>([]);
 
+  constructor(private router: Router, private api: ApiService) { }
+
   ngOnChanges() {
-    this.dataSource.data = this.data;
+    if (!this.data || this.data.length === 0) {
+      this.dataSource.data = [];
+      return;
+    }
+
+    const observables = this.data.map((t: TicketDTO) =>
+      this.api.getCategoriaById(t.categoriaId).pipe(
+        map((categoria: CategoriaDTO): DisplayTicket => ({
+          id: t.id,
+          usuarioId: t.usuarioId,
+          categoria: categoria.nombre,
+          titulo: t.titulo,
+          descripcion: t.descripcion,
+          prioridad: t.prioridad,
+          estado: t.estado,
+          fechaCreacion: t.fechaCreacion,
+          fechaCierre: t.fechaCierre,
+        }))
+      )
+    );
+
+    forkJoin(observables).subscribe((displayTickets: DisplayTicket[]) => {
+      this.dataSource.data = displayTickets;
+    });
+
   }
+
   goToManagement(ticket: DisplayTicket) {
     this.router.navigate(["/ticket/management", ticket.id], {
       state: { ticket },

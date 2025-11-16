@@ -24,7 +24,7 @@ export class AgentHomePageComponent implements OnInit {
   private router = inject(Router);
   private mapper = inject(MapperService);
   usuario = this.usuarioService.getUser();
-  tickets: DisplayTicket[] = [];
+  tickets: TicketDTO[] = [];
 
   ngOnInit() {
     this.apiService
@@ -32,15 +32,11 @@ export class AgentHomePageComponent implements OnInit {
       .subscribe({
         next: (response: TicketDTO[]) => {
           console.log("EXITO " + JSON.stringify(response));
-          this.tickets = this.mapper.mapTicketsDtoToDisplay(response);
+          this.tickets = response;
         },
         error: () => {
           console.log("ERRORRRR ");
         },
       });
-  }
-
-  onClickTable() {
-    this.router.navigate(["/ticket/management"]);
   }
 }
