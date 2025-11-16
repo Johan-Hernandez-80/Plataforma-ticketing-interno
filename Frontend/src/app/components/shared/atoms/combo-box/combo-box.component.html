@@ -1,7 +1,9 @@
-<select (change)="onChange($event)" [style.width]="width || null">
+<select
+  [(ngModel)]="selected"
+  (ngModelChange)="onChange($event)"
+  [style.width]="width"
+>
   @for (option of options; track option) {
-    <option [value]="option" [selected]="option === selected">
-      {{ option }}
-    </option>
+    <option [value]="option">{{ option }}</option>
   }
 </select>

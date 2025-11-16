@@ -53,8 +53,24 @@ export class TicketManageCardComponent implements OnInit {
       return;
     }
     if (!result) {
-      this.selectedPriority = "importante";
+      this.selectedPriority = this.data?.prioridad ?? "";
+      return;
     }
+    //logica para actualizar prioridad
+    this.updatePriority(this.selectedPriority);
+  }
+
+  updatePriority(newPriority: string) {
+    this.apiService
+      .updatePrioridad(this.idTicket, { prioridad: newPriority })
+      .subscribe({
+        next: () => {
+          alert("Prioridad actualizada exitosamente");
+        },
+        error: () => {
+          alert("Error al actualizar prioridad");
+        },
+      });
   }
 
   ngOnInit() {
