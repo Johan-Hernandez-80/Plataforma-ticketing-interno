@@ -1,3 +1,5 @@
+import { TicketDTO } from "../services/api.service";
+
 export interface Ticket {
   id: number;
   titulo: string;
@@ -6,6 +8,44 @@ export interface Ticket {
   prioridad: 'Urgente' | 'Importante' | 'Programado';
   fecha: string;
 }
+export const SAMPLE_TICKETS_DTO: TicketDTO[] = [
+  {
+    id: 4,
+    usuarioId: 3,
+    agenteId: 2,
+    categoriaId: 1,
+    titulo: "La impresora no imprime",
+    descripcion: "Ya la apague y volvi a encender y no funciono",
+    prioridad: "Urgente",
+    estado: "Cerrado",
+    fechaCreacion: "2025-10-19 13:15:01",
+    fechaCierre: "2025-10-19 17:45:33",
+  },
+  {
+    id: 4,
+    usuarioId: 3,
+    agenteId: 2,
+    categoriaId: 1,
+    titulo: "La impresora no imprime",
+    descripcion: "Ya la apague y volvi a encender y no funciono",
+    prioridad: "Urgente",
+    estado: "Cerrado",
+    fechaCreacion: "2025-10-19 13:15:01",
+    fechaCierre: "2025-10-19 17:45:33",
+  },
+  {
+    id: 4,
+    usuarioId: 3,
+    agenteId: 2,
+    categoriaId: 1,
+    titulo: "La impresora no imprime",
+    descripcion: "Ya la apague y volvi a encender y no funciono",
+    prioridad: "Urgente",
+    estado: "Cerrado",
+    fechaCreacion: "2025-10-19 13:15:01",
+    fechaCierre: "2025-10-19 17:45:33",
+  },
+]
 
 export const SAMPLE_TICKETS: Ticket[] = [
   {

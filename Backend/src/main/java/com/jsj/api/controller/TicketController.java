@@ -324,5 +324,5 @@ public class TicketController extends BaseController<Ticket, Long, TicketDTO> {
           ));
     }
   }
-
+  
 }

@@ -13,6 +13,7 @@ import { CommentManagementPageComponent } from "./components/pages/comment-manag
 import { CommentViewPageComponent } from "./components/pages/comment-view-page/comment-view-page.component";
 import { TestEndpointsComponent } from "./test-endpoints/test-endpoints.component";
 import { UserHomePageComponent } from "./components/pages/userHomePage/userHomePage.component";
+import { TestComponent } from "./components/shared/molecules/test/test.component";
 
 export const routes: Routes = [
   {
@@ -68,7 +69,11 @@ export const routes: Routes = [
     component: CommentViewPageComponent,
   },
   {
-    path: "test",
+    path: "test-endpoints",
     component: TestEndpointsComponent,
+  },
+  {
+    path: "test",
+    component: TestComponent,
   },
 ];

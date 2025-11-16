@@ -4,9 +4,9 @@ USE ticketing;
 -- 1. USUARIOS (explicit IDs, exact enum values)
 -- =========================================
 INSERT INTO usuarios (id, rol_id, nombre, email_personal, email_corporativo, contrasena, departamento) VALUES
-(1, 1, 'Jaime Martínez', NULL, 'admin@empresa.com', '$2a$10$XALQrXT9eqQbU3GiK674f.zHtJ2Eusuev1vQku/Bc78jDpCOA0smO', 'Administración'),
-(2, 2, 'José González', 'jose.gonzalez@personal.com', 'jose.gonzalez@empresa.com', '$2a$10$CAJ8XEgQlLP3J/W9pejFPeNqBGDPxru15L5TRpKp5e6bn2/cnXmWy', 'Soporte Técnico'),
-(3, 3, 'María Zambrano', 'maria.zambrano@personal.com', 'maria.zambrano@empresa.com', '$2a$10$mcFrZ.SKqpDX78UxCnfqQufiwPujp28e67TZ59TwyEgdJ73RBG4he', 'Recursos Humanos')
+(1, 1, 'Jaime Martínez', NULL, 'admin@empresa.com', '$2a$10$ig5jc/KAPqnbsQgs729ssu3cj2grVoIAclZEAYyQBWhUA7cbzU6sa', 'Administración'),
+(2, 2, 'José González', 'jose.gonzalez@personal.com', 'jose.gonzalez@empresa.com', '$2a$10$D8/.pV32nAGkfOSUYK9g4uzlX/IKkWVIfjAA1jxuYy9Rit848zs5u', 'Soporte Técnico'),
+(3, 3, 'María Zambrano', 'maria.zambrano@personal.com', 'maria.zambrano@empresa.com', '$2a$10$sUPVkeyjnG3e10m2Nejk7efrf4.8GfMU//X5ZoGy0p.p9ol4ZMk3O', 'Recursos Humanos')
 ON DUPLICATE KEY UPDATE id = VALUES(id);
 
 -- =========================================

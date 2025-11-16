@@ -103,4 +103,11 @@ public class TicketDAO extends BaseDAO<Ticket, Long, TicketDTO, TicketMapper, Ti
     return repo.countTicketsCerrados();
   }
 
+    public List<TicketDTO> findAllTickets() {
+        return repo.findAll()
+                .stream()
+                .map(mapper::toDTO)
+                .toList();
+    }
+
 }
