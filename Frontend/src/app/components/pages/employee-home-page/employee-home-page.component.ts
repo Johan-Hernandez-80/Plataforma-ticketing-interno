@@ -16,8 +16,4 @@ import { TicketDTO } from "../../../services/api.service";
 export class EmployeeHomePageComponent {
   router = inject(Router);
   tickets: TicketDTO[] = SAMPLE_TICKETS_DTO;
-
-  onClickTable() {
-    this.router.navigate(["/ticket/management"]);
-  }
 }

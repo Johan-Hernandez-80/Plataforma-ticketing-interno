@@ -53,11 +53,14 @@ export class TableComponent implements OnChanges {
       this.api.getCategoriaById(t.categoriaId).pipe(
         map((categoria: CategoriaDTO): DisplayTicket => ({
           id: t.id,
+          usuarioId: t.usuarioId,
           categoria: categoria.nombre,
           titulo: t.titulo,
+          descripcion: t.descripcion,
           prioridad: t.prioridad,
           estado: t.estado,
           fechaCreacion: t.fechaCreacion,
+          fechaCierre: t.fechaCierre,
         }))
       )
     );
