@@ -47,12 +47,12 @@ export class TicketManageCardComponent implements OnInit {
   prioridadOptions = ["Urgente", "Importante", "Programado"];
   isPriorityValidation = false;
 
-  setIsPriorityValidation(state: boolean, changePayload: ChangePayload) {
+  setIsPriorityValidation(state: boolean, result?: boolean) {
     this.isPriorityValidation = state;
-    if (changePayload.confirmation == undefined) {
+    if (result == undefined) {
       return;
     }
-    if (!changePayload.confirmation) {
+    if (!result) {
       this.selectedPriority = "importante";
     }
   }

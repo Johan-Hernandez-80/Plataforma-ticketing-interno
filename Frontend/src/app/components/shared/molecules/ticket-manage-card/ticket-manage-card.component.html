@@ -53,7 +53,7 @@
         @if (priorityEditable) {
           <app-combo-box
             [selected]="selectedPriority"
-            (change)="setIsPriorityValidation(true, $event)"
+            (change)="setIsPriorityValidation(true)"
             [options]="prioridadOptions"
           ></app-combo-box>
         } @else {

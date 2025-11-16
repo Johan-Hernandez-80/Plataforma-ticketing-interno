@@ -16,19 +16,21 @@
     </div>
 
     <div class="button-container">
-      <app-main-button
-        [width]="'150px'"
-        [height]="'50px'"
-        [placeHolder]="'Cerrar'"
-        [variant]="'primary-outline'"
-        (click)="setIsCloseTicketValidation(true)"
-      ></app-main-button>
-      <app-main-button
-        [width]="'150px'"
-        [height]="'50px'"
-        [placeHolder]="'Comentar'"
-        (click)="setIsTextArea(true)"
-      ></app-main-button>
+      @if (!isTicketCerrado) {
+        <app-main-button
+          [width]="'150px'"
+          [height]="'50px'"
+          [placeHolder]="'Cerrar'"
+          [variant]="'primary-outline'"
+          (click)="setIsCloseTicketValidation(true)"
+        ></app-main-button>
+        <app-main-button
+          [width]="'150px'"
+          [height]="'50px'"
+          [placeHolder]="'Comentar'"
+          (click)="setIsTextArea(true)"
+        ></app-main-button>
+      }
     </div>
   </div>
 </app-card>

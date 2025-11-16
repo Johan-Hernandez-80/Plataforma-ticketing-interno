@@ -18,12 +18,6 @@ interface ClosePayload {
   text: string;
 }
 
-interface ChangePayload {
-  confirmation?: boolean;
-  value?: string;
-  event?: Event;
-}
-
 @Component({
   selector: "app-comment-list-card",
   standalone: true,
@@ -47,17 +41,29 @@ export class CommentListCardComponent implements OnInit {
   idTicket = Number(this.route.snapshot.paramMap.get("id"));
   isCloseTicketValidation = false;
   isTextArea = false;
+  isTicketCerrado = true;
 
-  setIsCloseTicketValidation(state: boolean, changePayload?: ChangePayload) {
+  setIsCloseTicketValidation(state: boolean, result?: boolean) {
     this.isCloseTicketValidation = state;
-    if (changePayload?.confirmation == undefined) {
+    if (!result) {
       return;
     }
+    //logica para cerrar un ticket
+    this.isTicketCerrado = true;
+    this.apiService.cerrarTicket(this.idTicket).subscribe({
+      next: () => {
+        this.loadTicketState();
+        alert("ticket cerrado exitosamente");
+      },
+      error: () => {
+        alert("error: no se puedo cerrar");
+      },
+    });
   }
 
   setIsTextArea(state: boolean, closePayload?: ClosePayload) {
     this.isTextArea = state;
-    if (!(closePayload?.result && closePayload?.text)) {
+    if (!(closePayload?.result && closePayload?.text.trim())) {
       return;
     }
     //logica para crear comentario
@@ -90,8 +96,20 @@ export class CommentListCardComponent implements OnInit {
     });
   }
 
+  loadTicketState() {
+    this.apiService.getTicketById(this.idTicket).subscribe({
+      next: (response) => {
+        this.isTicketCerrado = response?.estado.toUpperCase() === "CERRADO";
+      },
+      error: (err) => {
+        alert("eror: " + err);
+      },
+    });
+  }
+
   ngOnInit() {
     this.loadComentarios();
+    this.loadTicketState();
   }
 
   comentarios: DisplayComentario[] = [];

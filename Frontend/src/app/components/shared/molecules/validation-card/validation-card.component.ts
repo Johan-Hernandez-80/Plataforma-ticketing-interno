@@ -3,12 +3,6 @@ import { CardComponent } from "../../atoms/card/card.component";
 import { MainButtonComponent } from "../../atoms/main-button/main-button.component";
 import { BackgroundComponent } from "../../atoms/background/background.component";
 
-interface ChangePayload {
-  confirmation?: boolean;
-  value?: string;
-  event?: Event;
-}
-
 @Component({
   selector: "app-validation-card",
   standalone: true,
@@ -19,9 +13,9 @@ interface ChangePayload {
 export class ValidationCardComponent {
   @Input() message = "¿?";
 
-  close = output<ChangePayload>();
+  close = output<boolean>();
 
   onClose(state: boolean) {
-    this.close.emit({ confirmation: state });
+    this.close.emit(state);
   }
 }
