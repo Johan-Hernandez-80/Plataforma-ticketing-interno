@@ -55,6 +55,7 @@ export interface ComentarioDTO {
   usuarioId: number;
   comentario: string;
   fechaCreacion?: string;
+  nombreUsuario?: string;
 }
 export interface CategoriaDTO {
   id?: number;
@@ -75,7 +76,7 @@ export class ApiService {
     headers: new HttpHeaders({ "Content-Type": "application/json" }),
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // AuthController
   login(
