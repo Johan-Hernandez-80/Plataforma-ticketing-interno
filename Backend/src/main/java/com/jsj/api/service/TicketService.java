@@ -84,13 +84,15 @@ public class TicketService extends BaseService<Ticket, Long, TicketDTO, TicketDA
   public List<TicketDTO> findTickets(String estado, String prioridad, Long usuarioId)
       throws UsuarioInexistenteException, PrioridadInvalidaException,
       EstadoInvalidoException {
-
+	
     Long currentUserId = Long.parseLong(CurrentUser.getUserId());
 
     if (usuarioDao.isAdmin(currentUserId) == 0) {
       if (currentUserId != usuarioId) {
         return null;
       }
+    } else if (estado == null && prioridad == null && usuarioId == null) {
+        return dao.findAllTickets();
     }
 
     validarUsuarioIdSave(usuarioId);

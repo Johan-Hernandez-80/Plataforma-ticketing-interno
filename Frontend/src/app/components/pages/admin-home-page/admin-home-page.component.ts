@@ -3,7 +3,7 @@ import { BackgroundComponent } from "../../shared/atoms/background/background.co
 import { HeaderComponent } from "../../shared/molecules/header/header.component";
 import { TableComponent } from "../../shared/molecules/table/table.component";
 import { Router } from "@angular/router";
-import { ApiService, DisplayTicket } from "../../../services/api.service";
+import { ApiService, DisplayTicket, TicketDTO } from "../../../services/api.service";
 
 @Component({
   selector: "app-admin-home-page",
@@ -15,7 +15,13 @@ import { ApiService, DisplayTicket } from "../../../services/api.service";
 export class AdminHomePageComponent {
   router = inject(Router);
 
-  constructor(private api: ApiService) {}
+  constructor(private api: ApiService) { }
 
-  tickets: DisplayTicket[] = [];
+  tickets: TicketDTO[] = [];
+
+  ngOnInit() {
+    this.api.getTickets().subscribe(data => {
+      this.tickets = data;
+    });
+  }
 }

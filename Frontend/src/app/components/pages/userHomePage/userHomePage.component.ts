@@ -4,7 +4,8 @@ import { HeaderComponent } from "../../shared/molecules/header/header.component"
 import { TableComponent } from "../../shared/molecules/table/table.component";
 import { MainButtonComponent } from "../../shared/atoms/main-button/main-button.component";
 import { Router } from "@angular/router";
-import { DisplayTicket } from "../../../services/api.service";
+import { TicketDTO } from "../../../services/api.service";
+import { SAMPLE_TICKETS_DTO } from "../../../data/sample-tickets";
 
 @Component({
   selector: "app-user-home-page",
@@ -20,42 +21,7 @@ import { DisplayTicket } from "../../../services/api.service";
 })
 export class UserHomePageComponent {
   router = inject(Router);
-  tickets: DisplayTicket[] = [
-    {
-      id: 4,
-      titulo: "dd",
-      categoria: "fdfd",
-      estado: "pendiente",
-      prioridad: "programado",
-      fechaCreacion: "dfd",
-      fechaCierre: "dfd",
-      descripcion: "ddd",
-      usuarioId: 5,
-    },
-    {
-      id: 4,
-      titulo: "dd",
-      categoria: "fdfd",
-      estado: "pendiente",
-      prioridad: "programado",
-      fechaCreacion: "dfd",
-      fechaCierre: "dfd",
-      descripcion: "ddd",
-      usuarioId: 5,
-    },
-    {
-      id: 4,
-      titulo: "dd",
-      categoria: "fdfd",
-      estado: "pendiente",
-      prioridad: "programado",
-      fechaCreacion: "dfd",
-      fechaCierre: "dfd",
-      descripcion: "ddd",
-      usuarioId: 5,
-    },
-  ];
-
+  tickets: TicketDTO[] = SAMPLE_TICKETS_DTO;
   onClickTable() {
     this.router.navigate(["/ticket/management/user"]);
   }

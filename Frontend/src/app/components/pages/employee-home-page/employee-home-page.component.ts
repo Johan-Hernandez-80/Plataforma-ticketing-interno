@@ -3,7 +3,8 @@ import { BackgroundComponent } from "../../shared/atoms/background/background.co
 import { HeaderComponent } from "../../shared/molecules/header/header.component";
 import { TableComponent } from "../../shared/molecules/table/table.component";
 import { Router } from "@angular/router";
-import { DisplayTicket } from "../../../services/api.service";
+import { SAMPLE_TICKETS_DTO } from "../../../data/sample-tickets";
+import { TicketDTO } from "../../../services/api.service";
 
 @Component({
   selector: "app-employee-home-page",
@@ -14,41 +15,7 @@ import { DisplayTicket } from "../../../services/api.service";
 })
 export class EmployeeHomePageComponent {
   router = inject(Router);
-  tickets: DisplayTicket[] = [
-    {
-      id: 4,
-      titulo: "dd",
-      categoria: "fdfd",
-      estado: "pendiente",
-      prioridad: "programado",
-      fechaCreacion: "dfd",
-      fechaCierre: "dfd",
-      descripcion: "",
-      usuarioId: 6,
-    },
-    {
-      id: 4,
-      titulo: "dd",
-      categoria: "fdfd",
-      estado: "en progreso",
-      prioridad: "urgente",
-      fechaCreacion: "dfd",
-      fechaCierre: "dfd",
-      descripcion: "",
-      usuarioId: 7,
-    },
-    {
-      id: 4,
-      titulo: "dd",
-      categoria: "fdfd",
-      estado: "cerrado",
-      prioridad: "importante",
-      fechaCreacion: "dfd",
-      fechaCierre: "dfd",
-      descripcion: "",
-      usuarioId: 5,
-    },
-  ];
+  tickets: TicketDTO[] = SAMPLE_TICKETS_DTO;
 
   onClickTable() {
     this.router.navigate(["/ticket/management"]);
