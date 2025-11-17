@@ -1,0 +1,50 @@
+version: "3.8"
+
+services:
+  # --- Backend Spring Boot ---
+  backend:
+    image: mi-backend
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    depends_on:
+      - db
+    env_file:
+      - ./Backend/.env
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_NAME_PROD: ticketing
+      DB_USER_PROD: user
+      DB_PASSWORD_PROD: pass
+      JWT_SECRET: b42e9139f99e8823d89e2178ab63edfe
+
+  # --- Base de datos MySQL ---
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: ticketing
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+
+  # --- Frontend Angular ---
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+
+volumes:
+  db_data:
