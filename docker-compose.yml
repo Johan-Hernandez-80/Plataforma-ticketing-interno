@@ -8,7 +8,7 @@ services:
       context: ./Backend
       dockerfile: Dockerfile
     ports:
-      - "8082:8082" # Exponemos el puerto interno de Spring Boot como 8080
+      - "8082:8082"
     depends_on:
       - db
     env_file:
@@ -16,23 +16,25 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: prod
       DB_HOST: db
-      DB_PORT: 5432
+      DB_PORT: 3306 # Cambiado a MySQL
       DB_NAME_PROD: ticketing
       DB_USER_PROD: user
       DB_PASSWORD_PROD: pass
       JWT_SECRET: b42e9139f99e8823d89e2178ab63edfe
 
-  # --- Base de datos PostgreSQL ---
+  # --- Base de datos MySQL ---
   db:
-    image: postgres:15
+    image: mysql:8.0
     environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: pass
-      POSTGRES_DB: ticketing
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: ticketing
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
     ports:
-      - "5432:5432" # Solo para desarrollo; en producción puedes quitarlo
+      - "3307:3306"
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - db_data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
 
   # --- Frontend Angular ---
   frontend:
@@ -40,7 +42,7 @@ services:
       context: ./Frontend
       dockerfile: Dockerfile
     ports:
-      - "4200:80" # Accedes a Angular en http://localhost:4200
+      - "4200:80"
     depends_on:
       - backend
 
