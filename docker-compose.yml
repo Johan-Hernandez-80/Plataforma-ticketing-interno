@@ -2,11 +2,13 @@ services:
   backend:
     image: mi-backend
     ports:
-      - "8080:8080"
+      - "8080:8082"
     depends_on:
       - db
+    env_file:
+      - ./Backend/.env
     environment:
-      ENABLE_DOTENV: false
+      SPRING_PROFILES_ACTIVE: prod
       DB_HOST: db
       DB_PORT: 5432
       DB_NAME_PROD: ticketing
@@ -19,7 +21,7 @@ services:
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: pass
-      POSTGRES_DB: mi_base
+      POSTGRES_DB: ticketing
     ports:
       - "5432:5432" # <--- Exponemos el puerto
     volumes:
