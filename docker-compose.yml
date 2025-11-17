@@ -1,12 +1,27 @@
 services:
+  backend:
+    image: mi-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      ENABLE_DOTENV: false
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME_PROD: ticketing
+      DB_USER_PROD: user
+      DB_PASSWORD_PROD: pass
+      JWT_SECRET: b42e9139f99e8823d89e2178ab63edfe
+
   db:
     image: postgres:15
-    ports:
-      - "5432:5432"
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: pass
-      POSTGRES_DB: ticketing
+      POSTGRES_DB: mi_base
+    ports:
+      - "5432:5432" # <--- Exponemos el puerto
     volumes:
       - db_data:/var/lib/postgresql/data
 
