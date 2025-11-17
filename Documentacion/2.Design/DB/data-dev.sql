@@ -5,8 +5,8 @@ USE ticketing;
 -- =========================================
 INSERT INTO usuarios (id, rol_id, nombre, email_personal, email_corporativo, contrasena, departamento) VALUES
 (1, 1, 'Jaime Martínez', NULL, 'admin@empresa.com', '$2a$10$ig5jc/KAPqnbsQgs729ssu3cj2grVoIAclZEAYyQBWhUA7cbzU6sa', 'Administración'),
-(2, 2, 'José González', 'jose.gonzalez@personal.com', 'jose.gonzalez@empresa.com', '$2a$10$D8/.pV32nAGkfOSUYK9g4uzlX/IKkWVIfjAA1jxuYy9Rit848zs5u', 'Soporte Técnico'),
-(3, 3, 'María Zambrano', 'maria.zambrano@personal.com', 'maria.zambrano@empresa.com', '$2a$10$sUPVkeyjnG3e10m2Nejk7efrf4.8GfMU//X5ZoGy0p.p9ol4ZMk3O', 'Recursos Humanos')
+(2, 2, 'José González', 'jose.gonzalez@personal.com', 'agente@empresa.com', '$2a$10$D8/.pV32nAGkfOSUYK9g4uzlX/IKkWVIfjAA1jxuYy9Rit848zs5u', 'Soporte Técnico'),
+(3, 3, 'María Zambrano', 'maria.zambrano@personal.com', 'usuario@empresa.com', '$2a$10$sUPVkeyjnG3e10m2Nejk7efrf4.8GfMU//X5ZoGy0p.p9ol4ZMk3O', 'Recursos Humanos')
 ON DUPLICATE KEY UPDATE id = VALUES(id);
 
 -- =========================================
@@ -28,11 +28,11 @@ ON DUPLICATE KEY UPDATE id = VALUES(id);
 -- =========================================
 -- 4. COMENTARIOS
 -- =========================================
-INSERT INTO comentarios (ticket_id, usuario_id, comentario, fecha_creacion) VALUES
-(1, 3, 'Ya intenté limpiar caché y usar otro navegador. Sigo con el mismo error.', '2025-04-01 09:30:00'),
-(1, 2, 'Revisaré los permisos en Active Directory. Te contacto en 30 min.', '2025-04-01 10:00:00'),
-(2, 3, 'Adjunto correo de aprobación de mi jefe.', '2025-04-02 14:35:00'),
-(2, 1, 'Aprobado. Se registrará en el sistema de RRHH.', '2025-04-02 16:00:00')
+INSERT INTO comentarios (ticket_id, usuario_id, comentario, nombre_usuario, fecha_creacion) VALUES
+(1, 3, 'Ya intenté limpiar caché y usar otro navegador. Sigo con el mismo error.', 'María Zambrano', '2025-04-01 09:30:00'),
+(1, 2, 'Revisaré los permisos en Active Directory. Te contacto en 30 min.', 'José González', '2025-04-01 10:00:00'),
+(2, 3, 'Adjunto correo de aprobación de mi jefe.', 'María Zambrano', '2025-04-02 14:35:00'),
+(2, 1, 'Aprobado. Se registrará en el sistema de RRHH.', 'Jaime Martínez', '2025-04-02 16:00:00')
 ON DUPLICATE KEY UPDATE ticket_id = ticket_id;
 
 -- =========================================

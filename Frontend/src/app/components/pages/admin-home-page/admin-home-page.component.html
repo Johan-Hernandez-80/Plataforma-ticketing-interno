@@ -1,4 +1,16 @@
 <app-background>
   <app-header></app-header>
-  <app-table [data]="tickets" tableHeight="500px" tableWidth="1080px"></app-table>
+  <div class="page">
+    <div class="content">
+      <div class="top-bar">
+        <app-main-button width="250px" height="50px" placeHolder="Crear categoria" [routerLink]="['/categoria/create']"
+          (clicked)="onRequestConfirm()"></app-main-button>
+      </div>
+      <app-table [data]="tickets" tableHeight="500px" tableWidth="1080px"></app-table>
+    </div>
+  </div>
+
+  @if (showModal) {
+  <app-new-categoria-modal (crear)="closeModal()" />
+  }
 </app-background>

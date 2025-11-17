@@ -1,0 +1,12 @@
+<div class="overlay" (click)="crear.emit()">
+  <app-card width="520px" height="260px" [center]="false" (click)="$event.stopPropagation()">
+    <div class="modal">
+      <app-text-input placeholder="Escribe la nueva categoria" type="text"
+        [(ngModel)]="currentCategoria"></app-text-input>
+      <div class="buttons">
+        <app-main-button [placeHolder]="confirmLabel" width="200px" height="40px"
+          (clicked)="onConfirm()"></app-main-button>
+      </div>
+    </div>
+  </app-card>
+</div>
