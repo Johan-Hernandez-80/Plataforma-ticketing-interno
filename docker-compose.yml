@@ -1,8 +1,14 @@
+version: "3.8"
+
 services:
+  # --- Backend Spring Boot ---
   backend:
     image: mi-backend
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
     ports:
-      - "8080:8082"
+      - "8082:8082" # Exponemos el puerto interno de Spring Boot como 8080
     depends_on:
       - db
     env_file:
@@ -16,6 +22,7 @@ services:
       DB_PASSWORD_PROD: pass
       JWT_SECRET: b42e9139f99e8823d89e2178ab63edfe
 
+  # --- Base de datos PostgreSQL ---
   db:
     image: postgres:15
     environment:
@@ -23,9 +30,19 @@ services:
       POSTGRES_PASSWORD: pass
       POSTGRES_DB: ticketing
     ports:
-      - "5432:5432" # <--- Exponemos el puerto
+      - "5432:5432" # Solo para desarrollo; en producción puedes quitarlo
     volumes:
       - db_data:/var/lib/postgresql/data
+
+  # --- Frontend Angular ---
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    ports:
+      - "4200:80" # Accedes a Angular en http://localhost:4200
+    depends_on:
+      - backend
 
 volumes:
   db_data:
