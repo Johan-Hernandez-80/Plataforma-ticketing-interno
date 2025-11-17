@@ -22,22 +22,30 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class ComentarioDAO extends BaseDAO<Comentario, Long, ComentarioDTO, ComentarioMapper, ComentarioFilter, ComentarioRepository> {
 
-    public ComentarioDAO(ComentarioMapper mapper, ComentarioFilter filter, ComentarioRepository repo) {
+    private UsuarioDAO usuarioDao;
+    
+    public ComentarioDAO(ComentarioMapper mapper, ComentarioFilter filter, ComentarioRepository repo, UsuarioDAO usuarioDao) {
         super(mapper, filter, repo);
+        this.usuarioDao = usuarioDao;
     }
 
     public List<ComentarioDTO> findComentariosByTicketId(Long idTicket) {
-        return repo.findByTicketIdOrderByFechaCreacionAsc(idTicket)
+        List<ComentarioDTO> comentarios = repo.findByTicketIdOrderByFechaCreacionAsc(idTicket)
                 .stream()
                 .map(mapper::toDTO)
                 .map(dto -> filter.filterDTO(dto))
                 .toList();
+        for (ComentarioDTO comentario : comentarios) {
+            comentario.setNombreUsuario(usuarioDao.findById(comentario.getUsuarioId()).get().getNombre());
+        }
+        return comentarios;
     }
 
     public ComentarioDTO save(ComentarioDTO dto) throws InsufficientSavingPermissionsException {
         Comentario entity = repo.save(filter.filterEntityToSave(mapper.toEntity(dto)));
-
-        return filter.filterDTO(mapper.toDTO(entity));
+        ComentarioDTO retDto = filter.filterDTO(mapper.toDTO(entity));
+        retDto.setNombreUsuario(usuarioDao.findById(dto.getUsuarioId()).get().getNombre());
+        return retDto;
     }
 
 }

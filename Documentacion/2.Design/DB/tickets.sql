@@ -76,6 +76,7 @@ create table comentarios (
     ticket_id int not null,
     usuario_id int not null,
     comentario varchar(1000) not null,
+    nombre_usuario varchar(255) not null,
     fecha_creacion timestamp not null default current_timestamp,
 
     constraint fk_comentarios_tickets
