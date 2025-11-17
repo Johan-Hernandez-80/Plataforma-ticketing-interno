@@ -16,7 +16,7 @@ services:
     environment:
       SPRING_PROFILES_ACTIVE: prod
       DB_HOST: db
-      DB_PORT: 3306 # Cambiado a MySQL
+      DB_PORT: 3306
       DB_NAME_PROD: ticketing
       DB_USER_PROD: user
       DB_PASSWORD_PROD: pass
