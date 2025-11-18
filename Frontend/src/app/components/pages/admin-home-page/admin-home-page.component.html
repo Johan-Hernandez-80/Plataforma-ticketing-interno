@@ -5,6 +5,12 @@
       <div class="top-bar">
         <app-main-button width="250px" height="50px" placeHolder="Crear categoria" [routerLink]="['/categoria/create']"
           (clicked)="onRequestConfirm()"></app-main-button>
+<app-main-button 
+    width="250px" 
+    height="50px" 
+    placeHolder="Getionar usuarios" 
+    [routerLink]="['/admin/usuario/management']">
+  </app-main-button>
       </div>
       <app-table [data]="tickets" tableHeight="500px" tableWidth="1080px" [isAdmin]=true></app-table>
     </div>
