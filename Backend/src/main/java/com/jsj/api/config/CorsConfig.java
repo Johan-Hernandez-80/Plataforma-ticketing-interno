@@ -17,13 +17,10 @@ public class CorsConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/api/**")  // todas las rutas de tu API
-                .allowedOrigins(
-                    "http://localhost:4200", // para desarrollo
-                    "https://plataforma-ticketing-interno-frontend.onrender.com" // producción
-                )
-                .allowedMethods("*")       // GET, POST, PUT, DELETE, etc.
-                .allowedHeaders("*")
-                .allowCredentials(true);   // si usas cookies o auth
+        registry.addMapping("/**")          // todas las rutas
+                .allowedOrigins("*")        // permite cualquier origen
+                .allowedMethods("*")        // permite todos los métodos (GET, POST, PUT, DELETE...)
+                .allowedHeaders("*")        // permite todos los headers
+                .allowCredentials(false);   // debe ser false si allowedOrigins es "*" 
     }
 }
