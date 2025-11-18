@@ -33,12 +33,17 @@ export class LoginCardComponent {
       next: (response) => {
         if (response.token && response.usuario) {
           this.usuarioService.setUser(response.usuario);
-          if (response.usuario.rolId === 1) {
+          const roleFromToken = this.authService.getRoleFromToken();
+          const rolId = (response.usuario as any)?.rolId;
+          if (rolId === 1 || roleFromToken === 'admin') {
             this.router.navigate(["/admin/home"]);
-          } else if (response.usuario.rolId === 2) {
+          } else if (rolId === 2 || roleFromToken === 'agent' || roleFromToken === 'agente') {
             this.router.navigate(["/agent/home"]);
-          } else if (response.usuario.rolId === 3) {
-            this.router.navigate(["/home"]);
+          } else if (rolId === 3 || roleFromToken === 'user' || roleFromToken === 'empleado') {
+            this.router.navigate(["/home/user"]);
+          } else {
+            // Fallback seguro: usuarios desconocidos a home de usuario
+            this.router.navigate(["/home/user"]);
           }
         }
       },

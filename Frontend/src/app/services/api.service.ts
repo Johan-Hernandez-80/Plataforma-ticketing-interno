@@ -96,6 +96,12 @@ export class ApiService {
       this.httpOptions,
     );
   }
+  getAllUsuarios(): Observable<UsuarioDTO[]> {
+    return this.http.get<UsuarioDTO[]>(
+      `${this.apiUrl}/usuarios`,
+      this.httpOptions,
+    );
+  }
   getNotificacionesById(idUsuario: number): Observable<NotificacionDTO[]> {
     return this.http.get<NotificacionDTO[]>(
       `${this.apiUrl}/usuarios/${idUsuario}/notificaciones`,

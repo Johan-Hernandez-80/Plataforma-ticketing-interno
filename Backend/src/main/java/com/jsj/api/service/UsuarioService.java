@@ -166,4 +166,8 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioDTO, Usuar
         return dao.findAllAgentes();
     }
 
+    public List<UsuarioDTO> findAllUsuarios() {
+        return dao.findAllUsuarios();
+    }
+
 }

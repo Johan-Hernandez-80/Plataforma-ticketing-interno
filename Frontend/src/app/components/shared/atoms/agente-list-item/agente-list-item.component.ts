@@ -1,4 +1,3 @@
-// agente-list-item.component.ts
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { UsuarioDTO } from '../../../../services/api.service';
 

@@ -138,5 +138,20 @@ public class UsuarioController extends BaseController<Usuario, Long, UsuarioDTO>
       List<UsuarioDTO> usuarios = service.findAllAgentes();
       return ResponseEntity.ok(usuarios);
   }
+  
+  @Operation(summary = "Retraer todos los agentes", description = "Permite obtener todos los agentes del sistema.")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Agentes obtenidos correctamente", content = @Content(array = @ArraySchema(schema = @Schema(implementation = UsuarioDTO.class)))),
+      @ApiResponse(responseCode = "401", description = "No autorizado", content = @Content(schema = @Schema(example = "{ \"error\": \"No tiene permiso para usar este endpoint\" }"))),
+      @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content(schema = @Schema(example = "{ \"error\": \"Error interno del servidor. Intente nuevamente más tarde.\" }")))
+  })
+  @GetMapping("")
+  public ResponseEntity<?> getAllUsuarios() {
+      if (!"admin".equalsIgnoreCase(CurrentUser.getRole())) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+      List<UsuarioDTO> usuarios = service.findAllUsuarios();
+      return ResponseEntity.ok(usuarios);
+  }
 
 }

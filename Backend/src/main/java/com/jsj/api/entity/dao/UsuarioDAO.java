@@ -112,4 +112,11 @@ public class UsuarioDAO extends BaseDAO<Usuario, Long, UsuarioDTO, UsuarioMapper
         .toList();
 }
 
+    public List<UsuarioDTO> findAllUsuarios() {
+        return repo.findAll()
+                .stream()
+                .map(mapper::toDTO)
+                .toList();
+    }
+
 }
