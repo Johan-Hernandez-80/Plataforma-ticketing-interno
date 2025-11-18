@@ -14,6 +14,10 @@ import { CommentViewPageComponent } from "./components/pages/comment-view-page/c
 import { TestEndpointsComponent } from "./test-endpoints/test-endpoints.component";
 import { UserHomePageComponent } from "./components/pages/userHomePage/userHomePage.component";
 import { TestComponent } from "./components/shared/molecules/test/test.component";
+import { TicketManagementAdminPageComponent } from "./components/pages/ticket-management-admin-page/ticket-management-admin-page.component";
+import { CommentManagementAdminPageComponent } from "./components/pages/comment-management-admin-page/comment-management-admin-page.component";
+import { AsignarAgentePageComponent } from "./components/pages/asignar-agente-page/asignar-agente-page.component";
+import { CommentViewAdminPageComponent } from "./components/pages/comment-view-admin-page/comment-view-admin-page.component";
 
 export const routes: Routes = [
   {
@@ -53,6 +57,10 @@ export const routes: Routes = [
     component: TicketManagementPageComponent,
   },
   {
+    path: "admin/ticket/management/:id",
+    component: TicketManagementAdminPageComponent,
+  },
+  {
     path: "ticket/management/user",
     component: UserTicketManagementPageComponent,
   },
@@ -65,8 +73,20 @@ export const routes: Routes = [
     component: CommentManagementPageComponent,
   },
   {
+    path: "admin/ticket/management/:id/comments/:comentarioId",
+    component: CommentViewAdminPageComponent,
+  },
+  {
+    path: "admin/ticket/management/:id/comments",
+    component: CommentManagementAdminPageComponent,
+  },
+  {
     path: "ticket/management/:id/comments/:comentarioId",
     component: CommentViewPageComponent,
+  },
+  {
+    path: 'admin/ticket/management/:id/asignar',
+    component: AsignarAgentePageComponent,
   },
   {
     path: "test-endpoints",

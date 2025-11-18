@@ -16,6 +16,7 @@ import com.jsj.api.exception.InsufficientSavingPermissionsException;
 import com.jsj.api.exception.UsuarioInexistenteException;
 import com.jsj.api.repository.UsuarioRepository;
 import com.jsj.api.security.CurrentUser;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -103,5 +104,12 @@ public class UsuarioDAO extends BaseDAO<Usuario, Long, UsuarioDTO, UsuarioMapper
   public long countAgentesActivos() {
     return repo.countAgentesActivos();
   }
+
+    public List<UsuarioDTO> findAllAgentes() {
+    return repo.findAll().stream()
+        .filter(u -> u.getRolId() == 2)
+        .map(mapper::toDTO)
+        .toList();
+}
 
 }
