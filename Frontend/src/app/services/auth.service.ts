@@ -52,4 +52,41 @@ export class AuthService {
   getToken(): string | null {
     return this.tokenSubject.value;
   }
+
+  getUserIdFromToken(): number | null {
+    const token = this.getToken();
+    if (!token) return null;
+    try {
+      const payloadPart = token.split(".")[1];
+      const base64 = payloadPart.replace(/-/g, "+").replace(/_/g, "/");
+      const padded = base64.padEnd(base64.length + (4 - (base64.length % 4)) % 4, "=");
+      const json = isPlatformBrowser(this.platformId)
+        ? atob(padded)
+        : Buffer.from(padded, 'base64').toString('utf-8');
+      const payload = JSON.parse(json);
+      const sub = payload?.sub ?? payload?.userId ?? payload?.id;
+      const id = typeof sub === 'string' ? parseInt(sub, 10) : sub;
+      return Number.isFinite(id) ? id : null;
+    } catch {
+      return null;
+    }
+  }
+
+  getRoleFromToken(): string | null {
+    const token = this.getToken();
+    if (!token) return null;
+    try {
+      const payloadPart = token.split(".")[1];
+      const base64 = payloadPart.replace(/-/g, "+").replace(/_/g, "/");
+      const padded = base64.padEnd(base64.length + (4 - (base64.length % 4)) % 4, "=");
+      const json = isPlatformBrowser(this.platformId)
+        ? atob(padded)
+        : Buffer.from(padded, 'base64').toString('utf-8');
+      const payload = JSON.parse(json);
+      const role = payload?.rol ?? payload?.role ?? payload?.authority ?? null;
+      return typeof role === 'string' ? role.toLowerCase() : null;
+    } catch {
+      return null;
+    }
+  }
 }
