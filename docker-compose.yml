@@ -28,8 +28,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: rootpass
       MYSQL_DATABASE: ticketing
-      MYSQL_USER: user
-      MYSQL_PASSWORD: pass
+      MYSQL_USER: appuser
+      MYSQL_PASSWORD: appPass
     ports:
       - "3307:3306"
     volumes:
