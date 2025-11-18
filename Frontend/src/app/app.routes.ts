@@ -18,6 +18,9 @@ import { TicketManagementAdminPageComponent } from "./components/pages/ticket-ma
 import { CommentManagementAdminPageComponent } from "./components/pages/comment-management-admin-page/comment-management-admin-page.component";
 import { AsignarAgentePageComponent } from "./components/pages/asignar-agente-page/asignar-agente-page.component";
 import { CommentViewAdminPageComponent } from "./components/pages/comment-view-admin-page/comment-view-admin-page.component";
+import { UsuarioManagementPageComponent } from "./components/pages/usuario-management-page/usuario-management-page.component";
+import { UsuarioDetailPageComponent } from "./components/pages/usuario-detail-page/usuario-detail-page.component";
+import { UpdateAdminPageComponent } from "./components/pages/update-admin-page/update-admin-page.component";
 
 export const routes: Routes = [
   {
@@ -47,6 +50,10 @@ export const routes: Routes = [
   {
     path: "profile/update",
     component: UpdatePageComponent,
+  },
+  {
+    path: "admin/profile/update",
+    component: UpdateAdminPageComponent,
   },
   {
     path: "notifications",
@@ -95,6 +102,18 @@ export const routes: Routes = [
   {
     path: 'admin/ticket/management/:id/asignar',
     component: AsignarAgentePageComponent,
+  },
+  {
+    path: 'admin/usuario/management',
+    component: UsuarioManagementPageComponent,
+  },
+  {
+    path: 'admin/usuario/management/:id',
+    component: UsuarioDetailPageComponent,
+  },
+  {
+    path: 'admin/usuario/create',
+    component: UsuarioManagementPageComponent,
   },
   {
     path: "test-endpoints",
