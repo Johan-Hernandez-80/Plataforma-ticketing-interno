@@ -19,9 +19,6 @@ WORKDIR /app
 # Copiamos el jar generado
 COPY --from=build /app/build/libs/*.jar app.jar
 
-# Copiamos el .env (asegúrate de que está junto al Dockerfile)
-COPY .env .env
-
 EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "app.jar"]
