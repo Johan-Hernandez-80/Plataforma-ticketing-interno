@@ -9,4 +9,4 @@ import { ProfileCardComponent } from "../../shared/molecules/profile-card/profil
   templateUrl: "./profilePage.component.html",
   styleUrls: ["./profilePage.component.css"],
 })
-export class ProfilePageComponent {}
+export class ProfilePageComponent { }

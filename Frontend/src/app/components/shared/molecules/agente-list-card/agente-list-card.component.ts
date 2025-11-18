@@ -1,4 +1,3 @@
-// agente-list-card.component.ts
 import { Component, inject, OnInit } from "@angular/core";
 import { Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
