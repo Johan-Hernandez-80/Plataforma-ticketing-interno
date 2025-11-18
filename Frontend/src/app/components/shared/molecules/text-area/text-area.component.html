@@ -1,0 +1,23 @@
+<app-background [variant]="'dark-overlay'">
+  <app-card width="1200px" height="600px">
+    <div class="container">
+      <img
+        src="../../../../../assets/closeIcon.svg"
+        alt="Icono cerrar ventana emergente"
+        (click)="onClose(false)"
+      />
+      <div class="textarea-wrapper">
+        <textarea
+          [(ngModel)]="currentText"
+          [placeholder]="'Escribe aquí...'"
+        ></textarea>
+      </div>
+      <app-main-button
+        placeHolder="Confirmar"
+        width="200px"
+        height="50px"
+        (click)="onClose(true)"
+      ></app-main-button>
+    </div>
+  </app-card>
+</app-background>

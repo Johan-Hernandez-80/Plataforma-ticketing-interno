@@ -1,0 +1,35 @@
+<app-card [width]="'880px'" [height]="'520px'" [center]="false" class="update-shell">
+    <div class="update-card">
+        <aside class="side">
+            <a class="back" [routerLink]="'/profile'" aria-label="Volver">
+                <img src="../../../../assets/goBackArrow.svg" alt="Volver" />
+            </a>
+            <button class="tab" [class.active]="tab==='email'" (click)="switchTab('email')">Correo personal</button>
+            <button class="tab" [class.active]="tab==='password'" (click)="switchTab('password')">Clave</button>
+        </aside>
+
+    <section class="content" aria-live="polite">
+            @if (tab === 'password') {
+            <h2>Cambiar clave</h2>
+            <div class="form">
+                <app-text-input [placeHolder]="'Clave actual'" [type]="'password'"
+                    [(ngModel)]="currentPassword"></app-text-input>
+                <app-text-input [placeHolder]="'Nueva clave'" [type]="'password'"
+                    [(ngModel)]="newPassword"></app-text-input>
+                <app-text-input [placeHolder]="'Confirma nueva clave'" [type]="'password'"
+                    [(ngModel)]="confirmPassword"></app-text-input>
+            </div>
+            } @else {
+            <h2>Cambiar correo personal</h2>
+            <div class="form">
+                <app-text-input [placeHolder]="'Nuevo correo'" [type]="'email'" [(ngModel)]="newEmail"></app-text-input>
+            </div>
+            }
+            <div class="actions">
+                <app-main-button [placeHolder]="'Confirmar'" [width]="'140px'" [height]="'40px'" [variant]="'primary'"
+                    (clicked)="confirm()"></app-main-button>
+            </div>
+
+        </section>
+    </div>
+</app-card>

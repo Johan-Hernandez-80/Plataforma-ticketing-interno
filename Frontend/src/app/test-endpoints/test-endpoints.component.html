@@ -1,0 +1,49 @@
+﻿<div class="container">
+  <h2>API Endpoint Tester</h2>
+  <p>Click to test <strong>all endpoints</strong> with real data.</p>
+
+  <button (click)="testAllEndpoints()" [disabled]="isTesting" class="btn-test">
+    {{ isTesting ? 'Testing...' : 'Test All Endpoints' }}
+  </button>
+
+  <div *ngIf="results.length > 0" class="results mt-4">
+    <h3>Results ({{ getSuccessCount() }} / {{ results.length }} OK)</h3>
+    <table class="table table-sm table-bordered">
+      <thead>
+        <tr>
+          <th>Endpoint</th>
+          <th>Method</th>
+          <th>Path</th>
+          <th>Status</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let r of results" [class.success]="r.status === 'success'" [class.error]="r.status === 'error'">
+          <td><strong>{{ r.name }}</strong></td>
+          <td>
+            <span class="badge"
+                  [class.bg-primary]="r.method === 'GET'"
+                  [class.bg-success]="r.method === 'POST'"
+                  [class.bg-warning]="r.method === 'PATCH'"
+                  [class.bg-danger]="r.method === 'DELETE'">
+              {{ r.method }}
+            </span>
+          </td>
+          <td><code>{{ r.path }}</code></td>
+          <td>
+            <span *ngIf="r.status === 'pending'" class="text-muted">Pending</span>
+            <span *ngIf="r.status === 'success'" class="text-success">Success</span>
+            <span *ngIf="r.status === 'error'" class="text-danger">Failed</span>
+          </td>
+          <td>
+            <span *ngIf="r.error" class="text-danger">{{ r.error }}</span>
+            <span *ngIf="r.response && !r.error" class="text-success text-small">
+              Success ({{ getResponseKeys(r.response).length }} fields)
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

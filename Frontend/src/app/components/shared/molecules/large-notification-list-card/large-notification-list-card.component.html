@@ -1,0 +1,24 @@
+<app-card [width]="'80rem'" [height]="'45rem'">
+  <div class="container">
+    <div class="card-header">
+      <a [routerLink]="navBack()">
+        <img
+          src="../../../../../assets/goBackArrow.svg"
+          alt="flecha para regresar"
+        />
+      </a>
+      <p>Notificaciones</p>
+    </div>
+
+    <div class="notification-container">
+      @for (notification of notifications; track notification.id) {
+        <app-notification-list-item
+          [width]="'100%'"
+          [message]="notification.mensaje"
+          [date]="getDate(notification.fechaCreacion ?? '')"
+          [time]="getTime(notification.fechaCreacion ?? '')"
+        ></app-notification-list-item>
+      }
+    </div>
+  </div>
+</app-card>

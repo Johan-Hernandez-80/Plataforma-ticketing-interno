@@ -1,0 +1,79 @@
+# Login
+
+## Body
+
+{
+  "email": "juan@empresa.com",
+  "password": "1234juan"
+}
+
+## Response
+
+200 OK
+
+{
+  "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzU3ODIzODIwLCJleHAiOjE3NTc4Mjc0MjB9.y47C0ckRcCAJvF0LdcpTpbTipU3tzozp_HVOnhOlUos"
+}
+
+# Create new comentario
+
+## Body
+
+{
+  "ticketId": 3,
+  "usuarioId": 2,
+  "comentario": "El usuario canceló el tiquete ya que se tenía que ir."
+}
+
+## Response
+
+200 OK
+
+{
+  "id": 7898,
+  "ticketId": 3,
+  "usuarioId": 2,
+  "comentario": "El usuario canceló el tiquete ya que se tenía que ir.",
+  "fechaCreacion": "2025-09-14T04:18:42.803Z"
+}
+
+# Get ticket by ID
+
+## Parameter
+
+3
+
+## Response
+
+200 OK
+
+{
+  "id": 12,
+  "usuario_id": 45,
+  "categoria_id": 3,
+  "titulo": "Error al iniciar sesión",
+  "descripcion": "El usuario no puede iniciar sesión en la aplicación.",
+  "prioridad": "Alta",
+  "estado": "Abierto",
+  "fecha_creacion": "2025-09-13T23:00:00Z",
+  "fecha_cierre": null
+}
+
+# Create categoria
+
+## Body
+
+{
+  "nombre": "Impresora",
+  "descripcion": "Problemas relacionados con impresoras"
+}
+
+## Response
+
+200 OK
+
+{
+  "id": 1,
+  "nombre": "Impresora",
+  "descripcion": "Problemas relacionados con impresoras"
+}

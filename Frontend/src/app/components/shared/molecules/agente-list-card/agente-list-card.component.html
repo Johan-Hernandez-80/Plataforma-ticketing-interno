@@ -1,0 +1,23 @@
+<!-- agente-list-card.component.html -->
+<app-card [width]="'1300px'" [height]="'800px'">
+  <div class="container">
+    <div class="card-header">
+      <a [routerLink]="['/admin/ticket/management', idTicket]">
+        <img src="../../../../../assets/goBackArrow.svg" alt="back" />
+      </a>
+      <h2>Agents</h2>
+    </div>
+
+    <app-validation-card *ngIf="showReassignConfirm"
+      message="¿Desea asignar el ticket al agente {{ selectedAgent?.nombre }}?"
+      (close)="handleReassignConfirmation($event)">
+    </app-validation-card>
+
+    <div class="comment-box">
+      @for (agent of agentes; track agent.id) {
+      <app-agente-list-item [agent]="agent" (reassign)="requestReassign($event)">
+      </app-agente-list-item>
+      }
+    </div>
+  </div>
+</app-card>

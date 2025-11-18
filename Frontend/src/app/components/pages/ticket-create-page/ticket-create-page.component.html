@@ -1,0 +1,71 @@
+<app-background>
+  <app-header></app-header>
+
+  <app-card width="1100px" height="620px">
+    <div class="container">
+      <div class="card-header">
+        <button class="go-back" (click)="onBack()">
+          <img src="../../../../../assets/goBackArrow.svg" alt="Volver" />
+        </button>
+      </div>
+
+      <div class="grid">
+        <div class="left">
+          <app-text-input
+            [placeHolder]="'Motivo'"
+            [(ngModel)]="motivo"
+            [type]="'text'"
+          ></app-text-input>
+
+          <textarea
+            class="text-area"
+            [(ngModel)]="descripcion"
+            rows="7"
+            placeholder="Descripción del problema"
+          ></textarea>
+
+          <app-file-upload-card
+            [placeholder]="'Prueba (png, pdf) máximo 50mb'"
+            [accept]="'.png,.pdf'"
+            [maxSizeMb]="50"
+            (fileSelected)="onFileSelected($event)"
+            (fileRejected)="onFileRejected($event)"
+            [height]="'110px'"
+          ></app-file-upload-card>
+        </div>
+
+        <div class="right">
+          <div class="field">
+            <label class="label">Categoría </label>
+            <app-combo-box
+              [selected]="categoria"
+              [options]="categorias"
+              [width]="'200px'"
+              (change)="onCategoriaChange($event.value ?? '')"
+            ></app-combo-box>
+          </div>
+
+          <div class="field" id="prioridad-box">
+            <label class="label">Prioridad </label>
+            <app-combo-box
+              [selected]="prioridad"
+              [options]="prioridades"
+              [width]="'140px'"
+              (change)="onPrioridadChange($event.value ?? '')"
+            ></app-combo-box>
+          </div>
+
+          <div class="actions">
+            <app-main-button
+              [placeHolder]="'Crear'"
+              [variant]="'primary'"
+              [width]="'180px'"
+              [height]="'56px'"
+              (clicked)="onCrear()"
+            ></app-main-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </app-card>
+</app-background>

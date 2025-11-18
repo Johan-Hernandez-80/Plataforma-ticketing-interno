@@ -1,0 +1,34 @@
+<div
+  (mouseenter)="setLogOutButtonClass('hover')"
+  (mouseleave)="setLogOutButtonClass('')"
+>
+  <app-main-button
+    (click)="navigate('/profile')"
+    [width]="'72px'"
+    [height]="'52px'"
+    [iconUrl]="'../../../../assets/userIcon.svg'"
+    [variant]="'secondary'"
+  ></app-main-button>
+  <p>{{ usuario?.nombre }}</p>
+  <app-main-button
+    [routerLink]="navBack()"
+    [width]="'72px'"
+    [height]="'52px'"
+    [iconUrl]="'../../../../assets/tableIcon.svg'"
+  ></app-main-button>
+  <app-main-button
+    (click)="setNotificationButtonActive(!isNotificationButtonActive)"
+    [width]="'56px'"
+    [height]="'52px'"
+    [iconUrl]="'../../../../assets/alarmIcon.svg'"
+  ></app-main-button>
+  @if (isNotificationButtonActive) {
+    <app-small-notification-list
+      (closeEvent)="setNotificationButtonActive(false)"
+    ></app-small-notification-list>
+  }
+</div>
+<app-log-out-button
+  (click)="logOut()"
+  [class]="logOutButtonClass"
+></app-log-out-button>

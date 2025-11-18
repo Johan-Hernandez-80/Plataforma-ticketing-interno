@@ -1,0 +1,59 @@
+.upload-card {
+    position: relative;
+    background-color: #eff2fe;
+    border: 1px solid #b3b5bf;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    overflow: hidden;
+    padding: 12px 16px;
+}
+
+.upload-card:hover {
+    border-color: #50aee3;
+}
+
+.upload-card.dragging {
+    border-color: #50aee3;
+}
+
+.content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.placeholder,
+.filename {
+    font-size: 1.5rem;
+    color: #5a5a5a;
+    margin: 0;
+}
+
+.filename {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.icon {
+    width: 28px;
+    height: 28px;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(80, 174, 227, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 1.4rem;
+    color: #504be0;
+}

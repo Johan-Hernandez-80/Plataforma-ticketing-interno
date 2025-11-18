@@ -1,0 +1,17 @@
+<app-background>
+  <app-header></app-header>
+  <app-ticket-manage-card
+    [showCancelButton]="true"
+    [priorityEditable]="false"
+    (requestCancel)="openCancel()"
+  ></app-ticket-manage-card>
+
+  @if (showCancelModal) {
+    <app-confirm-modal
+      [message]="cancelMessage"
+      (cancel)="closeCancel()"
+      (confirm)="confirmCancel()"
+    ></app-confirm-modal>
+  }
+</app-background>
+

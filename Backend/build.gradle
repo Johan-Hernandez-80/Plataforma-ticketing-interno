@@ -1,0 +1,65 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.5'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.jsj'
+version = '1.0.2'
+description = 'Backend del proyecto de ticketing'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'io.github.cdimascio:dotenv-java:3.0.0'
+        implementation 'org.springframework.boot:spring-boot-starter-security'
+        implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.12'
+        implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+        implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+        implementation 'org.mariadb.jdbc:mariadb-java-client:3.5.5'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'com.itextpdf:itextpdf:5.5.13.3'
+        implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+        implementation 'org.postgresql:postgresql:42.6.0'
+        implementation 'com.mysql:mysql-connector-j:8.4.0'
+
+        annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+
+	compileOnly 'org.projectlombok:lombok:1.18.30'
+
+        runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
+        runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+        annotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+    // 🔹 Dependencias para testing
+	  testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mockito:mockito-core'
+    testImplementation 'org.testcontainers:junit-jupiter'
+
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
+}

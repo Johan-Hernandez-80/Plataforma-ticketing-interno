@@ -1,0 +1,6 @@
+<main class="container" [class.dark-overlay]="variant === 'dark-overlay'">
+  @if (variant === "pattern") {
+  <img src="../../../../assets/circlePattern.svg" alt="Patron de circulos" width="100%" height="100%" />
+  }
+  <ng-content></ng-content>
+</main>

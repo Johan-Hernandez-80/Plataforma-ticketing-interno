@@ -1,0 +1,8 @@
+<app-background>
+  <app-header></app-header>
+  <div class="action-add" id="action-add">
+    <app-main-button [placeHolder]="'+'" [variant]="'primary'" [width]="'150px'" [height]="'56px'"
+      [routerLink]="'/ticket/create'"></app-main-button>
+  </div>
+  <app-table [data]="tickets" tableHeight="500px" tableWidth="1080px"></app-table>
+</app-background>

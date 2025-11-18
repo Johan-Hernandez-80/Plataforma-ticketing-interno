@@ -1,0 +1,68 @@
+# Nombres de clases e interfaces
+
+Usar PascalCase: UsuarioController, Usuario, UsuarioMapper.
+
+# Nombres de métodos
+
+Usar camelCase: create(), getById(), updateEntityFromDTO().
+
+# Constantes
+
+Las constantes deben ser static final.
+
+# Anotaciones
+
+Las anotaciones de clase van inmediatamente antes de la declaración de la clase.
+
+Las anotaciones de método van inmediatamente antes de la firma del método.
+
+Ejemplo:
+
+@PostMapping
+@Operation(summary = "Create a new Usuario", ...)
+public ResponseEntity<UsuarioDTO> create(...) { ... }
+
+# Modificadores de acceso
+
+Métodos de controladores o servicios deben ser public.
+
+# Sangría y llaves
+
+Sangría de 4 espacios.
+
+Llave de apertura { al final de la línea de declaración.
+
+Llave de cierre } alineada con la declaración inicial.
+
+# Espacios
+
+Espacio después de palabras clave (if, for, while) antes del paréntesis.
+
+Espacios alrededor de operadores (=, ==).
+
+if (!"admin".equalsIgnoreCase(CurrentUser.getRole())) {
+    return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+}
+
+# Genéricos
+
+Usar genéricos explícitos en las clases:
+
+BaseController<Usuario, Long, UsuarioDTO, UsuarioDAO, UsuarioMapper, UsuarioFilter>
+
+
+Evitar tipos sin especificar (raw types).
+
+# Mapeo DTO
+
+Usar MapStruct o equivalente para convertir entre entity y DTO.
+
+# Colecciones
+
+Preferir tipos de interfaz (List, Set) sobre implementación (ArrayList) en los campos.
+
+# Nombres de campos
+
+Usar camelCase: emailCorporativo, fechaCreacion.
+
+Evitar guiones bajos, salvo que se necesite para mapear la BD con @Column(name = "...").

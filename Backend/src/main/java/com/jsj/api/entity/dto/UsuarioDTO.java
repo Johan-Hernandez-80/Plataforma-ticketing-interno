@@ -1,0 +1,108 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.jsj.api.entity.dto;
+
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.*;
+import lombok.Data;
+
+/**
+ *
+ * @author Juan José Molano Franco
+ */
+@Data
+@Schema(
+        description = "DTO para usuario. Solo incluye los atributos que el usuario autenticado tiene permiso para usar. La visibilidad de los campos depende del rol y permisos del usuario."
+)
+public class UsuarioDTO {
+
+    @Schema(example = "1")
+    private Long id;
+
+    @Schema(example = "1")
+    private Long rolId;
+
+    @Schema(example = "Juan Armando")
+    @Size(max = 255, message = "El nombre no puede superar 255 caracteres")
+    private String nombre;
+
+    @Schema(example = "juan@email.com")
+    @Email(message = "El correo personal no es válido")
+    @Pattern(regexp = "\\S+", message = "El correo personal no debe contener espacios en blanco")
+    @Size(max = 255, message = "El correo personal no puede superar 255 caracteres")
+    private String emailPersonal;
+
+    @Schema(example = "juan@empresa.com")
+    @Email(message = "El correo corporativo no es válido")
+    @Pattern(regexp = "\\S+", message = "El correo corporativo no debe contener espacios en blanco")
+    @Size(max = 255, message = "El correo corporativo no puede superar 255 caracteres")
+    private String emailCorporativo;
+
+    @Schema(example = "juan1234")
+    @Pattern(regexp = "\\S+", message = "La contraseña no debe contener espacios en blanco")
+    @Size(max = 255, message = "La contraseña no puede superar 255 caracteres")
+    private String contrasena;
+
+    @Schema(example = "Contaduría")
+    @Size(max = 255, message = "El departamento no puede superar 255 caracteres")
+    private String departamento;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getRolId() {
+        return rolId;
+    }
+
+    public void setRolId(Long rolId) {
+        this.rolId = rolId;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getEmailPersonal() {
+        return emailPersonal;
+    }
+
+    public void setEmailPersonal(String emailPersonal) {
+        this.emailPersonal = emailPersonal;
+    }
+
+    public String getEmailCorporativo() {
+        return emailCorporativo;
+    }
+
+    public void setEmailCorporativo(String emailCorporativo) {
+        this.emailCorporativo = emailCorporativo;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public String getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(String departamento) {
+        this.departamento = departamento;
+    }
+
+}

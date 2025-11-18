@@ -1,0 +1,22 @@
+<div class="overlay">
+  <app-card [width]="'520px'" [height]="'260px'" [center]="false">
+    <div class="modal">
+      <h2>{{ message }}</h2>
+      <div class="buttons">
+        <app-main-button
+          [variant]="'primary-outline'"
+          [placeHolder]="cancelLabel"
+          [width]="'200px'"
+          [height]="'40px'"
+          (clicked)="cancel.emit()"
+        ></app-main-button>
+        <app-main-button
+          [placeHolder]="confirmLabel"
+          [width]="'200px'"
+          [height]="'40px'"
+          (clicked)="confirm.emit()"
+        ></app-main-button>
+      </div>
+    </div>
+  </app-card>
+</div>

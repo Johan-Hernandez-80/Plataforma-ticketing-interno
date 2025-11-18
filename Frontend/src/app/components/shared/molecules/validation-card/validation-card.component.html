@@ -1,0 +1,22 @@
+<app-background [variant]="'dark-overlay'">
+  <app-card [width]="'500px'" [height]="'250px'">
+    <div>
+      <p>{{ message }}</p>
+      <div class="button-wrapper">
+        <app-main-button
+          [variant]="'primary-outline'"
+          [placeHolder]="'Cancelar'"
+          [width]="'200px'"
+          [height]="'40px'"
+          (click)="onClose(false)"
+        ></app-main-button>
+        <app-main-button
+          [placeHolder]="'Confirmar'"
+          [width]="'200px'"
+          [height]="'40px'"
+          (click)="onClose(true)"
+        ></app-main-button>
+      </div>
+    </div>
+  </app-card>
+</app-background>

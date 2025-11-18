@@ -1,0 +1,115 @@
+# Diccionario de Datos de la Base de Datos de Ticketing
+
+## Base de Datos: `ticketing`
+
+---
+
+### Tabla: `roles`
+| Columna | Tipo         | Nulo | Clave         | Descripción                     |
+|---------|--------------|------|---------------|---------------------------------|
+| id      | INT          | NO   | PK, AI        | Identificador único del rol     |
+| nombre  | VARCHAR(255) | NO   | UQ            | Nombre del rol                  |
+
+---
+
+### Tabla: `permisos`
+| Columna | Tipo         | Nulo | Clave         | Descripción                          |
+|---------|--------------|------|---------------|--------------------------------------|
+| id      | INT          | NO   | PK, AI        | Identificador único del permiso      |
+| nombre  | VARCHAR(255) | NO   | UQ            | Nombre del permiso                   |
+
+---
+
+### Tabla: `permisos_roles`
+| Columna     | Tipo | Nulo | Clave                     | Descripción                          |
+|-------------|------|------|---------------------------|--------------------------------------|
+| rol_id      | INT  | NO   | PK, FK → roles(id)        | Referencia al rol                    |
+| permiso_id  | INT  | NO   | PK, FK → permisos(id)     | Referencia al permiso                |
+
+---
+
+### Tabla: `usuarios`
+| Columna           | Tipo         | Nulo | Clave             | Descripción                          |
+|-------------------|--------------|------|-------------------|--------------------------------------|
+| id                | INT          | NO   | PK, AI            | Identificador único del usuario      |
+| rol_id            | INT          | NO   | FK → roles(id)    | Rol asignado al usuario              |
+| nombre            | VARCHAR(255) | NO   |                   | Nombre completo del usuario          |
+| email_personal    | VARCHAR(255) | SÍ   | UQ                | Correo personal del usuario          |
+| email_corporativo | VARCHAR(255) | NO   | UQ                | Correo corporativo del usuario       |
+| contrasena        | VARCHAR(255) | NO   |                   | Contraseña del usuario (hasheada)    |
+| departamento      | VARCHAR(255) | NO   |                   | Nombre del departamento              |
+
+---
+
+### Tabla: `categorias`
+| Columna     | Tipo         | Nulo | Clave   | Descripción                          |
+|-------------|--------------|------|---------|--------------------------------------|
+| id          | INT          | NO   | PK, AI  | Identificador único de la categoría  |
+| nombre      | VARCHAR(255) | NO   |         | Nombre de la categoría               |
+| descripcion | VARCHAR(255) | SÍ   |         | Descripción de la categoría          |
+
+---
+
+### Tabla: `tickets`
+| Columna         | Tipo          | Nulo | Clave                 | Descripción                                            |
+|-----------------|---------------|------|-----------------------|--------------------------------------------------------|
+| id              | INT           | NO   | PK, AI                | Identificador único del ticket                         |
+| usuario_id      | INT           | NO   | FK → usuarios(id)     | Usuario que creó el ticket                             |
+| categoria_id    | INT           | NO   | FK → categorias(id)   | Categoría del ticket                                   |
+| agente_id       | INT           | NO   | FK → usuarios(id)     | Agente asignado al ticket                              |
+| titulo          | VARCHAR(255)  | NO   |                       | Título del ticket                                      |
+| descripcion     | VARCHAR(1000) | NO   |                       | Descripción del ticket                                 |
+| prioridad       | VARCHAR(255)  | NO   |                       | Prioridad del ticket (Urgente, Importante, Programado) |
+| estado          | VARCHAR(255)  | NO   |                       | Estado del ticket (En progreso, Pendiente, Cerrado)    |
+| fecha_creacion  | TIMESTAMP     | NO   |                       | Fecha y hora de creación                               |
+| fecha_cierre    | TIMESTAMP     | SÍ   |                       | Fecha y hora de cierre                                 |
+
+**Restricciones:**
+- `chk_tickets_estado`: `estado` debe ser 'En progreso', 'Pendiente' o 'Cerrado'.
+- `chk_tickets_prioridad`: `prioridad` debe ser 'Urgente', 'Importante' o 'Programado'.
+
+---
+
+### Tabla: `comentarios`
+| Columna        | Tipo          | Nulo | Clave                | Descripción                          |
+|----------------|---------------|------|----------------------|--------------------------------------|
+| id             | INT           | NO   | PK, AI               | Identificador único del comentario   |
+| ticket_id      | INT           | NO   | FK → tickets(id)     | Referencia al ticket                 |
+| usuario_id     | INT           | NO   | FK → usuarios(id)    | Autor del comentario                 |
+| comentario     | VARCHAR(1000) | NO   |                      | Contenido del comentario             |
+| fecha_creacion | TIMESTAMP     | NO   |                      | Fecha y hora de creación             |
+
+---
+
+### Tabla: `historial_tickets`
+| Columna         | Tipo         | Nulo | Clave                | Descripción                          |
+|-----------------|--------------|------|----------------------|--------------------------------------|
+| id              | INT          | NO   | PK, AI               | Identificador único del historial    |
+| ticket_id       | INT          | NO   | FK → tickets(id)     | Referencia al ticket                 |
+| estado_anterior | VARCHAR(255) | NO   |                      | Estado anterior del ticket           |
+| estado_nuevo    | VARCHAR(255) | NO   |                      | Nuevo estado del ticket              |
+| fecha_creacion  | TIMESTAMP    | NO   |                      | Fecha y hora del cambio              |
+
+**Restricciones:**
+- `chk_historialtickets_estados`: `estado_anterior` y `estado_nuevo` deben ser 'En progreso', 'Pendiente' o 'Cerrado'.
+
+---
+
+### Tabla: `notificaciones`
+| Columna        | Tipo         | Nulo | Clave                | Descripción                                  |
+|----------------|--------------|------|----------------------|----------------------------------------------|
+| id             | INT          | NO   | PK, AI               | Identificador único de la notificación       |
+| usuario_id     | INT          | NO   | FK → usuarios(id)    | Usuario que recibe la notificación           |
+| mensaje        | VARCHAR(255) | NO   |                      | Mensaje de la notificación                   |
+| fecha_creacion | TIMESTAMP    | NO   |                      | Fecha y hora de creación                     |
+
+---
+
+### Notas Adicionales
+- **Claves**:
+  - **PK**: Clave primaria.
+  - **AI**: Autoincremental.
+  - **UQ**: Única.
+  - **FK**: Clave foránea con referencia a la tabla y columna indicadas.
+- **Base de Datos**: Todas las tablas están contenidas en la base de datos `ticketing`.
+- **Timestamps**: Los campos `fecha_creacion` usan `TIMESTAMP` con valor por defecto `CURRENT_TIMESTAMP`.

@@ -1,0 +1,11 @@
+app-table {
+  position: absolute;
+  width: 1600px;
+  top: 200px;
+}
+
+.action-add {
+  position: absolute;
+  top: 140px;
+  right: 165px;
+}
