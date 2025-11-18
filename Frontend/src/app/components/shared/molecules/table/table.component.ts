@@ -1,5 +1,5 @@
-import { Component, Input, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, Input, OnChanges } from '@angular/core';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -30,6 +30,8 @@ export class TableComponent implements OnChanges {
   @Input() data: TicketDTO[] = [];
   @Input() maxHeight: string = '600px';
   @Input() tableWidth: string = '1020px';
+  @Input() isAdmin: boolean = false;
+
   displayedColumns = [
     "ID",
     "Titulo",
@@ -72,7 +74,11 @@ export class TableComponent implements OnChanges {
   }
 
   goToManagement(ticket: DisplayTicket) {
-    this.router.navigate(["/ticket/management", ticket.id], {
+    let route = "/ticket/management";
+    if (this.isAdmin === true) {
+      route = "/admin/ticket/management";
+    }
+    this.router.navigate([route, ticket.id], {
       state: { ticket },
     });
   }

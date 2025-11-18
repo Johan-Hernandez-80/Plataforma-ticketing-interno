@@ -1,0 +1,50 @@
+.container {
+  display: grid;
+  grid-template-columns: 9fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  width: 100%;
+  height: 80px;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
+  padding: 0 10px;
+}
+
+.container:hover {
+  border-top: 2px solid #50aee3;
+  border-bottom: 2px solid #50aee3;
+}
+
+.author,
+.date,
+.time {
+  font-size: 16px;
+  color: #1e1c4a;
+  font-weight: 500;
+}
+
+.author {
+  font-size: 20px;
+  font-weight: 700;
+  align-self: end;
+}
+
+.date {
+  align-self: end;
+  justify-self: end;
+}
+
+.time {
+  justify-self: end;
+}
+
+.message {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+a {
+  all: unset;
+  cursor: pointer;
+}
