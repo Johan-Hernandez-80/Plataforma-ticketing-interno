@@ -42,6 +42,7 @@ export class CommentListCardComponent implements OnInit {
   isCloseTicketValidation = false;
   isTextArea = false;
   isTicketCerrado = true;
+  get isUser(): boolean { return (this.usuario?.rolId ?? -1) === 3; }
 
   setIsCloseTicketValidation(state: boolean, result?: boolean) {
     this.isCloseTicketValidation = state;
@@ -113,4 +114,11 @@ export class CommentListCardComponent implements OnInit {
   }
 
   comentarios: DisplayComentario[] = [];
+
+  getBackRoute(): any[] {
+    if (this.isUser) {
+      return ["/ticket/management/user", this.idTicket];
+    }
+    return ["/ticket/management", this.idTicket];
+  }
 }

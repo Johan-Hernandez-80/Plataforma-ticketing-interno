@@ -65,6 +65,10 @@ export const routes: Routes = [
     component: UserTicketManagementPageComponent,
   },
   {
+    path: "ticket/management/user/:id",
+    component: UserTicketManagementPageComponent,
+  },
+  {
     path: "ticket/create",
     component: TicketCreatePageComponent,
   },
@@ -79,6 +83,10 @@ export const routes: Routes = [
   {
     path: "admin/ticket/management/:id/comments",
     component: CommentManagementAdminPageComponent,
+  },
+  {
+    path: "ticket/management/user/:id/comments",
+    component: CommentManagementPageComponent,
   },
   {
     path: "ticket/management/:id/comments/:comentarioId",

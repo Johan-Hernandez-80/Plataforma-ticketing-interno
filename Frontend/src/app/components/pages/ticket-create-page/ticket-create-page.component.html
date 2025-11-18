@@ -38,20 +38,19 @@
           <div class="field">
             <label class="label">Categoría </label>
             <app-combo-box
-              [selected]="categoria"
+              [(selected)]="categoria"
               [options]="categorias"
               [width]="'200px'"
-              (change)="onCategoriaChange($event.value ?? '')"
+              (selectedChange)="onCategoriaChange($event)"
             ></app-combo-box>
           </div>
 
           <div class="field" id="prioridad-box">
             <label class="label">Prioridad </label>
             <app-combo-box
-              [selected]="prioridad"
+              [(selected)]="prioridad"
               [options]="prioridades"
               [width]="'140px'"
-              (change)="onPrioridadChange($event.value ?? '')"
             ></app-combo-box>
           </div>
 
