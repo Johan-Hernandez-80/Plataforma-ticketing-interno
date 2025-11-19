@@ -1,4 +1,4 @@
 ﻿export const environment = {
   production: false,
-  apiUrl: "https://plataforma-ticketing-interno.onrender.com/api",
+  apiUrl: "http://localhost:8080/api",
 };
