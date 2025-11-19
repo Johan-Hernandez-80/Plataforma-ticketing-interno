@@ -11,8 +11,6 @@ services:
       - "8080:8080"
     depends_on:
       - db
-    env_file:
-      - ./Backend/.env
     environment:
       SPRING_PROFILES_ACTIVE: test
       DB_HOST: db
