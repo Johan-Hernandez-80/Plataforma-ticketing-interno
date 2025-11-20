@@ -9,6 +9,7 @@ import com.jsj.api.service.RolService;
 import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.security.Key;
 import java.util.Date;
@@ -21,32 +22,31 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtUtils {
 
-  private static final Dotenv dotenv = Dotenv.load();
-  private static final String SECRET = dotenv.get("JWT_SECRET");
-  private static final long EXPIRATION_MS = 3600000; // 1 hour
-  private static final Key KEY = Keys.hmacShaKeyFor(SECRET.getBytes());
-  private final RolService rolService;
+    private static final long EXPIRATION_MS = 3600000; // 1 hora
+    private final Key key;
+    private final RolService rolService;
 
-  public JwtUtils(RolService rolService) {
-    this.rolService = rolService;
-  }
+    public JwtUtils(@Value("${JWT_SECRET}") String secret, RolService rolService) {
+        this.rolService = rolService;
+        this.key = Keys.hmacShaKeyFor(secret.getBytes());
+    }
 
-  public String generateToken(UsuarioDTO user) {
-    return Jwts.builder()
-        .setSubject(user.getId().toString())
-        .claim("role", rolService.findRolNombreById(user.getRolId()).get())
-        .setIssuedAt(new Date())
-        .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_MS))
-        .signWith(KEY, SignatureAlgorithm.HS256)
-        .compact();
-  }
+    public String generateToken(UsuarioDTO user) {
+        return Jwts.builder()
+            .setSubject(user.getId().toString())
+            .claim("role", rolService.findRolNombreById(user.getRolId()).get())
+            .setIssuedAt(new Date())
+            .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_MS))
+            .signWith(key, SignatureAlgorithm.HS256)
+            .compact();
+    }
 
-  public String extractUserId(String token) throws JwtException {
-    return Jwts.parserBuilder()
-        .setSigningKey(KEY)
-        .build()
-        .parseClaimsJws(token)
-        .getBody()
-        .getSubject();
-  }
+    public String extractUserId(String token) throws JwtException {
+        return Jwts.parserBuilder()
+            .setSigningKey(key)
+            .build()
+            .parseClaimsJws(token)
+            .getBody()
+            .getSubject();
+    }
 }

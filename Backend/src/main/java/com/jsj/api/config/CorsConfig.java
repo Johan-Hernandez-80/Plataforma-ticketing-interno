@@ -17,10 +17,10 @@ public class CorsConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/api/**")
-                .allowedOrigins("http://localhost:4200") // Angular server
-                .allowedMethods("*")
-                .allowedHeaders("*")
-                .allowCredentials(true);
+        registry.addMapping("/**")          // todas las rutas
+                .allowedOrigins("*")        // permite cualquier origen
+                .allowedMethods("*")        // permite todos los métodos (GET, POST, PUT, DELETE...)
+                .allowedHeaders("*")        // permite todos los headers
+                .allowCredentials(false);   // debe ser false si allowedOrigins es "*" 
     }
 }
