@@ -9,5 +9,5 @@ import { Component, Input } from "@angular/core";
 })
 export class FileContainerComponent {
   @Input() fileExtension = "pdf";
-  @Input() fileName = "archddddddddddivoddd.png";
+  @Input() fileName = "prueba.pdf";
 }
