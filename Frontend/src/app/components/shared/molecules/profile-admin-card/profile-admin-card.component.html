@@ -1,26 +1,31 @@
 <app-card [width]="'720px'" [height]="'520px'">
   <div class="profile-card__content">
-    <button class="back" [routerLink]="navBack()" aria-label="Volver">
+    <button class="back" [routerLink]="['/admin/usuario/management']" aria-label="Volver">
       <img src="../../../../assets/goBackArrow.svg" alt="Volver" />
     </button>
-    <h2>Informacion del usuario</h2>
+
+    <h2>Información del usuario</h2>
 
     <div class="field">
       <h3>Nombre</h3>
       <p>{{ usuario?.nombre }}</p>
     </div>
+
     <div class="field">
       <h3>Email corporativo</h3>
       <p>{{ usuario?.emailCorporativo }}</p>
     </div>
+
     <div class="field">
       <h3>Email personal</h3>
       <p>{{ usuario?.emailPersonal }}</p>
     </div>
+
     <div class="field">
       <h3>Rol</h3>
       <p>{{ getRol() }}</p>
     </div>
+
     <div class="field">
       <h3>Departamento</h3>
       <p>{{ usuario?.departamento }}</p>
@@ -28,7 +33,8 @@
 
     <div class="actions">
       <app-main-button [placeHolder]="'Actualizar'" [width]="'140px'" [height]="'40px'" [variant]="'primary'"
-        [routerLink]="'/admin/profile/update'"></app-main-button>
+        [routerLink]="['/admin/profile/update']">
+      </app-main-button>
     </div>
   </div>
 </app-card>

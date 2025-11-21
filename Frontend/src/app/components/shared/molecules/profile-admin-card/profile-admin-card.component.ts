@@ -23,13 +23,4 @@ export class ProfileAdminCardComponent {
       default: return '';
     }
   }
-
-  navBack(): string {
-    switch (this.usuario?.rolId) {
-      case 1: return '/admin/home';
-      case 2: return '/agent/home';
-      case 3: return '/home';
-      default: return '';
-    }
-  }
 }

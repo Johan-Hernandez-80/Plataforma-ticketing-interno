@@ -1,0 +1,55 @@
+<app-card [width]="'720px'" [height]="'620px'">
+  <div class="usuario-create-card__content">
+    <button class="back" [routerLink]="['/admin/usuario/management']" aria-label="Volver">
+      <img src="../../../../assets/goBackArrow.svg" alt="Volver" />
+    </button>
+
+    <h2>Información del usuario</h2>
+
+    <div class="form-grid">
+      <div class="left-column">
+        <div class="field">
+          <h3>Nombre</h3>
+          <input type="text" placeholder="Nombre" [(ngModel)]="form.nombre" required />
+        </div>
+
+        <div class="field">
+          <h3>Email Corporativo</h3>
+          <input type="email" placeholder="Correo" [(ngModel)]="form.emailCorporativo" required />
+        </div>
+
+        <div class="field">
+          <h3>Email Personal</h3>
+          <input type="email" placeholder="Correo" [(ngModel)]="form.emailPersonal" />
+        </div>
+      </div>
+
+      <div class="right-column">
+        <div class="field select-field">
+          <h3>Rol</h3>
+          <select [(ngModel)]="form.rolSeleccionado">
+            <option *ngFor="let rol of roles" [ngValue]="rol">
+              {{ rol.nombre }}
+            </option>
+          </select>
+        </div>
+
+        <div class="field select-field">
+          <h3>Departamento</h3>
+          <select [(ngModel)]="form.departamento">
+            <option [ngValue]="null" disabled>Seleccione departamento</option>
+            <option *ngFor="let nombre of departamentos" [ngValue]="nombre">
+              {{ nombre }}
+            </option>
+          </select>
+        </div>
+
+        <div class="actions">
+          <app-main-button [placeHolder]="'Registrar usuario'" [width]="'240px'" [height]="'48px'" [variant]="'primary'"
+            (click)="registrarUsuario()">
+          </app-main-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-card>

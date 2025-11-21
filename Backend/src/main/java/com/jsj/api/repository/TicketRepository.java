@@ -49,5 +49,8 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
   
   @Query("SELECT COUNT(t) FROM Ticket t WHERE t.estado = 'Cerrado'")
   long countTicketsCerrados();
+
+  @Query("SELECT COUNT(t) FROM Ticket t")
+  long countTicketsTotales();
   
 }

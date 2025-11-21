@@ -175,4 +175,8 @@ System.out.println("Match? " + passwordEncoder.matches(password, user.getContras
         return dao.findAllUsuarios();
     }
 
+    public List<String> findAllDepartamentos() {
+        return dao.findAllDepartamentos();
+    }
+
 }

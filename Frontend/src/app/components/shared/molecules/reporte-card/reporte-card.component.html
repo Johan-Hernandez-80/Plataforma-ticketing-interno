@@ -1,0 +1,26 @@
+<app-card [width]="'900px'" [height]="'720px'">
+  <div class="reporte-card__content">
+    <button class="back" [routerLink]="['/admin/home']" aria-label="Volver">
+      <img src="../../../../assets/goBackArrow.svg" alt="Volver" />
+    </button>
+
+    <h2>Informe Estadístico</h2>
+
+    <div class="pdf-container">
+      @if (pdfBlob) {
+      <iframe [src]="pdfUrl" width="100%" height="100%" style="border: none;" title="Informe PDF">
+      </iframe>
+      } @else if (loading) {
+      <div class="loading">Cargando informe...</div>
+      } @else {
+      <div class="error">No se pudo cargar el informe</div>
+      }
+    </div>
+
+    <div class="actions">
+      <app-main-button [placeHolder]="'Exportar PDF'" [width]="'180px'" [height]="'48px'" [variant]="'primary'"
+        (click)="descargarPDF()">
+      </app-main-button>
+    </div>
+  </div>
+</app-card>

@@ -79,4 +79,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query(value = "SELECT COUNT(*) FROM usuarios u JOIN roles r ON u.rol_id = r.id WHERE r.nombre = 'agente'", nativeQuery = true)
     long countAgentesActivos();
 
+    @Query(value = "SELECT COUNT(*) FROM usuarios u", nativeQuery = true)
+    long countUsuariosTotales();
+
 }

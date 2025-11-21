@@ -153,5 +153,20 @@ public class UsuarioController extends BaseController<Usuario, Long, UsuarioDTO>
       List<UsuarioDTO> usuarios = service.findAllUsuarios();
       return ResponseEntity.ok(usuarios);
   }
+  
+  @Operation(summary = "Retornar todos los departamentos", description = "Permite obtener todos los departamentos del sistema.")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Departamentos obtenidos correctamente", content = @Content(array = @ArraySchema(schema = @Schema(implementation = String.class)))),
+      @ApiResponse(responseCode = "401", description = "No autorizado", content = @Content(schema = @Schema(example = "{ \"error\": \"No tiene permiso para usar este endpoint\" }"))),
+      @ApiResponse(responseCode = "500", description = "Error interno del servidor", content = @Content(schema = @Schema(example = "{ \"error\": \"Error interno del servidor. Intente nuevamente más tarde.\" }")))
+  })
+  @GetMapping("/departamentos")
+  public ResponseEntity<?> getAllDepartamentos() {
+      if (!"admin".equalsIgnoreCase(CurrentUser.getRole())) {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+      List<String> usuarios = service.findAllDepartamentos();
+      return ResponseEntity.ok(usuarios);
+  }
 
 }

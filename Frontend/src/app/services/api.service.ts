@@ -125,6 +125,12 @@ export class ApiService {
       this.httpOptions,
     );
   }
+  getAllDepartamentos(): Observable<string[]> {
+    return this.http.get<string[]>(
+      `${this.apiUrl}/usuarios/departamentos`,
+      this.httpOptions,
+    );
+  }
 
   // TicketController
   createTicket(ticketDTO: TicketDTO): Observable<TicketDTO> {

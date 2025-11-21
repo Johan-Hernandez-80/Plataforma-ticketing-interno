@@ -38,6 +38,9 @@ dependencies {
         implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
         implementation 'org.postgresql:postgresql:42.6.0'
         implementation 'com.mysql:mysql-connector-j:8.4.0'
+        implementation 'com.itextpdf:kernel:7.2.6'
+        implementation 'com.itextpdf:io:7.2.6'
+        implementation 'com.itextpdf:layout:7.2.6'
 
         annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 

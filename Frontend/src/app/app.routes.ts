@@ -21,6 +21,8 @@ import { CommentViewAdminPageComponent } from "./components/pages/comment-view-a
 import { UsuarioManagementPageComponent } from "./components/pages/usuario-management-page/usuario-management-page.component";
 import { UsuarioDetailPageComponent } from "./components/pages/usuario-detail-page/usuario-detail-page.component";
 import { UpdateAdminPageComponent } from "./components/pages/update-admin-page/update-admin-page.component";
+import { UsuarioCreatePageComponent } from "./components/pages/usuario-create-page/usuario-create-page.component";
+import { ReportePageComponent } from "./components/pages/reporte-page/reporte-page.component";
 
 export const routes: Routes = [
   {
@@ -113,7 +115,11 @@ export const routes: Routes = [
   },
   {
     path: 'admin/usuario/create',
-    component: UsuarioManagementPageComponent,
+    component: UsuarioCreatePageComponent,
+  },
+  {
+    path: 'admin/reporte',
+    component: ReportePageComponent,
   },
   {
     path: "test-endpoints",

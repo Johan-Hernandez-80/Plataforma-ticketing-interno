@@ -5,14 +5,21 @@
     <div class="content">
 
       <div class="top-bar">
-        <h2>Gestión de Usuarios</h2>
+        <div class="left-section">
+          <button class="back-btn" routerLink="/admin/home" aria-label="Volver al inicio de administración">
+            <img src="../../../../assets/goBackArrow.svg" alt="Volver" />
+          </button>
+          <h2>Gestión de Usuarios</h2>
+        </div>
 
         <app-main-button placeHolder="Registrar nuevo usuario" width="350px" height="50px"
           [routerLink]="['/admin/usuario/create']">
         </app-main-button>
       </div>
 
-      <app-usuarios-table [data]="usuarios" tableWidth="1080px"></app-usuarios-table>
+      <app-usuarios-table [data]="usuarios" tableWidth="1080px">
+      </app-usuarios-table>
+
     </div>
   </div>
 </app-background>

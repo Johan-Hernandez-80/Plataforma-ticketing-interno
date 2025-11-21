@@ -110,4 +110,8 @@ public class TicketDAO extends BaseDAO<Ticket, Long, TicketDTO, TicketMapper, Ti
                 .toList();
     }
 
+    public long countTicketsTotales() {
+        return repo.countTicketsTotales();
+    }
+
 }

@@ -18,8 +18,35 @@
   align-items: center;
 }
 
+.left-section {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .top-bar h2 {
   font-size: 32px;
   font-weight: 600;
   color: #333;
+  margin: 0;
+}
+
+.back-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+  flex-shrink: 0;
+}
+
+.back-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.back-btn img {
+  width: 28px;
+  height: 28px;
+  display: block;
 }
