@@ -260,6 +260,58 @@
       }
     },
     "/usuarios": {
+      "get": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Retraer todos los agentes",
+        "description": "Permite obtener todos los agentes del sistema.",
+        "operationId": "getAllUsuarios",
+        "responses": {
+          "200": {
+            "description": "Agentes obtenidos correctamente",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioDTO"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "No tiene permiso para usar este endpoint"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Error interno del servidor. Intente nuevamente más tarde."
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Acceso denegado. Token inválido o expirado."
+          }
+        }
+      },
       "post": {
         "tags": [
           "Usuarios"
@@ -1355,6 +1407,114 @@
         }
       }
     },
+    "/usuarios/departamentos": {
+      "get": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Retornar todos los departamentos",
+        "description": "Permite obtener todos los departamentos del sistema.",
+        "operationId": "getAllDepartamentos",
+        "responses": {
+          "200": {
+            "description": "Departamentos obtenidos correctamente",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "No tiene permiso para usar este endpoint"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Error interno del servidor. Intente nuevamente más tarde."
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Acceso denegado. Token inválido o expirado."
+          }
+        }
+      }
+    },
+    "/usuarios/agentes": {
+      "get": {
+        "tags": [
+          "Usuarios"
+        ],
+        "summary": "Retraer todos los agentes",
+        "description": "Permite obtener todos los agentes del sistema.",
+        "operationId": "getAllAgentes",
+        "responses": {
+          "200": {
+            "description": "Agentes obtenidos correctamente",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UsuarioDTO"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No autorizado",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "No tiene permiso para usar este endpoint"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "string",
+                  "example": {
+                    "error": "Error interno del servidor. Intente nuevamente más tarde."
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Acceso denegado. Token inválido o expirado."
+          }
+        }
+      }
+    },
     "/tickets/{idTicket}/comentarios": {
       "get": {
         "tags": [
@@ -1920,6 +2080,13 @@
             "format": "date-time",
             "description": "Fecha de creación del comentario.",
             "example": "2025-10-14 09:30:00"
+          },
+          "nombreUsuario": {
+            "type": "string",
+            "description": "Atributo nombreUsuario del comentario.",
+            "maxLength": 255,
+            "minLength": 0,
+            "example": null
           }
         },
         "required": [

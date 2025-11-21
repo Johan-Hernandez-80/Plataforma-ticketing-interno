@@ -23,9 +23,16 @@ public class BackendApplication {
 //        Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
 //        dotenv.entries().forEach(e -> System.out.println(String.format("Key: %s, value: %s", e.getKey(), e.getValue())));
 
-        System.out.println(new BCryptPasswordEncoder().encode("admin123"));
-        System.out.println(new BCryptPasswordEncoder().encode("agente123"));
-        System.out.println(new BCryptPasswordEncoder().encode("usuario123"));
+        System.out.println(new BCryptPasswordEncoder().encode("Ana López"));
+        System.out.println(new BCryptPasswordEncoder().encode("Carlos Ruiz"));
+        System.out.println(new BCryptPasswordEncoder().encode("Laura Fernández"));
+        System.out.println(new BCryptPasswordEncoder().encode("Pedro Sánchez"));
+        System.out.println(new BCryptPasswordEncoder().encode("Sofía Torres"));
+        System.out.println(new BCryptPasswordEncoder().encode("Diego Morales"));
+        System.out.println(new BCryptPasswordEncoder().encode("Valeria Castro"));
+        System.out.println(new BCryptPasswordEncoder().encode("Miguel Ángel Herrera"));
+        System.out.println(new BCryptPasswordEncoder().encode("Camila Ortiz"));
+        System.out.println(new BCryptPasswordEncoder().encode("Andrés Vargas"));
         SpringApplication.run(BackendApplication.class, args);
     }
 }
