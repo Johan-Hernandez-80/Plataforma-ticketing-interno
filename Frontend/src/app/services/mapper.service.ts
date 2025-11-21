@@ -8,14 +8,17 @@ import {
 } from "./api.service";
 import { ApiService } from "./api.service";
 import { DatePipe } from "@angular/common";
+import { UsuarioService } from "./usuario.service";
 
 @Injectable({
   providedIn: "root",
 })
 export class MapperService {
   private apiService = inject(ApiService);
+  private usuarioService = inject(UsuarioService);
   private datePipe = inject(DatePipe);
   private CATEGORIAS_MAP: CategoriaDTO[] = [];
+  usuario = this.usuarioService.getUser();
 
   constructor() {
     this.apiService.listCategorias().subscribe({
@@ -60,7 +63,10 @@ export class MapperService {
   ): DisplayComentario[] {
     return comentarios.map((c) => ({
       id: c.id,
-      autor: c.usuarioId.toString(),
+      autor:
+        c.usuarioId === this.usuario?.id
+          ? "Yo"
+          : (c.nombreUsuario ?? "Anonimo"),
       mensaje: c.comentario,
       date: c.fechaCreacion ? this.getDate(c.fechaCreacion) : "",
       time: c.fechaCreacion ? this.getTime(c.fechaCreacion) : "",

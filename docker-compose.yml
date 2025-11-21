@@ -8,19 +8,18 @@ services:
       context: ./Backend
       dockerfile: Dockerfile
     ports:
-      - "8082:8082"
+      - "8080:8080"
     depends_on:
       - db
-    env_file:
-      - ./Backend/.env
     environment:
-      SPRING_PROFILES_ACTIVE: prod
+      SPRING_PROFILES_ACTIVE: test
       DB_HOST: db
       DB_PORT: 3306
-      DB_NAME_PROD: ticketing
-      DB_USER_PROD: user
-      DB_PASSWORD_PROD: pass
+      DB_NAME_TEST: ticketing
+      DB_USER_TEST: user
+      DB_PASSWORD_TEST: pass
       JWT_SECRET: b42e9139f99e8823d89e2178ab63edfe
+      DB_USE_SSL: false
 
   # --- Base de datos MySQL ---
   db:
@@ -28,13 +27,19 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: rootpass
       MYSQL_DATABASE: ticketing
-      MYSQL_USER: appuser
-      MYSQL_PASSWORD: appPass
+      MYSQL_USER: user
+      MYSQL_PASSWORD: pass
+      MYSQL_CHARSET: utf8mb4
+      LANG: C.UTF-8
     ports:
       - "3307:3306"
     volumes:
       - db_data:/var/lib/mysql
-    command: --default-authentication-plugin=mysql_native_password
+      - ./sql-data:/docker-entrypoint-initdb.d
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --default-authentication-plugin=mysql_native_password
 
   # --- Frontend Angular ---
   frontend:

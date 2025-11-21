@@ -58,6 +58,7 @@ public class AuthController {
   public ResponseEntity<Map<String, Object>> login(
       @Parameter(description = "Credenciales se login, email y contraseña", required = true) @RequestBody LoginRequest request) {
     UsuarioDTO user = usuarioService.validateCredentials(request.getEmail(), request.getPassword());
+    System.out.println("\u001B[32mHola en verde final! +" + user + "\u001B[0m");
     if (user == null) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
           .body(Map.of("error", "Credenciales inválidas. Verifique su email y contraseña."));

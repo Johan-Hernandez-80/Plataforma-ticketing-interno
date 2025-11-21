@@ -58,9 +58,14 @@ public class UsuarioService extends BaseService<Usuario, Long, UsuarioDTO, Usuar
     if (user == null) {
       user = dao.findByEmailCorporativo(email);
     }
+    System.out.println("\u001B[32mHola en verde 1 +" + user + "\u001B[0m");
+System.out.println("Password ingresado: " + password);
+System.out.println("Hash en BD: " + user.getContrasena());
+System.out.println("Match? " + passwordEncoder.matches(password, user.getContrasena()));
     if (user != null && passwordEncoder.matches(password, user.getContrasena())) {
       return user;
     }
+    System.out.println("\u001B[32mHola en verde 2 +" + user + "\u001B[0m");
     return null;
   }
 
